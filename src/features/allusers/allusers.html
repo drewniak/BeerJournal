@@ -31,7 +31,15 @@
                         <span class="md-subhead">{{user.lastName}}</span>
                     </md-card-title-text>
                     <md-card-title-media>
-                        <div class="md-media-lg card-media"></div>
+                        <div class="images">
+                            <ul class="gallery gallery1" ng-controller="AllUsersController">
+                                <li ng-repeat="image in images"> <!-- TODO change images to user.images -->
+                                    <a ng-click="openLightboxModal($index)">
+                                        <img ng-src="{{image.url}}" height="50" width="50">
+                                    </a>
+                                </li>
+                            </ul>
+                            </div>
                     </md-card-title-media>
                 </md-card-title>
             </md-card>

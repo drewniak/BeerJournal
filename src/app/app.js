@@ -3,8 +3,11 @@ import uirouter from "angular-ui-router";
 import "angular-material";
 import "angular-base64"
 import "angular-cookies"
+import "angular-bootstrap-lightbox"
+import "angular-ui-bootstrap"
 
 import "../style/app.css";
+import "../style/galeryListStyle.css";
 
 import routing from "./app.config.js";
 import collections from "../features/collections";
@@ -26,7 +29,7 @@ let app = () => {
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uirouter, collections, login, registration, home, allusers, AddNewItemController, 'ngCookies', 'ngMaterial','base64'])
+angular.module(MODULE_NAME, [uirouter, collections, login, registration, home, allusers, AddNewItemController, 'ngCookies', 'ngMaterial','base64','ui.bootstrap','bootstrapLightbox'])
     .factory('UserService', UserService)
     .factory('AuthService', AuthService)
     .directive('app', app)
