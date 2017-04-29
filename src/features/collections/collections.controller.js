@@ -1,4 +1,4 @@
-export default function CollectionsController($rootScope, $scope, $http) {
+export default function CollectionsController($rootScope, $scope, $http, $location) {
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
@@ -13,6 +13,10 @@ export default function CollectionsController($rootScope, $scope, $http) {
             }, function (error) {
                 console.log(error);
             });
+    }
+
+    $scope.showDetails = function (itemId) {
+        $location.path("/itemDetails/" + itemId);
     }
 
     userItems();

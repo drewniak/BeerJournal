@@ -1,0 +1,8 @@
+.country {
+    overflow: hidden;
+}
+
+.country img {
+    margin-right: 15px;
+    float: left;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BeerJournal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <div ng-controller="itemDetailsController">
+
+            <h1>{{item.name}}</h1>
+
+            <div ng-show="item.isOwner">
+                <h2>{{item.owner}}</h2>
+            </div>
+
+            <div class="country">
+                <img ng-src="{{item.countryImage}}" height="30" width="60">
+                <p>{{item.country}}</p>
+            </div>
+
+            <h3>Brewery: {{item.brewery}}</h3>
+            <h3>Category: {{item.category}}</h3>
+            <h3>Style: {{item.style}}</h3>
+
+            <a class="btn btn-primary" href="/collections">Back</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
