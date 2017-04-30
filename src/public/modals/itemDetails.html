@@ -1,0 +1,16 @@
+<div class="container">
+    <div ng-controller="itemDetailsController" style="margin-top: 1%; margin-bottom: 1%">
+        <h1>{{item.name}}</h1>
+
+        <div class="country">
+            <img ng-src="{{item.countryImage}}" height="30" width="60">
+            <p>{{item.country}}</p>
+        </div>
+
+        <h3>Brewery: {{item.brewery}}</h3>
+        <h3>Category: {{item.category}}</h3>
+        <h3>Style: {{item.style}}</h3>
+
+        <button class="btn btn-primary" ng-click="close()">Close</button>
+    </div>
+</div>

@@ -2,9 +2,14 @@ import angular from "angular";
 import uirouter from "angular-ui-router";
 import "angular-material";
 import "angular-base64"
+import "angular-bootstrap-lightbox"
+import "angular-ui-bootstrap"
 import "angular-sessionstorage"
+import "angular-route"
 
 import "../style/app.css";
+import "../style/galeryListStyle.css";
+import "../style/itemDetails.css"
 
 import routing from "./app.config.js";
 import collections from "../features/collections";
@@ -13,7 +18,7 @@ import registration from "../features/registration"
 import home from "../features/home";
 import allusers from "../features/allusers"
 import AddNewItemController from "../features/addNewItem"
-
+import itemDetailsController from "../features/itemDetails"
 
 let app = () => {
     return {
@@ -24,7 +29,7 @@ let app = () => {
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uirouter, collections, login, registration, home, allusers, AddNewItemController, 'ngSessionStorage', 'ngMaterial','base64'])
+angular.module(MODULE_NAME, [uirouter, collections, login, registration, home, allusers, itemDetailsController, AddNewItemController, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox'])
     .directive('app', app)
     .config(routing)
     .run(run);

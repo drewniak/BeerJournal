@@ -8,7 +8,7 @@ import 'angular-material';
 import routing from './addNewItem.routes';
 import AddNewItemController from './addNewItem.controller';
 
-export default angular.module('AddNewItemController', [uirouter, 'ngMaterial', 'base64'])
+export default angular.module('AddNewItemController', [uirouter, 'ngMaterial','ui.bootstrap', 'base64'])
     .controller('AddNewItemController', AddNewItemController)
     .config(routing)
     .name;
