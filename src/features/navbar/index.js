@@ -12,4 +12,5 @@ export default angular.module('navbar', ['ngMaterial'])
             controllerAs: 'vm'
         }
     }])
+    .controller('NavbarController', NavbarController)
     .name;

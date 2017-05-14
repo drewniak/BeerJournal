@@ -20,7 +20,8 @@
     "angular-moment": "^1.0.1",
     "angular-toastr": "^2.1.1",
     "angular-ui-bootstrap": "^2.5.0",
-    "moment": "^2.18.1"
+    "moment": "^2.18.1",
+    "ng-facebook": "^0.1.6"
   },
   "devDependencies": {
     "angular-base64": "^2.0.5",

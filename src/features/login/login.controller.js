@@ -11,4 +11,6 @@ export default function LoginController(authService) {
     vm.logout = function () {
         authService.logout();
     };
+
+
 }

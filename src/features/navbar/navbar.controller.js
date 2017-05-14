@@ -1,4 +1,4 @@
-export default function NavbarController(authService) {
+export default function NavbarController(authService,$scope) {
     let vm = this;
     vm.logout = function () {
         authService.logout();
@@ -10,6 +10,11 @@ export default function NavbarController(authService) {
 
     vm.getCurrentUsername = function() {
         return authService.getCurrentUserName();
+    }
+
+
+    $scope.loginFb = function () {
+        authService.loginFb()
     }
 }
 
