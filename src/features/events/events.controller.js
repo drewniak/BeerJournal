@@ -22,7 +22,7 @@ export default function EventsController($rootScope, $scope, $http, $location, $
         $http.get("/api/events", {
             params: {
                 count: $scope.pagination.itemsPerPage,
-                page: $scope.pagination.currentPage
+                page: $scope.pagination.currentPage-1
             }})
             .then(function (response) {
                 var events = response.data.content;
