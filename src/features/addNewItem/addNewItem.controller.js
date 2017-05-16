@@ -77,8 +77,8 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
         context.drawImage(video, 0, 0, 640, 480);
-
-        var blob =  dataURItoBlob(canvas.toDataURL("image/png"));
+        vm.imageSrc = canvas.toDataURL("image/png");
+        var blob =  dataURItoBlob(vm.imageSrc);
         vm.imageFile = new File([blob], 'snapshot.jpeg', {type: blob.type});
 
         $scope.imageFileAdded = true;
@@ -107,9 +107,7 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
         $scope.files = undefined;
         $scope.errFiles = undefined;
         $scope.imageFileAdded = false;
-
-        var preview = document.getElementById('addedImage');
-        preview.src = '';
+        vm.imageSrc = '';
     }
 
     var modalInstance;
@@ -144,12 +142,13 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
 
 
     $scope.previewFile = function() {
-        var preview = document.getElementById('addedImage');
         var file    = document.querySelector('input[type=file]').files[0];
         var reader  = new FileReader();
         document.getElementById("fname").value ; //string file url
         reader.addEventListener("load", function () {
-            preview.src = reader.result;
+            $scope.$apply(function () {
+                vm.imageSrc = reader.result;
+            });
         }, false);
 
         if (file) {
