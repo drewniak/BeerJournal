@@ -19,13 +19,8 @@
                    required/>
             <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
         </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" name="email" id="email" class="form-control" ng-model="userData.email"/>
-        </div>
-
         <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-            <label for="password">Password</label>
+            <label for="password">Password Confirmation</label>
             <input type="password" name="password" id="password" class="form-control" ng-model="userData.password"
                    required/>
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Last name is required</span>
@@ -40,6 +35,48 @@
         </div>
         <div class="md-padding">
             <img id="image" ng-src="" height="50">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/home" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</div>
+
+
+<div class="jumbotron">
+    <h2> MODIFY USER EMAIL AND PASSWORD </h2>
+    <p ng-bind="errorMessage">{{errorMessage}}</p>
+    <form name="form" ng-submit="updateUserEmailAndPAss()" role="form">
+
+
+        <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+            <label>Old Email</label>
+            <input type="input" name="email" class="form-control" ng-model="userData.email"
+                   required/>
+            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Old email is required</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.newEmail.$dirty && form.newEmail.$error.required }">
+            <label>New Email</label>
+            <input type="input" name="newEmail" class="form-control" ng-model="userData.newEmail"
+                   required/>
+            <span ng-show="form.newEmail.$dirty && form.newEmail.$error.required" class="help-block">New email is required</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password">Old Password</label>
+            <input type="password" name="password" class="form-control" ng-model="userData.password"
+                   required/>
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.newPassword.$dirty && form.newPassword.$error.required }">
+            <label>New Password</label>
+            <input type="password" name="newPassword" class="form-control" ng-model="userData.newPassword"
+                   required/>
+            <span ng-show="form.newPassword.$dirty && form.newPassword.$error.required" class="help-block">New password is required</span>
         </div>
 
         <div class="form-actions">

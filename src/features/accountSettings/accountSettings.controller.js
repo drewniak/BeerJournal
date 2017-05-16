@@ -1,4 +1,4 @@
-export default function AccountSettingsController(authService,$sessionStorage, $scope, $rootScope, $stateParams, $http, $location) {
+export default function AccountSettingsController(authService,$sessionStorage, $scope, $rootScope, $stateParams, $http, $location,$base64) {
     let accountSettings = this;
     $scope.userData = {};
     $scope.errorMessage;
@@ -9,7 +9,11 @@ export default function AccountSettingsController(authService,$sessionStorage, $
         $scope.userData.email = "";
         $scope.userData.password = "";
         if($sessionStorage.getObject('user').pass) {
-            $scope.userData.password =  $sessionStorage.getObject('user').pass;
+            $scope.userData.password =  $base64.decode($sessionStorage.getObject('user').pass);
+            $scope.userData.email = $sessionStorage.getObject('user').username;
+        }else{
+            $scope.userData.email = response.data.password;
+            $scope.userData.password = response.data.email;
         }
     });
 
@@ -46,10 +50,31 @@ export default function AccountSettingsController(authService,$sessionStorage, $
         }, function (res) {
             $scope.errorMsg = "Unable to update user";
         });
-
-
     };
 
+    $scope.updateUserEmailAndPAss = function () {
+        var userDataForEmail = {
+            "password": $scope.userData.password,
+            "email": $scope.userData.email,
+            "newEmail": $scope.userData.newEmail
+        };
+
+        var userDataForPassword = {
+            "password": $scope.userData.password,
+            "newPassword": $scope.userData.newPassword,
+        };
+
+        $http.post('/api/account/email', userDataForEmail).then(function (res) {
+        }, function (res) {
+            $scope.errorMsg = "Unable to update user";
+        });
+
+        $http.post('/api/account/password', userDataForPassword).then(function (res) {
+        }, function (res) {
+            $scope.errorMsg = "Unable to update user";
+        });
+
+    };
 
     $scope.deleteUser = function () {
         if (confirm("Are you sure?") == true) {

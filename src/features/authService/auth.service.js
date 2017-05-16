@@ -16,7 +16,8 @@ export default function ($rootScope, $http, $location, $sessionStorage, $base64,
             user.id = res.data;
             const authdata = $base64.encode(user.username + ':' + user.password);
             if(fbAuth == true){
-                $sessionStorage.putObject('user', {username: user.username, id: user.id, auth: authdata,pass : password});
+                var encryptedPass = $base64.encode(password);
+                $sessionStorage.putObject('user', {username: user.username, id: user.id, auth: authdata,pass : encryptedPass});
             }else {
                 $sessionStorage.putObject('user', {username: user.username, id: user.id, auth: authdata});
             }
