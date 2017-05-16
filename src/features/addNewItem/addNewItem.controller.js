@@ -108,7 +108,7 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
         $scope.errFiles = undefined;
         $scope.imageFileAdded = false;
 
-        var preview = document.querySelector('img');
+        var preview = document.getElementById('addedImage');
         preview.src = '';
     }
 

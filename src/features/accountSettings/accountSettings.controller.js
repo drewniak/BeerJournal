@@ -1,26 +1,29 @@
-export default function AccountSettingsController(authService, $scope, $rootScope, $stateParams, $http, $location) {
+export default function AccountSettingsController(authService,$sessionStorage, $scope, $rootScope, $stateParams, $http, $location,$base64) {
     let accountSettings = this;
     $scope.userData = {};
-    $scope.userData1 = {};
     $scope.errorMessage;
 
     $http.get('/api/users/' + $rootScope.globals.currentUser.id).then(function (response) {
-        $scope.userData = response.data;
-    });
-    $http.get('/api/users/' + $rootScope.globals.currentUser.id).then(function (response) {
-        $scope.userData1 = response.data;
+        $scope.userData.firstName = response.data.firstName;
+        $scope.userData.lastName = response.data.lastName;
+        $scope.userData.email = "";
+        $scope.userData.password = "";
+        if($sessionStorage.getObject('user').pass) {
+            $scope.userData.password =  $base64.decode($sessionStorage.getObject('user').pass);
+            $scope.userData.email = $sessionStorage.getObject('user').username;
+        }else{
+            $scope.userData.email = response.data.password;
+            $scope.userData.password = response.data.email;
+        }
     });
 
     $scope.updateUser = function () {
-        $scope.userData = {
-            "email": $scope.userData.email,
-
+        var userData = {
             "password": $scope.userData.password,
             "lastName": $scope.userData.lastName,
             "firstName": $scope.userData.firstName
         };
-
-        $http.put('/api/users/' + $rootScope.globals.currentUser.id, this.userData).then(function (res) {
+        $http.put('/api/account/', userData).then(function (res) {
             if ($scope.imageFile != null) {
                 $scope.form = [];
                 $http({
@@ -47,10 +50,31 @@ export default function AccountSettingsController(authService, $scope, $rootScop
         }, function (res) {
             $scope.errorMsg = "Unable to update user";
         });
-
-
     };
 
+    $scope.updateUserEmailAndPAss = function () {
+        var userDataForEmail = {
+            "password": $scope.userData.password,
+            "email": $scope.userData.email,
+            "newEmail": $scope.userData.newEmail
+        };
+
+        var userDataForPassword = {
+            "password": $scope.userData.password,
+            "newPassword": $scope.userData.newPassword,
+        };
+
+        $http.post('/api/account/email', userDataForEmail).then(function (res) {
+        }, function (res) {
+            $scope.errorMsg = "Unable to update user";
+        });
+
+        $http.post('/api/account/password', userDataForPassword).then(function (res) {
+        }, function (res) {
+            $scope.errorMsg = "Unable to update user";
+        });
+
+    };
 
     $scope.deleteUser = function () {
         if (confirm("Are you sure?") == true) {
