@@ -4,6 +4,8 @@ export default function AccountSettingsController(authService,$sessionStorage, $
     $scope.errorMessage;
 
     $http.get('/api/users/' + $rootScope.globals.currentUser.id).then(function (response) {
+        console.log($rootScope.globals.currentUser.id);
+        console.log(response.data);
         $scope.userData.firstName = response.data.firstName;
         $scope.userData.lastName = response.data.lastName;
         $scope.userData.email = "";
@@ -102,6 +104,16 @@ export default function AccountSettingsController(authService,$sessionStorage, $
             reader.readAsDataURL(file);
             $scope.imageFile = file;
         }
+    }
+
+    $scope.checkPasswords = function() {
+        $scope.form.password.$error.wrongPasswordPattern = checkPasswordPattern($scope.userData.newPassword) && !$scope.form.password.$error.required;
+    }
+
+    function checkPasswordPattern(str)
+    {
+        var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+        return !re.test(str);
     }
 
 }
