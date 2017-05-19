@@ -8,7 +8,7 @@ export default function routes($stateProvider) {
     $stateProvider
         .state('addNewItem', {
             url: '/add-item',
-            template: require('./addNewItem.html'),
+          
             controller: 'AddNewItemController',
             controllerAs: 'vm'
         });
