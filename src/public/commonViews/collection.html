@@ -27,3 +27,12 @@
         </md-card-content>
     </md-card>
 </md-card-content>
+
+<ul uib-pagination
+    total-items="pagination.totalItems"
+    num-pages="pagination.numPages"
+    ng-model="pagination.currentPage"
+    max-size="3"
+    force-ellipses="true"
+    ng-change="pagination.pageChanged()"
+    class="pagination-sm bj-pagination"></ul>

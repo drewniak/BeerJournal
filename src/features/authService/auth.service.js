@@ -23,7 +23,7 @@ export default function ($rootScope, $http, $location, $sessionStorage, $base64,
             }
             $rootScope.globals.currentUser = user;
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-            $location.path('/collections');
+            $location.path('/start');
             location.reload();
         }, function (res) {
             toastr.error('Login failed ', 'Error');

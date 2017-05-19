@@ -17,7 +17,6 @@
         <form name="form" ng-submit="vm.addNewItem()" role="form">
             <wizard id='wizard' on-finish="finishedWizard()" indicators-position="top">
                 <wz-step wz-title="Basic informations">
-                    <h2>Add new item</h2>
                     <h3>Basic info</h3>
                     <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
                         <label for="name">Name</label>
@@ -60,7 +59,6 @@
 
 
                 <wz-step wz-title="Add image">
-                    <h2>Add new item</h2>
                     <h3>Picture (optional)</h3>
 
                     <div ng-show="!imageFileAdded" class="form-group">
@@ -109,7 +107,7 @@
                                 <md-icon><i class="material-icons">videocam_off</i></md-icon>
                             </md-button>
                         </div>
-                        <img ng-show="imageSource=='disc'" ng-src="" height="200">
+                        <img ng-show="imageSource=='disc'" ng-src="{{vm.imageSrc}}" height="200">
                         <canvas ng-show="imageSource=='snapshot'" id="canvas" width="640" height="480"></canvas>
                         <md-button class="md-warn md-raised" ng-click="removeImage()">Delete</md-button>
                     </div>
@@ -118,7 +116,6 @@
 
 
                 <wz-step wz-title="Confirm">
-                    <h2>Add new item</h2>
                     <h3>Is all data correct?</h3>
                     <div>
                         <table border="1" style="width:60%">
@@ -145,6 +142,10 @@
                         </table>
                     </div>
 
+                    <div>
+                        <img ng-show="vm.imageSrc" ng-src="{{vm.imageSrc}}" height="200">
+                    </div>
+
                     <div class="form-group">
                         <input class="btn btn-success" ng-disabled="form.$invalid" type="submit"
                                value="Add item to my collection"/>
@@ -153,9 +154,5 @@
                 </wz-step>
             </wizard>
         </form>
-        <div class="md-padding" ng-show="imageFileAdded">
-            <img id="addedImage" ng-src="" height="200">
-            <button class="btn btn-warning" ng-click="removeImage()">Delete</button>
-        </div>
     </div>
 </md-content>
