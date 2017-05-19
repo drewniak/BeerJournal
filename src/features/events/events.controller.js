@@ -25,8 +25,8 @@ export default function EventsController($rootScope, $scope, $http, $location, $
     }
 
     $scope.userCreatedEvent = function(user) {
-        $rootScope.selectedUser = user;
-        $location.path('/allUsers');
+        console.log(user.id);
+        $location.path('/allUsers').search('id', user.id);
     }
 
     $scope.itemEvent = function(item) {

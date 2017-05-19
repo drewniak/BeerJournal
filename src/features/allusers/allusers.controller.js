@@ -1,4 +1,4 @@
-export default function AllUsersController($rootScope, $scope, $http,$uibModal,Lightbox) {
+export default function AllUsersController($rootScope, $scope, $location, $http, $uibModal, Lightbox) {
  
     let user = $rootScope.globals.currentUser;
 
@@ -23,9 +23,11 @@ export default function AllUsersController($rootScope, $scope, $http,$uibModal,L
             });
     }
 
-    if ($rootScope.selectedUser) {
-        showUserItems($rootScope.selectedUser);
-        $rootScope.selectedUser = undefined;
+    var selectedUserId = $location.search().id;
+    if (selectedUserId) {
+        $http.get('/api/users/' + selectedUserId).then(function(user) {
+            showUserItems(user.data);
+        });
     }
 
     getUsersFromServer();
@@ -99,10 +101,6 @@ export default function AllUsersController($rootScope, $scope, $http,$uibModal,L
         }
         return arr;
     }
-
-
-
-
 }
 
 

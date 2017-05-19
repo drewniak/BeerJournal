@@ -29,8 +29,7 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
     };
 
     $scope.showUserCollection = function(user) {
-        $rootScope.selectedUser = user;
-        $location.path('/allUsers');
+        $location.path('/allUsers').search('id', user.id);
     }
 
     function getItemImages(imageIds) {
