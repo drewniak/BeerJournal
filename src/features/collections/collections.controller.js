@@ -1,4 +1,14 @@
 export default function CollectionsController($rootScope, $scope, $http, $location, $uibModal) {
+
+    $scope.pagination = {
+        currentPage: 1,
+        itemsPerPage: 10,
+        totalItems: null,
+        pageChanged: function () {
+            userItems();
+        }
+    };
+
     let user = undefined;
     $scope.isUserCollection = false;
 
@@ -13,9 +23,17 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
     $scope.userItems = [];
 
     function userItems () {
-        $http.get('/api/users/' + user.id + "/collection/items")
+        $http.get('/api/users/' + user.id + "/collection/items", {
+            params: {
+                lacking: false,
+                count: $scope.pagination.itemsPerPage,
+                page: $scope.pagination.currentPage-1
+            }})
             .then(function (response) {
+                console.log(response.data)
                 $scope.userItems = response.data.content;
+                $scope.pagination.totalItems = response.data.totalElements;
+                $scope.pagination.numPages = response.data.totalPages;
             }, function (error) {
                 console.log(error);
             });

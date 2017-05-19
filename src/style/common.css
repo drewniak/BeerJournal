@@ -48,3 +48,8 @@ td:nth-of-type(even) {
 tr:nth-of-type(even) {
     background-color: white;
 }
+
+.bj-pagination {
+    float:right;
+    margin:7px;
+}

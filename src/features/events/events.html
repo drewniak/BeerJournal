@@ -1,31 +1,46 @@
 <md-content class="md-padding">
-    <div ng-if="!showItems" ng-repeat="event in events">
-        <md-card md-theme="default" md-theme-watch/>
-        <div>
-            <md-card-title-text>
-            </md-card-title-text>
-            <div ng-if="event.dataType=='ITEM'" ng-click="itemEvent(event.data)">
+    <md-card ng-if="!showItems" ng-repeat="event in events">
+        <md-card md-theme="default" md-theme-watch></md-card>
+        <div ng-if="event.dataType=='ITEM'" ng-click="itemEvent(event.data)">
+            <md-card-content>
+                <div class="row">
+                    <div class="col-md-1" align="left">
+                        <img src="{{event.image}}" height="50" width="50"/>
+                    </div>
+                    <div class="col-md-9" align="left">
+                        <div ng-if="event.action=='CREATE'">
+                            <p class="md-subhead">Item <b>{{event.data.name}}</b> was just created.</p>
+                        </div>
+                        <div ng-if="event.action=='UPDATE'">
+                            <p class="md-subhead">Item <b>{{event.data.name}}</b> was just updated.</p>
+                        </div>
+                        <div ng-if="event.action=='DELETE'">
+                            <p class="md-subhead">Item <b>{{event.data.name}}</b> was just deleted.</p>
+                        </div>
+                        <div>
+                            <p> It's a <b>{{event.data.type}}</b>
+                                from {{event.data.brewery}} brewery. It's style is <b>{{event.data.style}}</b>, type:
+                                <b>{{event.data.type}}</b>
+                                and it's from <b>{{event.data.country}}</b>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-2" align="left">
+                        {{event.date}}
+                    </div>
+                </div>
+            </md-card-content>
+        </div>
+        <div ng-if="event.dataType=='USER'">
+            <div ng-if="event.action=='CREATE'" ng-click="userCreatedEvent(event.data)">
                 <md-card-content>
                     <div class="row">
                         <div class="col-md-1" align="left">
-                            <img src="{{event.image}}" height="50" width="50" />
+                            <img src="{{event.image}}" height="50" width="50"/>
                         </div>
                         <div class="col-md-9" align="left">
-                            <div ng-if="event.action=='CREATE'">
-                                    <p class="md-subhead">Item <b>{{event.data.name}}</b> was just created.</p>
-                            </div>
-                            <div ng-if="event.action=='UPDATE'">
-                                    <p class="md-subhead">Item <b>{{event.data.name}}</b> was just updated.</p>
-                            </div>
-                            <div ng-if="event.action=='DELETE'">
-                                    <p class="md-subhead">Item <b>{{event.data.name}}</b> was just deleted.</p>
-                            </div>
-                            <div>
-                                <p> It's a <b>{{event.data.type}}</b>
-                                    from {{event.data.brewery}} brewery. It's style is <b>{{event.data.style}}</b>, type: <b>{{event.data.type}}</b>
-                                    and it's from <b>{{event.data.country}}</b>.
-                                </p>
-                            </div>
+                            <p class="md-subhead">User <b>{{event.data.firstName}} {{event.data.lastName}}</b> just
+                                joined BeerJournal. Welcome!</p>
                         </div>
                         <div class="col-md-2" align="left">
                             {{event.date}}
@@ -33,25 +48,17 @@
                     </div>
                 </md-card-content>
             </div>
-            <div ng-if="event.dataType=='USER'">
-                <div ng-if="event.action=='CREATE'" ng-click="userCreatedEvent(event.data)">
-                    <md-card-content>
-                        <div class="row">
-                            <div class="col-md-1" align="left">
-                                <img src="{{event.image}}" height="50" width="50" />
-                            </div>
-                            <div class="col-md-9" align="left">
-                                <p class="md-subhead">User <b>{{event.data.firstName}} {{event.data.lastName}}</b> just joined BeerJournal. Welcome!</p>
-                            </div>
-                            <div class="col-md-2" align="left">
-                                {{event.date}}
-                            </div>
-                        </div>
-                    </md-card-content>
-                </div>
-            </div>
-            </md-card-title>
-            </md-card>
         </div>
+    </md-card>
+
+    <ul uib-pagination
+        total-items="pagination.totalItems"
+        num-pages="pagination.numPages"
+        ng-model="pagination.currentPage"
+        max-size="3"
+        force-ellipses="true"
+        ng-change="pagination.pageChanged()"
+        class="pagination-sm bj-pagination"></ul>
+
 </md-content>
 

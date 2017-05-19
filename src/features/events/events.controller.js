@@ -1,4 +1,13 @@
 export default function EventsController($rootScope, $scope, $http, $location, $uibModal, moment) {
+    $scope.pagination = {
+        currentPage: 1,
+        itemsPerPage: 10,
+        totalItems: null,
+        pageChanged: function () {
+            events();
+        }
+    };
+
     let user = undefined;
     if (!$scope.selectedUser) {
         $scope.selectedUser = $rootScope.globals.currentUser;
@@ -9,10 +18,16 @@ export default function EventsController($rootScope, $scope, $http, $location, $
     $scope.username = user.username;
 
 
-    function events () {
-        $http.get("/api/events")
+    function events() {
+        $http.get("/api/events", {
+            params: {
+                count: $scope.pagination.itemsPerPage,
+                page: $scope.pagination.currentPage-1
+            }})
             .then(function (response) {
                 var events = response.data.content;
+                $scope.pagination.totalItems = response.data.totalElements;
+                $scope.pagination.numPages = response.data.totalPages;
                 $scope.events = [];
                 events.forEach(function (event) {
                     event.date = moment(event.date).fromNow();
@@ -24,18 +39,18 @@ export default function EventsController($rootScope, $scope, $http, $location, $
             });
     }
 
-    $scope.userCreatedEvent = function(user) {
+    $scope.userCreatedEvent = function (user) {
         $rootScope.selectedUser = user;
         $location.path('/allUsers');
     }
 
-    $scope.itemEvent = function(item) {
+    $scope.itemEvent = function (item) {
         $scope.itemId = item.id;
         var modalInstance = $uibModal.open({
             templateUrl: 'modals/itemDetails.html',
             scope: $scope
         }).result.finally(
-            function() {
+            function () {
             }
         ).then(angular.noop, angular.noop);
     }
@@ -45,28 +60,28 @@ export default function EventsController($rootScope, $scope, $http, $location, $
             var DEFAULT = 'https://image.flaticon.com/icons/svg/410/410321.svg';
 
             $http.get('/api/items/' + event.data.id).then(
-                function(res){
+                function (res) {
                     var imageIds = res.data.imageIds;
                     if (imageIds.length > 0) {
                         event.image = '/api/files/' + imageIds[0];
                     } else {
                         event.image = DEFAULT;
                     }
-                }, function() {
+                }, function () {
                     event.image = DEFAULT;
                 });
-        } else if(event.dataType == 'USER') {
+        } else if (event.dataType == 'USER') {
             var DEFAULT = 'https://maxcdn.icons8.com/Color/PNG/48/Users/checked_user_male-48.png';
 
             $http.get('/api/users/' + event.data.id).then(
-                function(res){
-                    if(res.data.avatarFileId) {
+                function (res) {
+                    if (res.data.avatarFileId) {
                         event.image = '/api/users/' + event.id + '/avatar';
                     } else {
                         event.image = DEFAULT;
                     }
                 },
-                function(){
+                function () {
                     event.image = DEFAULT;
                 })
         }
