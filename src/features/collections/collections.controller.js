@@ -12,15 +12,19 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
     let user = undefined;
     $scope.isUserCollection = false;
 
-    if (!$scope.selectedUser) {
-        $scope.selectedUser = $rootScope.globals.currentUser;
+    var selectedUserId = $location.search().id;
+    if (!selectedUserId) {
+        selectedUserId = $rootScope.globals.currentUser.id;
         $scope.currentNavItem = "collections";
     }
-    $scope.isUserCollection = $scope.selectedUser.id === $rootScope.globals.currentUser.id;
-    user = $scope.selectedUser;
-
-    $scope.username = user.username;
+    $scope.isUserCollection = selectedUserId === $rootScope.globals.currentUser.id;
     $scope.userItems = [];
+
+    $http.get('/api/users/' + selectedUserId).then(function(res) {
+        user = res.data;
+        $scope.username = user.username;
+        userItems();
+    })
 
     function userItems () {
         $http.get('/api/users/' + user.id + "/collection/items", {
@@ -39,7 +43,6 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
             });
         $http.get('/api/users/' + user.id)
             .then(function (response) {
-                console.log(response.data);
                 $scope.user_firstName = response.data.firstName;
                 $scope.user_lastName = response.data.lastName;
             }, function (error) {
@@ -99,6 +102,4 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
 
         return modal.result;
     }
-
-    userItems();
 }
