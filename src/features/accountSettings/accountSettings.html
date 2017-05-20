@@ -46,9 +46,9 @@
 
 
 <div class="jumbotron">
-    <h2>CHANGE USER EMAIL AND PASSWORD </h2>
+    <h2>CHANGE USER EMAIL</h2>
     <p ng-bind="errorMessage">{{errorMessage}}</p>
-    <form name="form" ng-submit="updateUserEmailAndPAss()" role="form">
+    <form name="form" ng-submit="updateUserEmail()" role="form">
 
 
         <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
@@ -66,7 +66,29 @@
         </div>
 
         <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-            <label for="password">Old Password</label>
+            <label for="password">Password confirmation</label>
+            <input type="password" name="password" class="form-control" ng-model="userData.password"
+                   required/>
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/home" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</div>
+
+
+<div class="jumbotron">
+    <h2>CHANGE USER PASSWORD </h2>
+    <p ng-bind="errorMessage">{{errorMessage}}</p>
+    <form name="form" ng-submit="updateUserPass()" role="form">
+
+
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password">Old password</label>
             <input type="password" name="password" class="form-control" ng-model="userData.password"
                    required/>
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
@@ -86,6 +108,7 @@
         </div>
     </form>
 </div>
+
 
 
 <div class="jumbotron">
