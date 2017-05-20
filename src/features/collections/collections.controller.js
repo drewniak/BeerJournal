@@ -9,6 +9,15 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
         }
     };
 
+    $scope.filter = {
+        name: "",
+        category: "",
+        changed: function () {
+            $scope.pagination.currentPage = 1;
+            userItems();
+        }
+    };
+
     let user = undefined;
     $scope.isUserCollection = false;
 
@@ -24,17 +33,18 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
         user = res.data;
         $scope.username = user.username;
         userItems();
-    })
+    });
 
     function userItems () {
         $http.get('/api/users/' + user.id + "/collection/items", {
             params: {
+                name: $scope.filter.name,
+                category: $scope.filter.category,
                 lacking: false,
                 count: $scope.pagination.itemsPerPage,
                 page: $scope.pagination.currentPage-1
             }})
             .then(function (response) {
-                console.log(response.data)
                 $scope.userItems = response.data.content;
                 $scope.pagination.totalItems = response.data.totalElements;
                 $scope.pagination.numPages = response.data.totalPages;

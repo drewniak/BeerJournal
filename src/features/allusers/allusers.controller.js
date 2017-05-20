@@ -1,5 +1,23 @@
 export default function AllUsersController($rootScope, $scope, $location, $http, $uibModal, Lightbox) {
- 
+
+    $scope.pagination = {
+        currentPage: 1,
+        itemsPerPage: 10,
+        totalItems: null,
+        pageChanged: function () {
+            getUsersFromServer();
+        }
+    };
+
+    $scope.filter = {
+        firstname: "",
+        lastname: "",
+        changed: function () {
+            $scope.pagination.currentPage = 1;
+            getUsersFromServer();
+        }
+    };
+
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
@@ -9,14 +27,23 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
     $scope.showItems = false;
 
     function getUsersFromServer () {
-        $http.get('/api/users/')
+        $http.get('/api/users/', {
+            params: {
+                firstname: $scope.filter.firstname,
+                lastname: $scope.filter.lastname,
+                count: $scope.pagination.itemsPerPage,
+                page: $scope.pagination.currentPage-1
+            }})
             .then(function (response) {
-                $scope.users = response.data;
+                $scope.users = response.data.content;
+                $scope.pagination.totalItems = response.data.totalElements;
+                $scope.pagination.numPages = response.data.totalPages;
+
                 var usersId = [];
                 $scope.users.forEach(function (user) {
                     user.images = [];
                     usersId.push(user.id);
-                })
+                });
                 getUserCollections(usersId);
             }, function (error) {
                 console.log(error);
@@ -58,10 +85,13 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
                     response.data.content.forEach(function (item) {
                       $http.get('/api/items/'+item.itemId)
                             .then(function (res) {
-                                res.data.imageIds.forEach(function (imageId) {
-                                    userItem.images = ['/api/files/' + imageId];
-                                    createImagesCollection(userItem);
-                                })
+                                if(res.data.imageIds) {
+                                    res.data.imageIds.forEach(function (imageId) {
+                                        userItem.images = ['/api/files/' + imageId];
+                                        createImagesCollection(userItem);
+                                    })
+                                }
+
                             }, function (error) {
                                 console.log(error);
                             });
@@ -77,6 +107,7 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
         var imageTabObj = $scope.users.filter(function(v) {
             return v.id === userItem.id;
         })[0];
+
         if(imageTabObj.images!=null) {
             imageTabObj.images = imageTabObj.images.concat(userItem.images)
             removeByAttr($scope.users, 'id', imageTabObj.id);
