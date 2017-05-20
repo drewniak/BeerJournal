@@ -1,0 +1,37 @@
+<md-content class="md-padding">
+    <div>
+        <h3>Name: {{desiredItem.name}}</h3>
+        <h3>Owner: {{desiredItem.owner}}</h3>
+        <br>
+        <h4>Country: {{desiredItem.country}}</h4>
+        <h4>Brewery: {{desiredItem.brewery}}</h4>
+        <h4>Type: {{desiredItem.type}}</h4>
+        <h4>Style: {{desiredItem.style}}</h4>
+    </div>
+    <div ng-if="desiredItem.image">
+        <img ng-src="{{desiredItem.image}}" height="150" align="middle"/>
+    </div>
+</md-content>
+<br><br>
+<md-content class="md-padding">
+    <div>
+        <h1>Select some items</h1>
+    </div>
+    <div class="search-bar" layout="row" layout-align="end center" flex>
+        <label>Search: <input ng-model="textFilter"></label>
+    </div>
+    <div>
+        <button class="btn btn-primary" ng-click="submit()">Create an offer</button>
+    </div>
+
+    <md-list ng-cloak="">
+        <md-list-item ng-repeat="item in userItems | filter:textFilter">
+            <div>
+                <span md-highlight-text="textFilter" md-highlight-flags="gi"> {{item.name}}</span>
+                <img ng-src="{{item.image}}" height="50" align="middle"/>
+            </div>
+            <md-checkbox aria-label='Select' class="md-secondary" ng-model="item.selected"></md-checkbox>
+        </md-list-item>
+    </md-list>
+</md-content>
+
