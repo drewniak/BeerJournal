@@ -5,8 +5,9 @@ import 'angular-file-upload';
 
 import routing from './accountSettings.routes';
 import AccountSettingsController from './accountSettings.controller';
+import toastr from "angular-toastr"
 
-export default angular.module('accountSetings', [uirouter, 'ngMaterial', 'angularFileUpload'])
+export default angular.module('accountSetings', [uirouter,toastr, 'ngMaterial', 'angularFileUpload'])
     .controller('AccountSettingsController', AccountSettingsController)
     .config(routing)
     .name;
