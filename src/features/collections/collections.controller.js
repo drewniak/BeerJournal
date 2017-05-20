@@ -38,6 +38,10 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
                 $scope.userItems = response.data.content;
                 $scope.pagination.totalItems = response.data.totalElements;
                 $scope.pagination.numPages = response.data.totalPages;
+
+                $scope.userItems.forEach(function(item) {
+                    setItemImage(item);
+                });
             }, function (error) {
                 console.log(error);
             });
@@ -101,5 +105,16 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
         });
 
         return modal.result;
+    }
+
+    function setItemImage(item) {
+        $http.get('/api/items/' + item.itemId).then(function(res) {
+            var ids = res.data.imageIds;
+            if (ids.length > 0) {
+                item.image = '/api/files/' + ids[0];
+            } else {
+                item.image = undefined;
+            }
+        })
     }
 }
