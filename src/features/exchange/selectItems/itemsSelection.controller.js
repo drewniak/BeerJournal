@@ -22,12 +22,17 @@ export default function ItemsSelectionController($rootScope, $scope, $http, $loc
                     }})
                     .then(function (response) {
                         $scope.userItems = response.data.content;
-                        $scope.pagination.totalItems = response.data.totalElements;
-                        $scope.pagination.numPages = response.data.totalPages;
 
                         $scope.userItems.forEach(function(item) {
                             getItemImage(item.itemId).then(function(src) {
                                 item.image = src;
+                            });
+
+                            $http.get('/api/items/' + item.itemId).then(function(res) {
+                                item.brewery = res.data.brewery;
+                                item.style = res.data.style;
+                                item.country = res.data.country;
+                                item.type = res.data.type;
                             })
                         })
                     }, function (error) {
