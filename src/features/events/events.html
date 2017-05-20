@@ -1,5 +1,7 @@
 <md-content class="md-padding">
-    <md-card ng-if="!showItems" ng-repeat="event in events">
+    <md-card ng-if="!showItems" ng-repeat="event in events" ng-class="{ 'create': event.action=='CREATE',
+                                                                        'update': event.action=='UPDATE',
+                                                                        'delete': event.action=='DELETE'}">
         <md-card md-theme="default" md-theme-watch></md-card>
         <div ng-if="event.dataType=='ITEM'" ng-click="itemEvent(event.data)">
             <md-card-content>
