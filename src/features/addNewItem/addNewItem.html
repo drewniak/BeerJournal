@@ -118,7 +118,7 @@
                 <wz-step wz-title="Confirm">
                     <h3>Is all data correct?</h3>
                     <div>
-                        <table border="1" style="width:60%">
+                        <table style="width:60%">
                             <tr>
                                 <td>Name</td>
                                 <td>{{vm.item.name}}</td>
@@ -146,7 +146,7 @@
                         <img ng-show="vm.imageSrc" ng-src="{{vm.imageSrc}}" height="200">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: 5%">
                         <input class="btn btn-success" ng-disabled="form.$invalid" type="submit"
                                value="Add item to my collection"/>
                         <a href="/collections" class="btn btn-link">Cancel</a>

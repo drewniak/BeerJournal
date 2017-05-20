@@ -38,7 +38,6 @@
 td {
     padding: 10px 5px 3px 5px;
     font-size:150%;
-    font-family: Serif
 }
 
 td:nth-of-type(even) {
@@ -46,6 +45,14 @@ td:nth-of-type(even) {
 }
 
 tr:nth-of-type(even) {
+    background-color: white;
+}
+
+tr:nth-child(even) {
+    background-color: lavender;
+}
+
+tr:nth-child(odd) {
     background-color: white;
 }
 
