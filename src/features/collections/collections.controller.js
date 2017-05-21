@@ -22,8 +22,11 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
 
     $http.get('/api/users/' + selectedUserId).then(function(res) {
         user = res.data;
+        $scope.firstName = user.firstName;
+        $scope.lastName = user.lastName;
         $scope.username = user.username;
         userItems();
+        getUserAvatar();
     })
 
     function userItems () {
@@ -34,20 +37,15 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
                 page: $scope.pagination.currentPage-1
             }})
             .then(function (response) {
-                console.log(response.data)
                 $scope.userItems = response.data.content;
                 $scope.pagination.totalItems = response.data.totalElements;
                 $scope.pagination.numPages = response.data.totalPages;
             }, function (error) {
                 console.log(error);
             });
-        $http.get('/api/users/' + user.id)
-            .then(function (response) {
-                $scope.user_firstName = response.data.firstName;
-                $scope.user_lastName = response.data.lastName;
-            }, function (error) {
-                console.log(error);
-            });
+    }
+
+    function getUserAvatar() {
         $http.get('api/users/'+user.id+'/avatar')
             .then(function (response) {
                 $scope.avatar = 'api/users/'+user.id+'/avatar';
