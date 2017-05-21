@@ -1,5 +1,5 @@
 export default function CollectionsController($rootScope, $scope, $http, $location, $uibModal) {
-
+    
     $scope.pagination = {
         currentPage: 1,
         itemsPerPage: 10,
@@ -67,9 +67,9 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
     function getUserAvatar() {
         $http.get('api/users/'+user.id+'/avatar')
             .then(function (response) {
-                $scope.avatar = 'api/users/'+user.id+'/avatar';
+                $scope.selectedUserAvatar = 'api/users/'+user.id+'/avatar';
             }, function (error) {
-                $scope.avatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxeed1zuKopBf5p58ffZNLCz2DMwbmA_xj9fD2W-EzZ4xcsVN6oFhAAw';
+                $scope.selectedUserAvatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxeed1zuKopBf5p58ffZNLCz2DMwbmA_xj9fD2W-EzZ4xcsVN6oFhAAw';
             });
     }
 
