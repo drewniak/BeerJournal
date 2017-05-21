@@ -38,7 +38,7 @@ import OfferDetailsController from "../features/exchange/offerDetails"
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemSelectionController, OfferDetailsController, exchange, offers, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard'])
+angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard'])
     .config(routing)
     .config(themeConfig)
     .run(run);
