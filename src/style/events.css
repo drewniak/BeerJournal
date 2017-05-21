@@ -1,0 +1,11 @@
+.create {
+    background: linear-gradient(to left, white 99%, green)
+}
+
+.update {
+    background: linear-gradient(to left, white 99%, orange)
+}
+
+.delete {
+    background: linear-gradient(to left, white 99%, red)
+}
