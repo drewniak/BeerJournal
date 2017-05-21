@@ -1,0 +1,83 @@
+<md-content class="md-padding">
+    <div ng-show="vm.offeror.id == vm.currentUser.id">
+        <h2>Offer to <b>{{vm.owner.firstName}} {{vm.owner.lastName}}</b>
+            <img src="images/user.png" height="40" ng-click="vm.showUserCollection(vm.owner.id)"/>
+        </h2>
+        <div>
+            <button class="btn btn-warning" ng-click="vm.exchangeCancled(vm.offerId)">Cancel offer <img src="images/cancel.png" height="20"/></button>
+        </div>
+    </div>
+
+    <div ng-show="vm.owner.id == vm.currentUser.id">
+        <h2>Offer from user <b>{{vm.offeror.firstName}} {{vm.offeror.lastName}}</b>
+            <img src="images/user.png" height="40" ng-click="vm.showUserCollection(vm.offeror.id)"/>
+        </h2>
+        <div>
+            <button class="btn btn-success" ng-click="vm.exchangeCompleted(vm.offerId)">Exchange completed <img src="images/accept.png" height="20"/></button>
+            <button class="btn btn-danger" ng-click="vm.exchangeRejected(vm.offerId)">Reject <img src="images/reject.png" height="20"/></button>
+        </div>
+    </div>
+</md-content>
+<br>
+
+
+<md-content class="md-padding">
+    <div ng-show="vm.offeror.id == vm.currentUser.id">
+        <h3>You want his/her item...</h3>
+    </div>
+
+    <div ng-show="vm.owner.id == vm.currentUser.id">
+        <h3>He/she wants Your item...</h3>
+    </div>
+
+    <div>
+        <div style="float: left;">
+            <h3>Name: <b>{{vm.desiredItem.name}}</b></h3>
+            <br>
+            <h4>Country: <b>{{vm.desiredItem.country}}</b></h4>
+            <h4>Brewery: <b>{{vm.desiredItem.brewery}}</b></h4>
+            <h4>Type: <b>{{vm.desiredItem.type}}</b></h4>
+            <h4>Style: <b>{{vm.desiredItem.style}}</b></h4>
+        </div>
+        <div ng-if="vm.desiredItem.image" style="float: left; margin-left: 10%">
+            <img ng-src="{{vm.desiredItem.image}}" height="150"/>
+        </div>
+    </div>
+</md-content>
+<br>
+
+
+<md-content class="md-padding">
+    <div ng-show="vm.offeror.id == vm.currentUser.id">
+        <h3>...and You offer:</h3>
+    </div>
+
+    <div ng-show="vm.owner.id == vm.currentUser.id">
+        <h3>...and offers You:</h3>
+    </div>
+
+    <div ng-if="vm.offeredItems.length == 0">
+        <h4>Nothing</h4>
+    </div>
+    <md-card-content ng-repeat="item in vm.offeredItems">
+        <md-card md-theme="default" md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline" md-highlight-flags="gi">{{item.name}}</span>
+                    <span class="md-subhead" md-highlight-flags="gi">{{item.type}}</span>
+                </md-card-title-text>
+                <md-card-title-media>
+                    <img ng-show="item.image" src="{{item.image}}" height="150"/>
+                </md-card-title-media>
+            </md-card-title>
+            <md-card-content>
+                <button class="btn btn-primary" ng-click="vm.showItemDetails(item.id)">Details</button>
+            </md-card-content>
+        </md-card>
+    </md-card-content>
+</md-content>
+<br>
+
+<div>
+    <button class="btn btn-primary" ng-click="back()" style="font-size: 150%">Back</button>
+</div>

@@ -25,6 +25,9 @@
             </ul>
         </div>
 
-        <button class="btn btn-primary" ng-click="close()">Close</button>
+        <div>
+            <button ng-show="item.owner" class="btn btn-success" ng-click="makeAnOffer(item.id)"><b>I WANT IT!!!</b></button>
+            <button class="btn btn-primary" ng-click="close()">Close</button>
+        </div>
     </div>
 </div>

@@ -1,10 +1,29 @@
 <img ng-src="{{avatar}}" height="100" width="100">
 <br>
 <label>{{user_firstName}} {{user_lastName}}</label>
-<div class="search-bar" layout="row" layout-align="end center" flex>
-    <label>Search: <input ng-model="textFilter"></label>
+<br>
+<br>
+
+<div class="row" style="margin: 0 -7px;">
+    <div class="form-group col-xs-6">
+        <label for="nameFilter">Filter by name</label>
+        <input id="nameFilter"
+               class="form-control"
+               ng-model="filter.name"
+               ng-change="filter.changed()"/>
+    </div>
+
+    <div class="form-group col-xs-6">
+        <label for="typeFilter">Filter by type</label>
+        <input id="typeFilter"
+               class="form-control"
+               ng-model="filter.type"
+               ng-change="filter.changed()"/>
+    </div>
 </div>
-<md-card-content ng-repeat="item in userItems | filter:textFilter">
+ <button class="btn btn-primary" ng-click="addItem()">Add new item</button>
+
+<md-card-content ng-repeat="item in userItems">
     <md-card md-theme="default" md-theme-watch>
         <md-card-title>
             <md-card-title-text>
@@ -16,14 +35,14 @@
                       md-highlight-flags="gi">{{item.category}}</span>
             </md-card-title-text>
             <md-card-title-media>
-                <div class="md-media-lg card-media"></div>
+                <img ng-show="item.image" src="{{item.image}}" height="75">
             </md-card-title-media>
         </md-card-title>
         <md-card-content>
             <button class="btn btn-primary" ng-click="showDetails(item.itemId)">Details</button>
             <button class="btn btn-warning" ng-show="isUserCollection" ng-click="deleteItem(item.itemId)">Delete item
             </button>
-            <a class="btn btn-primary" ng-show="isUserCollection" href="/edit-item/{{item.itemId}}" role="button">Edit</a>
+            <button class="btn btn-primary" ng-click="editItem(item.itemId)">Edit</button>
         </md-card-content>
     </md-card>
 </md-card-content>

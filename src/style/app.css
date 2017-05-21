@@ -64,3 +64,22 @@ footer {
 #startJumborton {
     margin-bottom: -7px;
 }
+
+/*fix problems with hint on modal
+ see:
+ https://github.com/angular/material/issues/2942
+ http://stackoverflow.com/questions/41049080/ngmaterial-md-autocomplete-results-list-showing-behind-modal-form
+ */
+
+.md-autocomplete-suggestions-container{
+    z-index:100000 !important; /* any number of choice > 1050*/
+}
+
+.md-backdrop.md-select-backdrop {
+    z-index:1500 !important;
+}
+
+.md-select-menu-container {
+    z-index:1501 !important;
+}
+

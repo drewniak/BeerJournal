@@ -32,6 +32,11 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
         $location.path('/allUsers').search('id', user.id);
     }
 
+    $scope.makeAnOffer = function(itemId) {
+        close();
+        $location.path('/selectItems').search('id', itemId);
+    }
+
     function getItemImages(imageIds) {
         if(imageIds){
             $scope.item.images = [];

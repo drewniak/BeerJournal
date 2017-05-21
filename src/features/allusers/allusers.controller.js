@@ -1,5 +1,23 @@
 export default function AllUsersController($rootScope, $scope, $location, $http, $uibModal, Lightbox) {
 
+    $scope.pagination = {
+        currentPage: 1,
+        itemsPerPage: 10,
+        totalItems: null,
+        pageChanged: function () {
+            getUsersFromServer();
+        }
+    };
+
+    $scope.filter = {
+        firstname: "",
+        lastname: "",
+        changed: function () {
+            $scope.pagination.currentPage = 1;
+            getUsersFromServer();
+        }
+    };
+
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
@@ -9,9 +27,18 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
     $scope.showItems = false;
 
     function getUsersFromServer () {
-        $http.get('/api/users/')
+        $http.get('/api/users/', {
+            params: {
+                firstname: $scope.filter.firstname,
+                lastname: $scope.filter.lastname,
+                count: $scope.pagination.itemsPerPage,
+                page: $scope.pagination.currentPage-1
+            }})
             .then(function (response) {
                 $scope.users = response.data.content;
+                $scope.pagination.totalItems = response.data.totalElements;
+                $scope.pagination.numPages = response.data.totalPages;
+
                 var usersId = [];
                 $scope.users.forEach(function (user) {
                     user.images = [];

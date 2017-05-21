@@ -9,12 +9,25 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
         }
     };
 
+    $scope.filter = {
+        name: "",
+        category: "",
+        changed: function () {
+            $scope.pagination.currentPage = 1;
+            userItems();
+        }
+    };
+
     let user = undefined;
     $scope.isUserCollection = false;
 
     var selectedUserId = $location.search().id;
     if (!selectedUserId) {
-        selectedUserId = $rootScope.globals.currentUser.id;
+        if ($scope.selectedUser) {
+            selectedUserId = $scope.selectedUser.id;
+        } else {
+            selectedUserId = $rootScope.globals.currentUser.id;
+        }
         $scope.currentNavItem = "collections";
     }
     $scope.isUserCollection = selectedUserId === $rootScope.globals.currentUser.id;
@@ -22,32 +35,36 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
 
     $http.get('/api/users/' + selectedUserId).then(function(res) {
         user = res.data;
+        $scope.firstName = user.firstName;
+        $scope.lastName = user.lastName;
         $scope.username = user.username;
         userItems();
+        getUserAvatar();
     })
 
     function userItems () {
         $http.get('/api/users/' + user.id + "/collection/items", {
             params: {
+                name: $scope.filter.name,
+                category: $scope.filter.category,
                 lacking: false,
                 count: $scope.pagination.itemsPerPage,
                 page: $scope.pagination.currentPage-1
             }})
             .then(function (response) {
-                console.log(response.data)
                 $scope.userItems = response.data.content;
                 $scope.pagination.totalItems = response.data.totalElements;
                 $scope.pagination.numPages = response.data.totalPages;
+
+                $scope.userItems.forEach(function(item) {
+                    setItemImage(item);
+                });
             }, function (error) {
                 console.log(error);
             });
-        $http.get('/api/users/' + user.id)
-            .then(function (response) {
-                $scope.user_firstName = response.data.firstName;
-                $scope.user_lastName = response.data.lastName;
-            }, function (error) {
-                console.log(error);
-            });
+    }
+
+    function getUserAvatar() {
         $http.get('api/users/'+user.id+'/avatar')
             .then(function (response) {
                 $scope.avatar = 'api/users/'+user.id+'/avatar';
@@ -65,6 +82,55 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
             function() {
             }
         ).then(angular.noop, angular.noop);
+    }
+    $scope.addItem = function () {
+      
+        var modalInstance = $uibModal.open({
+            templateUrl: 'modals/itemModal.html',
+            controller: 'AddNewItemController',
+            controllerAs: 'vm',
+            scope: $scope,
+            size: 'lg'
+        }).result.then(function(res) {
+            },
+            function(res) {
+                if(!res) {  //refresh when its undefined
+                    async function refresh() {
+                        await sleep(500)
+                        userItems()
+                    };
+                    refresh();
+                }
+            }
+        );
+    }
+
+    $scope.editItem = function (id) {
+        $rootScope.itemId = id
+        var modalInstance = $uibModal.open({
+            templateUrl: 'modals/itemModal.html',
+            controller: 'EditItemController',
+            controllerAs: 'vm',
+            scope: $scope,
+            size: 'lg'
+        }).result.then(function(res) {
+            },
+            function(res) {
+                delete $rootScope['itemId'];
+                if(!res) {  //refresh when its undefined
+                    async function refresh() {
+                        await sleep(500)
+                        userItems()
+                    };
+                    refresh();
+                }
+            }
+        );
+    };
+
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     $scope.deleteItem = function (itemID) {
@@ -101,5 +167,16 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
         });
 
         return modal.result;
+    }
+
+    function setItemImage(item) {
+        $http.get('/api/items/' + item.itemId).then(function(res) {
+            var ids = res.data.imageIds;
+            if (ids.length > 0) {
+                item.image = '/api/files/' + ids[0];
+            } else {
+                item.image = undefined;
+            }
+        })
     }
 }
