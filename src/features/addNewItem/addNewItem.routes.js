@@ -8,7 +8,6 @@ export default function routes($stateProvider) {
     $stateProvider
         .state('addNewItem', {
             url: '/add-item',
-          
             controller: 'AddNewItemController',
             controllerAs: 'vm'
         });
