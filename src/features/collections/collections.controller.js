@@ -23,7 +23,11 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
 
     var selectedUserId = $location.search().id;
     if (!selectedUserId) {
-        selectedUserId = $rootScope.globals.currentUser.id;
+        if ($scope.selectedUser) {
+            selectedUserId = $scope.selectedUser.id;
+        } else {
+            selectedUserId = $rootScope.globals.currentUser.id;
+        }
         $scope.currentNavItem = "collections";
     }
     $scope.isUserCollection = selectedUserId === $rootScope.globals.currentUser.id;
