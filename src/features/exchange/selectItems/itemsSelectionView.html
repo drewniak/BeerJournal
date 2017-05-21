@@ -1,0 +1,51 @@
+<md-content class="md-padding">
+    <h1>
+        <img src="images/exchange-users.png" height="75" style="margin-right: 3%; margin-left: 3%"/>
+        <b>Exchange proposal</b>
+    </h1>
+</md-content>
+<br><br>
+<md-content class="md-padding">
+    <h1><b>What I want</b></h1>
+    <div>
+        <div style="float: left;">
+            <h3>Name: <b>{{desiredItem.name}}</b></h3>
+            <h3>Owner: <b>{{desiredItem.owner}}</b></h3>
+            <br>
+            <h4>Country: <b>{{desiredItem.country}}</b></h4>
+            <h4>Brewery: <b>{{desiredItem.brewery}}</b></h4>
+            <h4>Type: <b>{{desiredItem.type}}</b></h4>
+            <h4>Style: <b>{{desiredItem.style}}</b></h4>
+        </div>
+        <div ng-if="desiredItem.image" style="float: left; margin-left: 10%">
+            <img ng-src="{{desiredItem.image}}" height="150"/>
+        </div>
+    </div>
+</md-content>
+<br><br>
+<md-content class="md-padding">
+    <div>
+        <h1><b>What I offer</b></h1>
+        <h3>Select some items</h3>
+    </div>
+    <div class="search-bar" layout="row" layout-align="end center" flex>
+        <label>Search: <input ng-model="textFilter"></label>
+    </div>
+    <div>
+        <button class="btn btn-primary" ng-click="submit()" style="font-size: 150%">Submit offer
+            <img src="images/exchange-users-2.png" height="40">
+        </button>
+    </div>
+
+    <md-list ng-cloak="">
+        <md-list-item ng-repeat="item in userItems | filter:textFilter">
+            <div>
+                <span style="font-weight:bold; font-size: 150%" md-highlight-text="textFilter" md-highlight-flags="gi">{{item.name}}</span>
+                <img ng-src="{{item.image}}" height="50" align="middle"/>
+                <span style="font-style : italic">{{item.country}} {{item.brewery}} {{item.type}} {{item.style}}</span>
+            </div>
+            <md-checkbox aria-label='Select' class="md-secondary" ng-model="item.selected"></md-checkbox>
+        </md-list-item>
+    </md-list>
+</md-content>
+
