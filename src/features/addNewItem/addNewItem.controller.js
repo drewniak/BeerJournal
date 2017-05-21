@@ -47,6 +47,8 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
                 console.log(res);
                 toastr.error('Unable to add new item');
             })
+  $scope.$dismiss('cancel');
+    $scope.apply();
 
     }
 

@@ -1,0 +1,51 @@
+<md-content class="md-padding">
+    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+        <md-nav-item md-nav-href="/offers" name="users">
+            Offers from others          
+        </md-nav-item>
+         <md-nav-item md-nav-href="/exchange" name="collections">
+           My exchange proposals
+        </md-nav-item> 
+     </md-nav-bar>
+
+<md-card-content ng-repeat="offer in offers | filter: {performed : 'false'}">
+
+    <md-card md-theme="default" md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+               <div ng-repeat = "offeror in offerors">
+                <div ng-if= " offeror.id == offer.offerorId">
+                <span class="md-headline"
+                      md-highlight-text="textFilter"   
+                            
+                      md-highlight-flags="gi">{{offeror.firstName}} {{offeror.lastName}}</span>
+                      wants to exchange 
+            </div>
+            </div>
+                        <ul>
+                        <li ng-repeat=" offeredItem in offer.offeredItems"  >
+                            {{ offeredItem.name }}  
+                        </br>
+                        </li>
+                        </ul>
+                                                              
+                for
+        
+                <span class="md-headline"
+                      md-highlight-text="textFilter"
+                                            
+                      md-highlight-flags="gi">{{offer.desiredItem.name}}</span>
+          </md-card-title>
+ <md-card-content>
+            <button class="btn btn-primary" ng-click="showDetails(offer.id)">Details</button>
+            <button class="btn btn-warning" ng-click="accept(offer.id)">Accept</button>
+            <button class="btn btn-warning" ng-click="reject(offer.id)">Reject</button>
+         
+        </md-card-content>
+     
+    </md-card>
+</md-card-content>
+   </md-content>
+
+
+
