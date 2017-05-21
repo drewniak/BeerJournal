@@ -1,15 +1,19 @@
-export default function EditItemController($scope,$rootScope, $http, $timeout, $location, $uibModal, toastr, countriesProvider, WizardHandler, $stateParams) {
+export default function EditItemController($scope,$rootScope, $http, $timeout, $location, $uibModal, $uibModalInstance, toastr, countriesProvider, WizardHandler) {
     let vm = this;
     vm.operationType = "UPDATE";
     vm.save = save;
     vm.countries = [];
     var video;
+    var itemId = $rootScope.itemId
+    $scope.modal = $uibModalInstance;
+    
+    console.log($scope, vm)
 
     countriesProvider.getCountries().then(function(countries) {
         vm.countries = countries;
     });
 
-    $http.get('/api/items/' + $stateParams.id).then(function(res) {
+    $http.get('/api/items/' + itemId).then(function(res) {
         vm.item = res.data;
     })
 

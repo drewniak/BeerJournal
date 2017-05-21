@@ -83,6 +83,55 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
             }
         ).then(angular.noop, angular.noop);
     }
+    $scope.addItem = function () {
+      
+        var modalInstance = $uibModal.open({
+            templateUrl: 'modals/addNewItem.html',
+            controller: 'AddNewItemController',
+            controllerAs: 'vm',
+            scope: $scope,
+            size: 'lg'
+        }).result.then(function(res) {
+            },
+            function(res) {
+                if(!res) {  //refresh when its undefined
+                    async function refresh() {
+                        await sleep(500)
+                        userItems()
+                    };
+                    refresh();
+                }
+            }
+        );
+    }
+
+    $scope.editItem = function (id) {
+        $rootScope.itemId = id
+        var modalInstance = $uibModal.open({
+            templateUrl: 'modals/addNewItem.html',
+            controller: 'EditItemController',
+            controllerAs: 'vm',
+            scope: $scope,
+            size: 'lg'
+        }).result.then(function(res) {
+            },
+            function(res) {
+                delete $rootScope['itemId'];
+                if(!res) {  //refresh when its undefined
+                    async function refresh() {
+                        await sleep(500)
+                        userItems()
+                    };
+                    refresh();
+                }
+            }
+        );
+    };
+
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     $scope.deleteItem = function (itemID) {
         dialogConfirm("Are you sure?", "Delete item").then(function(res) {

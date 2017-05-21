@@ -1,18 +1,4 @@
-
-<md-content class="md-padding">
-    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-        <md-nav-item md-nav-href="/collections" name="collections">
-            My collections
-        </md-nav-item>
-        <md-nav-item md-nav-href="/allUsers" name="users">
-            All users
-        </md-nav-item>
-        <md-nav-item md-nav-href="/add-item" name="add">
-            Add item to my collection
-        </md-nav-item>
-    </md-nav-bar>
-    <br/>
-    <br/>
+ <div>
     <div class="jumbotron">
         <h2 ng-if="vm.operationType=='CREATE'">Add new item</h2>
         <h2 ng-if="vm.operationType=='UPDATE'">Edit Item</h2>
@@ -22,13 +8,13 @@
                     <h3>Basic info</h3>
                     <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
                         <label for="name">Name</label>
-                        <input type="text" ng-model="vm.item.name" class="form-control" required/>
+                        <input type="text" name="name" id="name" class="form-control" ng-model="vm.item.name" required/>
                         <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Name is required</span>
                     </div>
 
                     <div class="form-group" ng-class="{ 'has-error': form.brewery.$dirty && form.brewery.$error.required }">
                         <label for="brewery">Brewery</label>
-                        <md-autocomplete ng-model="vm.item.brewery" md-selected-item="brewery" md-search-text="vm.item.brewery" md-items="item in breweryAutocomplete(vm.item.brewery)" md-dropdown-position="bottom" required>
+                        <md-autocomplete name="brewery" id="brewery" md-selected-item="brewery" md-search-text="vm.item.brewery" md-items="item in breweryAutocomplete(vm.item.brewery)" md-dropdown-position="bottom" required>
                             <span md-highlight-text="vm.item.brewery">{{item}}</span>
                         </md-autocomplete>
                         <span ng-show="form.brewery.$dirty && form.brewery.$error.required" class="help-block">Brewery is required</span>
@@ -36,7 +22,7 @@
 
                     <div class="form-group" ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required }">
                         <label for="type">Type</label>
-                        <md-autocomplete ng-model="vm.item.type" md-selected-item="type" md-search-text="vm.item.type" md-items="item in typeAutocomplete(vm.item.type)" md-dropdown-position="bottom" required>
+                        <md-autocomplete name="type" id="type" md-selected-item="type" md-search-text="vm.item.type" md-items="item in typeAutocomplete(vm.item.type)" md-dropdown-position="bottom" required>
                             <span md-highlight-text="vm.item.type">{{item}}</span>
                         </md-autocomplete>
                         <span ng-show="form.type.$dirty && form.type.$error.required" class="help-block">Type is required</span>
@@ -44,7 +30,7 @@
 
                     <div class="form-group" ng-class="{ 'has-error': form.style.$dirty && form.style.$error.required }">
                         <label for="style">Style</label>
-                        <md-autocomplete ng-model="vm.item.style" md-selected-item="style" md-search-text="vm.item.style" md-items="item in styleAutocomplete(vm.item.style)" md-dropdown-position="bottom" required>
+                        <md-autocomplete name="style" id="style" md-selected-item="style" md-search-text="vm.item.style" md-items="item in styleAutocomplete(vm.item.style)" md-dropdown-position="bottom" required>
                             <span md-highlight-text="vm.item.style">{{item}}</span>
                         </md-autocomplete>
                         <span ng-show="form.style.$dirty && form.style.$error.required" class="help-block">Style is required</span>
@@ -52,7 +38,7 @@
 
                     <div class="form-group" ng-class="{ 'has-error': form.country.$dirty && form.country.$error.required }">
                         <label>Country</label>
-                        <md-select placeholder="Country" ng-model="vm.item.country" required>
+                        <md-select placeholder="Country" name="country" id="country" ng-model="vm.item.country" required>
                             <md-option ng-value="c" ng-repeat="c in vm.countries">{{c}}</md-option>
                         </md-select>
                     </div>
@@ -150,11 +136,11 @@
 
                     <div class="form-group" style="margin-top: 5%">
                         <input class="btn btn-success" ng-disabled="form.$invalid" type="submit"
-                               value="Add item to my collection"/>
-                        <a href="/collections" class="btn btn-link">Cancel</a>
+                               value="Add item to my collection" ng-click="modal.dismiss()">
+                        <a class="btn btn-info" ng-click="modal.close()">Cancel</a>
                     </div>
                 </wz-step>
             </wizard>
         </form>
     </div>
-</md-content>
+ </div>

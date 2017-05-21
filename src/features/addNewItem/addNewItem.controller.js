@@ -1,9 +1,10 @@
-export default function AddNewItemController($scope,$rootScope, $http, $location, $uibModal, toastr, countriesProvider, WizardHandler) {
+export default function AddNewItemController($scope,$rootScope, $http, $location, $uibModal, $uibModalInstance, toastr, countriesProvider, WizardHandler) {
     let vm = this;
     vm.operationType = "CREATE";
     vm.save = save;
     vm.countries = [];
     var video;
+    $scope.modal = $uibModalInstance;
 
     countriesProvider.getCountries().then(function(countries) {
         vm.countries = countries;
@@ -46,6 +47,8 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
                 toastr.error('Unable to add new item');
             })
 
+  $scope.$dismiss('cancel');
+    $scope.$apply();
     }
 
     $scope.turnOnCamera = function() {
