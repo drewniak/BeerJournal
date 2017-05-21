@@ -33,7 +33,7 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
         user = res.data;
         $scope.username = user.username;
         userItems();
-    });
+    })
 
     function userItems () {
         $http.get('/api/users/' + user.id + "/collection/items", {

@@ -43,7 +43,7 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
                 $scope.users.forEach(function (user) {
                     user.images = [];
                     usersId.push(user.id);
-                });
+                })
                 getUserCollections(usersId);
             }, function (error) {
                 console.log(error);
@@ -85,13 +85,10 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
                     response.data.content.forEach(function (item) {
                       $http.get('/api/items/'+item.itemId)
                             .then(function (res) {
-                                if(res.data.imageIds) {
-                                    res.data.imageIds.forEach(function (imageId) {
-                                        userItem.images = ['/api/files/' + imageId];
-                                        createImagesCollection(userItem);
-                                    })
-                                }
-
+                                res.data.imageIds.forEach(function (imageId) {
+                                    userItem.images = ['/api/files/' + imageId];
+                                    createImagesCollection(userItem);
+                                })
                             }, function (error) {
                                 console.log(error);
                             });
@@ -107,7 +104,6 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
         var imageTabObj = $scope.users.filter(function(v) {
             return v.id === userItem.id;
         })[0];
-
         if(imageTabObj.images!=null) {
             imageTabObj.images = imageTabObj.images.concat(userItem.images)
             removeByAttr($scope.users, 'id', imageTabObj.id);
