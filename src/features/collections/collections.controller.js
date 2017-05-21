@@ -86,7 +86,7 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
     $scope.addItem = function () {
       
         var modalInstance = $uibModal.open({
-            templateUrl: 'modals/addNewItem.html',
+            templateUrl: 'modals/itemModal.html',
             controller: 'AddNewItemController',
             controllerAs: 'vm',
             scope: $scope,
@@ -108,7 +108,7 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
     $scope.editItem = function (id) {
         $rootScope.itemId = id
         var modalInstance = $uibModal.open({
-            templateUrl: 'modals/addNewItem.html',
+            templateUrl: 'modals/itemModal.html',
             controller: 'EditItemController',
             controllerAs: 'vm',
             scope: $scope,
