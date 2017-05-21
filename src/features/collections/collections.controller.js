@@ -9,12 +9,25 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
         }
     };
 
+    $scope.filter = {
+        name: "",
+        category: "",
+        changed: function () {
+            $scope.pagination.currentPage = 1;
+            userItems();
+        }
+    };
+
     let user = undefined;
     $scope.isUserCollection = false;
 
     var selectedUserId = $location.search().id;
     if (!selectedUserId) {
-        selectedUserId = $rootScope.globals.currentUser.id;
+        if ($scope.selectedUser) {
+            selectedUserId = $scope.selectedUser.id;
+        } else {
+            selectedUserId = $rootScope.globals.currentUser.id;
+        }
         $scope.currentNavItem = "collections";
     }
     $scope.isUserCollection = selectedUserId === $rootScope.globals.currentUser.id;
@@ -32,6 +45,8 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
     function userItems () {
         $http.get('/api/users/' + user.id + "/collection/items", {
             params: {
+                name: $scope.filter.name,
+                category: $scope.filter.category,
                 lacking: false,
                 count: $scope.pagination.itemsPerPage,
                 page: $scope.pagination.currentPage-1

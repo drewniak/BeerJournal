@@ -11,6 +11,28 @@
         </md-nav-item>
     </md-nav-bar>
     <br/>
+
+    <div ng-if="!showItems"
+         class="row"
+         style="margin: 0 -7px;">
+        <div class="form-group col-xs-6">
+            <label for="firstnameFilter">Filter by first name</label>
+            <input id="firstnameFilter"
+                   class="form-control"
+                   ng-model="filter.firstname"
+                   ng-change="filter.changed()"/>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="lastnameFilter">Filter by last name</label>
+            <input id="lastnameFilter"
+                   class="form-control"
+                   ng-model="filter.lastname"
+                   ng-change="filter.changed()"/>
+        </div>
+    </div>
+
+
     <br/>
     <div ng-if="!showItems" ng-repeat="user in users">
         <md-card md-theme="default" md-theme-watch ng-click="showUserItems(user)">
@@ -19,7 +41,7 @@
                     <span class="md-headline">{{user.firstName}}</span>
                     <span class="md-subhead">{{user.lastName}}</span>
                 </md-card-title-text>
-               <md-card-title-media>
+                <md-card-title-media>
                     <div class="images">
                         <ul class="gallery gallery1">
                             <li ng-repeat="image in user.images">
@@ -33,10 +55,22 @@
             </md-card-title>
         </md-card>
     </div>
+
+    <ul uib-pagination
+        ng-if="!showItems"
+        total-items="pagination.totalItems"
+        num-pages="pagination.numPages"
+        ng-model="pagination.currentPage"
+        max-size="3"
+        force-ellipses="true"
+        ng-change="pagination.pageChanged()"
+        class="pagination-sm bj-pagination"></ul>
+
     <div ng-if="showItems" ng-controller="CollectionsController">
         <h3>{{selectedUser.username}} collection</h3>
         <button class="btn btn-default" ng-click="back()">Back</button>
         <div ng-include="'/commonViews/collection.html'"></div>
     </div>
+
 </md-content>
 
