@@ -1,9 +1,7 @@
-/**
- * Created by wojciech_dymek on 22.04.17.
- */
 export default function AddNewItemController($scope,$rootScope, $http, $location, $uibModal, toastr, countriesProvider, WizardHandler) {
     let vm = this;
-    vm.addNewItem = addNewItem;
+    vm.operationType = "CREATE";
+    vm.save = save;
     vm.countries = [];
     var video;
 
@@ -11,7 +9,7 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
         vm.countries = countries;
     });
 
-    function addNewItem() {
+    function save() {
         vm.item.ownerId = $rootScope.globals.currentUser.id;
         vm.item.attributes = [];
 
