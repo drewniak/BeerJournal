@@ -1,5 +1,5 @@
 export default function AllUsersController($rootScope, $scope, $location, $http, $uibModal, Lightbox) {
- 
+
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
@@ -11,7 +11,7 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
     function getUsersFromServer () {
         $http.get('/api/users/')
             .then(function (response) {
-                $scope.users = response.data;
+                $scope.users = response.data.content;
                 var usersId = [];
                 $scope.users.forEach(function (user) {
                     user.images = [];
