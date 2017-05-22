@@ -25,13 +25,24 @@
                    required/>
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Last name is required</span>
         </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/home" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</div>
 
+
+<div class="jumbotron">
+    <h2> MODIFY AVATAR</h2>
+    <form name="form" ng-submit="updateAvatar()" role="form">
         <div class="fileinput fileinput-new" data-provides="fileinput">
             <label class="btn btn-default btn-file">
                 <span>Choose avatar </span><input type="file" id="fname" name='file'
                                                   onchange="angular.element(this).scope().previewFile()"
                                                   accept="image/x-png,image/gif,image/jpeg" style="display: none;">
             </label>
+            <button type="button" class="btn btn-danger"  ng-click="deleteAvatar()" confirm="Are you sure?">Delete current avatar</button>
         </div>
         <div class="md-padding">
             <img id="image" ng-src="" height="50">
@@ -108,8 +119,6 @@
         </div>
     </form>
 </div>
-
-
 
 <div class="jumbotron">
     <h2> DELETE USER</h2>
