@@ -2,18 +2,19 @@ export default function AccountSettingsController(authService,$sessionStorage, $
     let accountSettings = this;
     $scope.userData = {};
     $scope.errorMessage;
+    $scope.isFbUser = false;
 
     $http.get('/api/users/' + $rootScope.globals.currentUser.id).then(function (response) {
-        console.log($rootScope.globals.currentUser.id);
-        console.log(response.data);
         $scope.userData.firstName = response.data.firstName;
         $scope.userData.lastName = response.data.lastName;
         $scope.userData.email = "";
         $scope.userData.password = "";
         if($sessionStorage.getObject('user').pass) {
+            $scope.isFbUser = true;
             $scope.userData.password =  $base64.decode($sessionStorage.getObject('user').pass);
             $scope.userData.email = $sessionStorage.getObject('user').username;
         }else{
+            $scope.isFbUser = false;
             $scope.userData.email = response.data.password;
             $scope.userData.password = response.data.email;
         }

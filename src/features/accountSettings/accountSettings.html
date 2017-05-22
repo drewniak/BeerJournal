@@ -56,7 +56,7 @@
 </div>
 
 
-<div class="jumbotron">
+<div class="jumbotron" ng-if="!isFbUser">
     <h2>CHANGE USER EMAIL</h2>
     <p ng-bind="errorMessage">{{errorMessage}}</p>
     <form name="form" ng-submit="updateUserEmail()" role="form">
@@ -92,7 +92,7 @@
 </div>
 
 
-<div class="jumbotron">
+<div class="jumbotron"  ng-if="!isFbUser">
     <h2>CHANGE USER PASSWORD </h2>
     <p ng-bind="errorMessage">{{errorMessage}}</p>
     <form name="form" ng-submit="updateUserPass()" role="form">
@@ -120,7 +120,7 @@
     </form>
 </div>
 
-<div class="jumbotron">
+<div class="jumbotron"  ng-if="!isFbUser">
     <h2> DELETE USER</h2>
     <button type="button" class="btn btn-danger" ng-click="deleteUser()" confirm="Are you sure?">DELETE</button>
 </div>
