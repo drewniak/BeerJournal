@@ -1,13 +1,4 @@
 /* styles in src/style directory are applied to the whole page */
-html, body {
-    background: #99CCFF;
-    color: #0099FF;
-    height: 100%;
-}
-
-a {
-    color: #0066CC;
-}
 
 main {
     padding: 1em;
@@ -25,7 +16,6 @@ footer {
 .navBardemoBasicUsage md-content .ext-content {
     padding: 50px;
     margin: 20px;
-    background-color: #99CCFF;
 }
 
 .toast {

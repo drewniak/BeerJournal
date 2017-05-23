@@ -12,6 +12,8 @@ export default function NavbarController($scope, $rootScope, $http, authService)
         return authService.getCurrentUserName();
     }
 
+    $scope.themeColor = "#febf01";
+    $rootScope.themeColor = $scope.themeColor;
 
     $scope.loginFb = function () {
         authService.loginFb()
