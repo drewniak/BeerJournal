@@ -3,7 +3,9 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
     var ownerID = $scope.ownerId;
     let user = $rootScope.globals.currentUser;
     $scope.item = {};
-    $scope.firstRate = 0;
+    $scope.rate = 0;  //todo send this rate to server
+    $scope.readOnly = true;
+    $scope.avgRate = 3; //todo receive avg rate from server
 
     $http.get('/api/items/' + itemID).then(function(res) {
         $scope.item = res.data;
