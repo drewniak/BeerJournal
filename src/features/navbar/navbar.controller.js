@@ -1,4 +1,4 @@
-export default function NavbarController($scope, $rootScope, $http, authService) {
+export default function NavbarController($scope, $rootScope, $http, authService, $cookieStore, $timeout) {
     let vm = this;
     vm.logout = function () {
         authService.logout();
@@ -11,9 +11,6 @@ export default function NavbarController($scope, $rootScope, $http, authService)
     vm.getCurrentUsername = function() {
         return authService.getCurrentUserName();
     }
-
-    $scope.themeColor = "#febf01";
-    $rootScope.themeColor = $scope.themeColor;
 
     $scope.loginFb = function () {
         authService.loginFb()
@@ -36,7 +33,23 @@ export default function NavbarController($scope, $rootScope, $http, authService)
         }
     }
 
+    function initThemeCustomize() {
+        let color = $cookieStore.get("themeColor");
+        if (!color) {
+            color = "#febf01";
+        }
+        $scope.themeColor = color;
+        $rootScope.themeColor = $scope.themeColor;
+
+        let timeoutPromise;
+        $scope.$watch("themeColor", (themeColor) => {
+            $timeout.cancel(timeoutPromise);
+            timeoutPromise = $timeout(() => {
+                $cookieStore.put("themeColor", $scope.themeColor)
+            }, 250);
+        });
+    }
+
     getUserAvatar();
+    initThemeCustomize();
 }
-
-
