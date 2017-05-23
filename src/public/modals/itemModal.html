@@ -1,20 +1,8 @@
-<md-content class="md-padding">
-    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-        <md-nav-item md-nav-href="/collections" name="collections">
-            My collections
-        </md-nav-item>
-        <md-nav-item md-nav-href="/allUsers" name="users">
-            All users
-        </md-nav-item>
-        <md-nav-item md-nav-href="/add-item" name="add">
-            Add item to my collection
-        </md-nav-item>
-    </md-nav-bar>
-    <br/>
-    <br/>
+ <div>
     <div class="jumbotron">
-        <h2>Add new item</h2>
-        <form name="form" ng-submit="vm.addNewItem()" role="form">
+        <h2 ng-if="vm.operationType=='CREATE'">Add new item</h2>
+        <h2 ng-if="vm.operationType=='UPDATE'">Edit Item</h2>
+        <form name="form" ng-submit="vm.save()" role="form">
             <wizard id='wizard' on-finish="finishedWizard()" indicators-position="top">
                 <wz-step wz-title="Basic informations">
                     <h3>Basic info</h3>
@@ -147,12 +135,14 @@
                     </div>
 
                     <div class="form-group" style="margin-top: 5%">
-                        <input class="btn btn-success" ng-disabled="form.$invalid" type="submit"
-                               value="Add item to my collection"/>
-                        <a href="/collections" class="btn btn-link">Cancel</a>
+                        <input ng-if="vm.operationType=='CREATE'" class="btn btn-success" ng-disabled="form.$invalid" type="submit"
+                               value="Add item to my collection" ng-click="modal.dismiss()">
+                        <input ng-if="vm.operationType=='UPDATE'" class="btn btn-success" ng-disabled="form.$invalid" type="submit"
+                               value="Apply changes" ng-click="modal.dismiss()">
+                        <a class="btn btn-info" ng-click="modal.close()">Cancel</a>
                     </div>
                 </wz-step>
             </wizard>
         </form>
     </div>
-</md-content>
+ </div>

@@ -14,6 +14,7 @@ import "../style/galeryListStyle.css";
 import "../style/itemDetails.css"
 import "../style/common.css";
 import "../style/navbar.css";
+import "../style/events.css"
 import "../style/default.theme.css";
 import "angular-bootstrap-colorpicker/css/colorpicker.css"
 
@@ -34,11 +35,15 @@ import accountSettings from "../features/accountSettings"
 import EventsController from  "../features/events"
 import EditItemController from "../features/editItem"
 import countriesProvider from "../features/countries"
+import offers from  "../features/offers"
+import exchange from  "../features/exchange"
 import StartController from "../features/startPage";
+import ItemsSelectionController from "../features/exchange/selectItems"
+import OfferDetailsController from "../features/exchange/offerDetails"
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, theme, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider,StartController, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', "colorpicker.module"])
+angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, theme, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', "colorpicker.module"])
     .config(routing)
     .config(themeConfig)
     .run(run);
