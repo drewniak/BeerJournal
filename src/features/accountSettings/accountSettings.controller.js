@@ -104,9 +104,21 @@ export default function AccountSettingsController(authService,$sessionStorage, $
 
     $scope.deleteUser = function () {
         if (confirm("Are you sure?") == true) {
-            $location.path("/home")
-            $http.delete('/api/users/' + $rootScope.globals.currentUser.id);
-            authService.logout();
+            $http({
+                url: 'api/account',
+                method: 'DELETE',
+                data: {
+                    "email" : $scope.userData.email,
+                    "password" : $scope.userData.password
+                },
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            }).then(function(res) {
+                authService.logout();
+            }, function(error) {
+                toastr.error('Delete user failed','Error');
+            });
         }
     }
 
