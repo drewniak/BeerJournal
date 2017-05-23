@@ -3,6 +3,7 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
     var ownerID = $scope.ownerId;
     let user = $rootScope.globals.currentUser;
     $scope.item = {};
+    $scope.firstRate = 0;
 
     $http.get('/api/items/' + itemID).then(function(res) {
         $scope.item = res.data;
