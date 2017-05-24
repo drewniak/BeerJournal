@@ -19,7 +19,7 @@
             <ul class="gallery gallery1">
                 <li ng-repeat="image in item.images">
                     <a ng-click="openLightboxModal($index,item.images)">
-                        <img ng-src="{{image}}" height="100" width="100">
+                        <img ng-src="{{image}}" err-src="images/fallbackIcons/item.svg" height="100" width="100">
                     </a>
                 </li>
             </ul>

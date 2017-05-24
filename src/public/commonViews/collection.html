@@ -35,7 +35,7 @@
                       md-highlight-flags="gi">{{item.category}}</span>
             </md-card-title-text>
             <md-card-title-media>
-                <img ng-show="item.image" src="{{item.image}}" height="75">
+                <img ng-show="item.image" ng-src="{{item.image}}" err-src="images/fallbackIcons/item.svg" height="75">
             </md-card-title-media>
         </md-card-title>
         <md-card-content>
