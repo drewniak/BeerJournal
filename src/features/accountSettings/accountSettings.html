@@ -42,7 +42,7 @@
                                                   onchange="angular.element(this).scope().previewFile()"
                                                   accept="image/x-png,image/gif,image/jpeg" style="display: none;">
             </label>
-            <button type="button" class="btn btn-danger"  ng-click="deleteAvatar()" confirm="Are you sure?">Delete current avatar</button>
+            <button type="button" class="btn btn-danger"  ng-click="deleteAvatar()" ng-if="userHaveAvatar" confirm="Are you sure?">Delete current avatar</button>
         </div>
         <div class="md-padding">
             <img id="image" ng-src="" height="50">

@@ -3,6 +3,7 @@ export default function AccountSettingsController(authService,$sessionStorage, $
     $scope.userData = {};
     $scope.errorMessage;
     $scope.isFbUser = false;
+    $scope.userHaveAvatar = false;
 
     $http.get('/api/users/' + $rootScope.globals.currentUser.id).then(function (response) {
         $scope.userData.firstName = response.data.firstName;
@@ -147,5 +148,16 @@ export default function AccountSettingsController(authService,$sessionStorage, $
         var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
         return !re.test(str);
     }
+
+    function userHaveAvatar() {
+        $http.get('api/users/' +  $rootScope.globals.currentUser.id + '/avatar')
+            .then(function (response) {
+               $scope.userHaveAvatar = true;
+            }, function (error) {
+               $scope.userHaveAvatar = false;
+            });
+    }
+
+    userHaveAvatar();
 
 }
