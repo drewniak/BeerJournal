@@ -19,8 +19,6 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
             $scope.isMyItem = false;
             $http.get('/api/users/' + res.data.ownerId).then(function(owner) {
                 $scope.item.owner = owner.data;
-                console.log(owner.data);
-                console.log( $rootScope.globals.currentUser.id);
             })
         }else{
             $scope.isMyItem = true;

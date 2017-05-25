@@ -27,7 +27,10 @@
 
         <div>
             <label ng-if="!isMyItem">Rate it</label>
-            <jk-rating-stars rating="rate" ng-if="!isMyItem"></jk-rating-stars>
+            <jk-rating-stars  rating="rate" ng-if="!isMyItem"></jk-rating-stars>
+
+            <angular-rating-icons ng-model="rate" icon-empty="fa-beer fa-2x" icon-full="fa-beer fa-2x" icon-hover="fa-beer fa-2x" color-base="black" color-selected="orange" color-hover="orange"></angular-rating-icons>
+
             <button ng-show="item.owner" class="btn btn-success" ng-click="makeAnOffer(item.id)"><b>I WANT IT!!!</b></button>
             <button class="btn btn-primary" ng-click="close()">Close</button>
         </div>

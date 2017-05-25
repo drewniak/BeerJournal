@@ -19,6 +19,7 @@
     "angular-jk-rating-stars": "^1.0.7",
     "angular-mocks": "^1.6.4",
     "angular-moment": "^1.0.1",
+    "angular-rating-icons": "^1.0.3",
     "angular-toastr": "^2.1.1",
     "angular-ui-bootstrap": "^2.5.0",
     "moment": "^2.18.1",
