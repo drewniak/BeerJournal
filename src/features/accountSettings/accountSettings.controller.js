@@ -36,6 +36,7 @@ export default function AccountSettingsController(authService,$sessionStorage, $
     };
 
     $scope.updateAvatar = function () {
+        console.log($scope.imageFile);
         if ($scope.imageFile != null) {
             $scope.form = [];
             $http({
