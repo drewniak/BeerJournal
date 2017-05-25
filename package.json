@@ -24,6 +24,7 @@
     "ng-facebook": "^0.1.6"
   },
   "devDependencies": {
+    "angular-advanced-searchbox": "^3.0.0",
     "angular-base64": "^2.0.5",
     "angular-file-upload": "^2.5.0",
     "angular-material": "^1.1.3",

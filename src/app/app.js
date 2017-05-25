@@ -7,6 +7,7 @@ import "angular-ui-bootstrap"
 import "angular-sessionstorage"
 import "angular-route"
 import "angular-wizard"
+import "angular-advanced-searchbox"
 
 import "../style/app.css";
 import "../style/galeryListStyle.css";
@@ -15,6 +16,7 @@ import "../style/common.css";
 import "../style/navbar.css";
 import "../style/beer.theme.css";
 import "../style/events.css"
+import "../style/advancedSearch.css"
 
 import routing from "./app.config.js";
 import themeConfig from "./beer.theme"
@@ -36,10 +38,11 @@ import exchange from  "../features/exchange"
 import StartController from "../features/startPage";
 import ItemsSelectionController from "../features/exchange/selectItems"
 import OfferDetailsController from "../features/exchange/offerDetails"
+import topRatedListController from "../features/topRatedItems"
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard'])
+angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, topRatedListController, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', 'angular-advanced-searchbox'])
     .config(routing)
     .config(themeConfig)
     .run(run);
