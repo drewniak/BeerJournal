@@ -71,21 +71,22 @@ export default function EventsController($rootScope, $sessionStorage,$scope, $ht
                 });
         } else if (event.dataType == 'USER') {
             var DEFAULT = 'https://maxcdn.icons8.com/Color/PNG/48/Users/checked_user_male-48.png';
-            if($sessionStorage.getObject('user').fbId){
-                $scope.image = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';
-            }else {
-                $http.get('/api/users/' + event.data.id).then(
-                    function (res) {
-                        if (res.data.avatarFileId) {
-                            event.image = '/api/users/' + event.id + '/avatar';
-                        } else {
+            $http.get('/api/users/' + event.data.id).then(
+                function (res) {
+                    if (res.data.avatarFileId) {
+                        event.image = '/api/users/' + event.id + '/avatar';
+                    } else {
+                        if($sessionStorage.getObject('user').fbId){
+                            $scope.image = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';
+                        }else {
                             event.image = DEFAULT;
                         }
-                    },
-                    function () {
-                        event.image = DEFAULT;
-                    })
-            }
+                    }
+                },
+                function () {
+                    event.image = DEFAULT;
+                })
+
         }
     }
 

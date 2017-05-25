@@ -65,16 +65,16 @@ export default function CollectionsController($rootScope, $sessionStorage, $scop
     }
 
     function getUserAvatar() {
-        if($sessionStorage.getObject('user').fbId){
-            $scope.selectedUserAvatar = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';
-        }else {
-            $http.get('api/users/' + user.id + '/avatar')
+        $scope.selectedUserAvatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxeed1zuKopBf5p58ffZNLCz2DMwbmA_xj9fD2W-EzZ4xcsVN6oFhAAw';
+        $http.get('api/users/' + user.id + '/avatar')
                 .then(function (response) {
                     $scope.selectedUserAvatar = 'api/users/' + user.id + '/avatar';
                 }, function (error) {
-                    $scope.selectedUserAvatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxeed1zuKopBf5p58ffZNLCz2DMwbmA_xj9fD2W-EzZ4xcsVN6oFhAAw';
+                    if($sessionStorage.getObject('user').fbId){
+                        $scope.selectedUserAvatar = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';
+                    }
                 });
-        }
+
     }
 
     $scope.showDetails = function (itemId) {
