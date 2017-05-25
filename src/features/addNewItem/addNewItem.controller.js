@@ -5,7 +5,7 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
     vm.countries = [];
     var video;
     $scope.modal = $uibModalInstance;
-    $scope.types = ['bottle','can','cap','label'];
+    vm.types = ['bottle','can','cap','label'];
 
     countriesProvider.getCountries().then(function(countries) {
         vm.countries = countries;
