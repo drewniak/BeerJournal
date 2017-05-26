@@ -3,11 +3,11 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
     vm.operationType = "UPDATE";
     vm.save = save;
     vm.countries = [];
+    vm.types = ['bottle','can','cap','label'];
+    console.log($rootScope.itemId);
     var video;
-    var itemId = $rootScope.itemId
+    var itemId = $rootScope.itemId;
     $scope.modal = $uibModalInstance;
-    
-    console.log($scope, vm)
 
     countriesProvider.getCountries().then(function(countries) {
         vm.countries = countries;
@@ -15,6 +15,12 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
 
     $http.get('/api/items/' + itemId).then(function(res) {
         vm.item = res.data;
+
+        if(vm.item.imageIds.length > 0) {
+            $scope.imageSource = 'backend';
+            $scope.imageFileAdded = true;
+            vm.imageSrc = "/api/files/" + vm.item.imageIds[0];
+        }
     })
 
     function save() {
@@ -26,7 +32,7 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
 
             var itemId = res.data.id;
 
-            if (vm.imageFile != null) {
+            if (vm.imageFile) {
                 $scope.form = [];
                 $http({
                     method  : 'POST',
