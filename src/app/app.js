@@ -17,6 +17,7 @@ import "../style/navbar.css";
 import "../style/beer.theme.css";
 import "../style/events.css"
 import "../style/advancedSearch.css"
+import "../style/rate.css"
 
 import routing from "./app.config.js";
 import themeConfig from "./beer.theme"
