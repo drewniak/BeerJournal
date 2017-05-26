@@ -34,7 +34,7 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
                 vm.items = response.data.content;
 
                 vm.items.forEach(function(item) {
-                    item.rate = "5.0 " + vm.period;
+                    item.rate = Math.floor(Math.random() * 6);//TODO
                     setItemImage(item);
                 });
             }, function (error) {

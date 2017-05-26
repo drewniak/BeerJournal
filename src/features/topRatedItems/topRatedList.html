@@ -30,7 +30,10 @@
         <md-card md-theme="default" md-theme-watch ng-repeat="item in vm.items">
             <md-card-title>
                 <md-card-title-text>
-                    <p>{{item.rate}}</p>
+                    <div>
+                        <h5>AVG: {{item.rate}}</h5>
+                        <jk-rating-stars rating="item.rate" read-only=true ></jk-rating-stars>
+                    </div>
                     <span class="md-headline">{{item.name}}</span>
                     <span class="md-subhead">{{item.category}}</span>
                 </md-card-title-text>
