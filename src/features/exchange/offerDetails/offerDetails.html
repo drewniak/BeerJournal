@@ -3,7 +3,7 @@
         <h2>Offer to <b>{{vm.owner.firstName}} {{vm.owner.lastName}}</b>
             <img src="images/user.png" height="40" ng-click="vm.showUserCollection(vm.owner.id)"/>
         </h2>
-        <div>
+        <div ng-show="vm.state=='inProgress'">
             <button class="btn btn-warning" ng-click="vm.exchangeCancled(vm.offerId)">Cancel offer <img src="images/cancel.png" height="20"/></button>
         </div>
     </div>
@@ -12,8 +12,9 @@
         <h2>Offer from user <b>{{vm.offeror.firstName}} {{vm.offeror.lastName}}</b>
             <img src="images/user.png" height="40" ng-click="vm.showUserCollection(vm.offeror.id)"/>
         </h2>
-        <div>
+        <div ng-show="vm.state=='inProgress'">
             <button class="btn btn-success" ng-click="vm.exchangeCompleted(vm.offerId)">Exchange completed <img src="images/accept.png" height="20"/></button>
+            <button class="btn btn-info" ng-click="vm.negotiate(vm.offerId)">Negotiate <img src="images/negotiate.png" height="20"/></button>
             <button class="btn btn-danger" ng-click="vm.exchangeRejected(vm.offerId)">Reject <img src="images/reject.png" height="20"/></button>
         </div>
     </div>
@@ -47,7 +48,7 @@
 <br>
 
 
-<md-content class="md-padding">
+<md-content class="md-padding" ng-show="vm.state=='inProgress'">
     <div ng-show="vm.offeror.id == vm.currentUser.id">
         <h3>...and You offer:</h3>
     </div>
@@ -75,6 +76,18 @@
             </md-card-content>
         </md-card>
     </md-card-content>
+</md-content>
+
+<md-content class="md-padding" ng-show="vm.state=='negotiate'">
+    <h3>...but I want:</h3>
+
+    <div class="search-bar" layout="row" layout-align="end center" flex>
+        <label>Search: <input ng-model="textFilter"></label>
+    </div>
+
+    <button class="btn btn-success" ng-click="vm.resendOffer()">Re-send offer</button>
+
+    <div ng-include="'/commonViews/itemSelection.html'"/>
 </md-content>
 <br>
 

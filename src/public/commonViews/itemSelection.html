@@ -1,0 +1,10 @@
+<md-list ng-cloak="">
+    <md-list-item ng-repeat="item in userItems | filter:textFilter">
+        <div>
+            <span style="font-weight:bold; font-size: 150%" md-highlight-text="textFilter" md-highlight-flags="gi">{{item.name}}</span>
+            <img ng-src="{{item.image}}" height="50" align="middle"/>
+            <span style="font-style : italic">{{item.country}} {{item.brewery}} {{item.type}} {{item.style}}</span>
+        </div>
+        <md-checkbox aria-label='Select' class="md-secondary" ng-model="item.selected"></md-checkbox>
+    </md-list-item>
+</md-list>

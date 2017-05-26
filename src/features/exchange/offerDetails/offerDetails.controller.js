@@ -10,9 +10,12 @@ export default function OfferDetailsController ($rootScope, $scope, $window, $ht
     vm.exchangeCompleted = exchangeCompleted;
     vm.exchangeCancled = exchangeCancled;
     vm.exchangeRejected = exchangeRejected;
+    vm.negotiate = negotiate;
+    vm.resendOffer = resendOffer;
 
     vm.offerId = $location.search().offerId;
     vm.ownerId = $location.search().ownerId;
+    vm.state = "inProgress";
 
     $scope.back = function() {
         $window.history.back();
@@ -101,6 +104,31 @@ export default function OfferDetailsController ($rootScope, $scope, $window, $ht
             console.log(res);
             toastr.error("Unable to complete exchange...", "");
         })
+    }
+
+    function negotiate() {
+        $http.get('/api/users/' + vm.offeror.id + "/collection").then(function(res) {
+            $scope.userItems = [];
+
+            res.data.itemRefs.forEach(function(item) {
+                getItemDetails(item.itemId).then(function(details) {
+                    $scope.userItems.push(details);
+
+                    vm.offeredItems.forEach(function(offeredItem) {
+                        if (offeredItem.id == details.id) {
+                            details.selected = true;
+                            return;
+                        }
+                    })
+                })
+            })
+        })
+        vm.state = "negotiate";
+    }
+
+    function resendOffer() {
+        toastr.info("TODO", "");
+        location.reload();
     }
 
     function exchangeCancled(offerId) {
