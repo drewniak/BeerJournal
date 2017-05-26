@@ -25,22 +25,24 @@
                 placeholder="Search...">
         </nit-advanced-searchbox>
     </div>
-
-    <md-card md-theme="default" md-theme-watch ng-repeat="item in vm.items">
-        <md-card-title>
-            <md-card-title-text>
-                <p>{{item.rate}}</p>
-                <span class="md-headline">{{item.name}}</span>
-                <span class="md-subhead">{{item.category}}</span>
-            </md-card-title-text>
-            <md-card-title-media>
-                <img ng-show="item.image" src="{{item.image}}" height="75">
-            </md-card-title-media>
-        </md-card-title>
-        <md-card-content>
-            <button class="btn btn-primary" ng-click="vm.showDetails(item.itemId)">Details</button>
-        </md-card-content>
-    </md-card>
+    <br>
+    <div>
+        <md-card md-theme="default" md-theme-watch ng-repeat="item in vm.items">
+            <md-card-title>
+                <md-card-title-text>
+                    <p>{{item.rate}}</p>
+                    <span class="md-headline">{{item.name}}</span>
+                    <span class="md-subhead">{{item.category}}</span>
+                </md-card-title-text>
+                <md-card-title-media>
+                    <img ng-show="item.image" src="{{item.image}}" height="75">
+                </md-card-title-media>
+            </md-card-title>
+            <md-card-content>
+                <button class="btn btn-primary" ng-click="vm.showDetails(item.itemId)">Details</button>
+            </md-card-content>
+        </md-card>
+    </div>
 
 </md-content>
 
