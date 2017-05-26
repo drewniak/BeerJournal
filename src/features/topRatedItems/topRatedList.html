@@ -42,6 +42,15 @@
                 <button class="btn btn-primary" ng-click="vm.showDetails(item.itemId)">Details</button>
             </md-card-content>
         </md-card>
+
+        <ul uib-pagination
+            total-items="pagination.totalItems"
+            num-pages="pagination.numPages"
+            ng-model="pagination.currentPage"
+            max-size="3"
+            force-ellipses="true"
+            ng-change="pagination.pageChanged()"
+            class="pagination-sm bj-pagination"></ul>
     </div>
 
 </md-content>

@@ -3,6 +3,14 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
     vm.period = "past24h";
 
     $scope.filter={};
+    $scope.pagination = {
+        currentPage: 1,
+        itemsPerPage: 10,
+        totalItems: null,
+        pageChanged: function () {
+            vm.getItems();
+        }
+    };
 
     $scope.availableSearchParams = [
         { key: "country", name: "Country", placeholder: "Country...", allowMultiple: true },
@@ -17,7 +25,9 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
                 category: $scope.filter.type,
                 brewery: $scope.filter.brewery,
                 country: $scope.filter.country,
-                lacking: false
+                lacking: false,
+                count: $scope.pagination.itemsPerPage,
+                page: $scope.pagination.currentPage-1
             }
         })
             .then(function (response) {
@@ -59,6 +69,7 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
         $scope.filter.type = model.type;
         $scope.filter.brewery = model.brewery;
         $scope.filter.country = model.country;
+        $scope.pagination.currentPage = 1;
 
         if($scope.filter.type) {
             $scope.filter.type = $scope.filter.type.toLowerCase();
