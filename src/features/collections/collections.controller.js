@@ -21,10 +21,13 @@ export default function CollectionsController($rootScope, $sessionStorage, $scop
     let user = undefined;
     $scope.isUserCollection = false;
 
-    var selectedUserId = $location.search().id;
+    var selectedUserId = undefined;
+    if ($scope.selectedUser) {
+        selectedUserId = $scope.selectedUser.id
+    }
     if (!selectedUserId) {
-        if ($scope.selectedUser) {
-            selectedUserId = $scope.selectedUser.id;
+        if ($location.search().id) {
+            selectedUserId = $location.search().id;
         } else {
             selectedUserId = $rootScope.globals.currentUser.id;
         }
