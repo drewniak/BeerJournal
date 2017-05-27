@@ -96,6 +96,7 @@
                                 <md-icon><i class="material-icons">videocam_off</i></md-icon>
                             </md-button>
                         </div>
+                        <img ng-show="imageSource=='backend'" ng-src="{{vm.imageSrc}}" height="200">
                         <img ng-show="imageSource=='disc'" ng-src="{{vm.imageSrc}}" height="200">
                         <canvas ng-show="imageSource=='snapshot'" id="canvas" width="640" height="480"></canvas>
                         <md-button class="md-warn md-raised" ng-click="removeImage()">Delete</md-button>
