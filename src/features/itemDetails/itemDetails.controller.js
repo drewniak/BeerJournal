@@ -1,11 +1,11 @@
-export default function itemDetailsController($rootScope, $scope, $http, $location, countriesProvider, Lightbox) {
+export default function itemDetailsController($rootScope, $scope, $http, $location, countriesProvider, Lightbox, toastr) {
     var itemID = $scope.itemId;
     var ownerID = $scope.ownerId;
     let user = $rootScope.globals.currentUser;
     $scope.item = {};
-    $scope.rate = 0;  //todo send this rate to server
+    $scope.rate = 0;
     $scope.readOnly = true;
-    $scope.avgRate = 3; //todo receive avg rate from server
+    $scope.avgRate = 3;
     $scope.isMyItem = false;
 
     $http.get('/api/items/' + itemID).then(function(res) {
@@ -42,6 +42,30 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
     $scope.makeAnOffer = function(itemId) {
         close();
         $location.path('/selectItems').search('id', itemId);
+    }
+
+    $scope.onRating = function(rate) {
+        if (rate == 0) {
+            //TODO delete user rating
+        } else {
+            var body = {
+                itemId: itemID,
+                raterId: user.id,
+                value: rate
+            };
+
+            $http.post("/api/ratings", body).then(function() {
+                toastr.success("Item's rate was successfully updated", "");
+                updateItemRate(itemId);
+            }, function(res) {
+                toastr.success("Something goes wrong :(", "Error");
+                console.log(res);
+            })
+        }
+    }
+
+    function updateItemRate(itemId) {
+        //TODO
     }
 
     function getItemImages(imageIds) {
