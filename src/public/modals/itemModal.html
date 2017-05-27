@@ -19,12 +19,12 @@
                             </md-autocomplete>
                             <span ng-show="form.brewery.$dirty && form.brewery.$error.required" class="help-block">Brewery is required</span>
                         </div>
-
+                      
                         <div class="form-group" ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required }">
                             <label for="type">Type</label>
-                            <md-autocomplete name="type" id="type" md-selected-item="type" md-search-text="vm.item.type" md-items="item in typeAutocomplete(vm.item.type)" md-dropdown-position="bottom" required>
-                                <span md-highlight-text="vm.item.type">{{item}}</span>
-                            </md-autocomplete>
+                            <md-select placeholder="Type" name="type" id="type" ng-model="vm.item.type" required>
+                                <md-option ng-value="t" ng-repeat="t in vm.types">{{t}}</md-option>
+                            </md-select>
                             <span ng-show="form.type.$dirty && form.type.$error.required" class="help-block">Type is required</span>
                         </div>
 

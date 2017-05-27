@@ -2,18 +2,20 @@ export default function AccountSettingsController(authService,$sessionStorage, $
     let accountSettings = this;
     $scope.userData = {};
     $scope.errorMessage;
+    $scope.isFbUser = false;
+    $scope.userHaveAvatar = false;
 
     $http.get('/api/users/' + $rootScope.globals.currentUser.id).then(function (response) {
-        console.log($rootScope.globals.currentUser.id);
-        console.log(response.data);
         $scope.userData.firstName = response.data.firstName;
         $scope.userData.lastName = response.data.lastName;
         $scope.userData.email = "";
         $scope.userData.password = "";
         if($sessionStorage.getObject('user').pass) {
+            $scope.isFbUser = true;
             $scope.userData.password =  $base64.decode($sessionStorage.getObject('user').pass);
             $scope.userData.email = $sessionStorage.getObject('user').username;
         }else{
+            $scope.isFbUser = false;
             $scope.userData.email = response.data.password;
             $scope.userData.password = response.data.email;
         }
@@ -26,28 +28,6 @@ export default function AccountSettingsController(authService,$sessionStorage, $
             "firstName": $scope.userData.firstName
         };
         $http.put('/api/account/', userData).then(function (res) {
-            if ($scope.imageFile != null) {
-                $scope.form = [];
-                $http({
-                    method  : 'POST',
-                    url     : '/api/users/' +$rootScope.globals.currentUser.id + '/avatar',
-                    processData: false,
-                    transformRequest: function (data) {
-                        var formData = new FormData();
-                        formData.append("file", $scope.imageFile);
-                        return formData;
-                    },
-                    data : $scope.form,
-                    headers: {
-                        'Content-Type': undefined
-                    }
-                }).then(function(res){
-                    location.reload();
-                }, function (error) {
-                   console.log(error);
-
-                });
-            }
             $location.path("/accountSettings")
             toastr.success('User data successfully updated');
         }, function (res) {
@@ -55,6 +35,44 @@ export default function AccountSettingsController(authService,$sessionStorage, $
             toastr.error('Update user data failed','Error');
         });
     };
+
+    $scope.updateAvatar = function () {
+        console.log($scope.imageFile);
+        if ($scope.imageFile != null) {
+            $scope.form = [];
+            $http({
+                method  : 'POST',
+                url     : '/api/users/' +$rootScope.globals.currentUser.id + '/avatar',
+                processData: false,
+                transformRequest: function (data) {
+                    var formData = new FormData();
+                    formData.append("file", $scope.imageFile);
+                    return formData;
+                },
+                data : $scope.form,
+                headers: {
+                    'Content-Type': undefined
+                }
+            }).then(function(res){
+                toastr.success('Avatar successfully updated')
+                location.reload();
+            }, function (error) {
+                toastr.error('Update user data failed','Error');
+            });
+        }
+
+    }
+
+    $scope.deleteAvatar = function () {
+        if (confirm("Are you sure?") == true) {
+            $http.delete('/api/users/' + $rootScope.globals.currentUser.id + '/avatar').then(function (res) {
+                toastr.success('Avatar successfully deleted')
+                location.reload();
+            }, function (error) {
+                toastr.error('Delete avatar failed', 'Error');
+            });
+        }
+    }
 
     $scope.updateUserEmail = function () {
         var userDataForEmail = {
@@ -88,9 +106,21 @@ export default function AccountSettingsController(authService,$sessionStorage, $
 
     $scope.deleteUser = function () {
         if (confirm("Are you sure?") == true) {
-            $location.path("/home")
-            $http.delete('/api/users/' + $rootScope.globals.currentUser.id);
-            authService.logout();
+            $http({
+                url: 'api/account',
+                method: 'DELETE',
+                data: {
+                    "email" : $scope.userData.email,
+                    "password" : $scope.userData.password
+                },
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            }).then(function(res) {
+                authService.logout();
+            }, function(error) {
+                toastr.error('Delete user failed','Error');
+            });
         }
     }
 
@@ -118,5 +148,16 @@ export default function AccountSettingsController(authService,$sessionStorage, $
         var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
         return !re.test(str);
     }
+
+    function userHaveAvatar() {
+        $http.get('api/users/' +  $rootScope.globals.currentUser.id + '/avatar')
+            .then(function (response) {
+               $scope.userHaveAvatar = true;
+            }, function (error) {
+               $scope.userHaveAvatar = false;
+            });
+    }
+
+    userHaveAvatar();
 
 }

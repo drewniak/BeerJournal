@@ -3,6 +3,10 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
     var ownerID = $scope.ownerId;
     let user = $rootScope.globals.currentUser;
     $scope.item = {};
+    $scope.rate = 0;  //todo send this rate to server
+    $scope.readOnly = true;
+    $scope.avgRate = 3; //todo receive avg rate from server
+    $scope.isMyItem = false;
 
     $http.get('/api/items/' + itemID).then(function(res) {
         $scope.item = res.data;
@@ -11,12 +15,15 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
                                 $scope.item.countryImage =  flag;
                             });
         getItemImages(res.data.imageIds);
-
         if (res.data.ownerId != user.id) {
+            $scope.isMyItem = false;
             $http.get('/api/users/' + res.data.ownerId).then(function(owner) {
                 $scope.item.owner = owner.data;
             })
+        }else{
+            $scope.isMyItem = true;
         }
+
     });
     
     $scope.close = function () {

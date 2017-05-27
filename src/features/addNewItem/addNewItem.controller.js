@@ -10,6 +10,7 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
 
     var video;
     $scope.modal = $uibModalInstance;
+    vm.types = ['bottle','can','cap','label'];
 
     countriesProvider.getCountries().then(function(countries) {
         vm.countries = countries;
@@ -182,11 +183,7 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
     }
 
     $scope.typeAutocomplete = function(searchText) {
-        return $http
-            .get('/api/categories/type/')
-            .then(function(res) {
-                return filterAutocompleteResults(searchText, res.data.values);
-            });
+        return filterAutocompleteResults(searchText,$scope.types);
     }
 
     $scope.styleAutocomplete = function(searchText) {
