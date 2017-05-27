@@ -14,6 +14,7 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
                                 $scope.item.countryImage =  flag;
                             });
         getItemImages(res.data.imageIds);
+        getUserRate($scope.item);
         if (res.data.ownerId != user.id) {
             $scope.isMyItem = false;
             $http.get('/api/users/' + res.data.ownerId).then(function(owner) {
@@ -45,19 +46,14 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
 
     $scope.onRating = function(rate) {
         if (rate == 0) {
-            //TODO change it
-            $http.get('/api/ratings?itemId=' + itemID).then(function(res) {
-                res.data.forEach(function(rating) {
-                   if (rating.raterId == user.id) {
-                       $http.delete('/api/ratings?ratingId=' + rating.id).then(function(){
-                               updateItemRate(itemID);
-                           },
-                        function(res) {
-                           toastr.error("Unable to remove Your rate", "Error");
-                           console.log(res);
-                        })
-                   }
-                });
+            getRating(itemID, user.id).then(function(rating) {
+                $http.delete('/api/ratings?ratingId=' + rating.id).then(function(){
+                        updateItemRate(itemID);
+                    },
+                    function(res) {
+                        toastr.error("Unable to remove Your rate", "Error");
+                        console.log(res);
+                    })
             })
         } else {
             var body = {
@@ -76,6 +72,18 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
         }
     }
 
+    function getRating(itemId, userId) {
+        return $http.get('/api/ratings?itemId=' + itemId).then(function(res) {
+            var result = undefined;
+            res.data.forEach(function(rating) {
+                if (rating.raterId == userId) {
+                    result = rating;
+                }
+            });
+            return result;
+        });
+    }
+
     function updateItemRate(itemId) {
         $http.get('/api/items/' + itemId).then(function(res) {
             $scope.item.averageRating = res.data.averageRating;
@@ -91,5 +99,11 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
         } else {
             $scope.item.images = ['http://www.howderfamily.com/graphics/howder-beer.jpg'];
         }
+    }
+
+    function getUserRate(item) {
+        getRating(item.id, user.id).then(function(rating) {
+            $scope.rate = rating.value;
+        })
     }
 }
