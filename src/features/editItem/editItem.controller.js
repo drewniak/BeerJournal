@@ -3,6 +3,10 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
     vm.operationType = "UPDATE";
     vm.save = save;
     vm.countries = [];
+    vm.item = {};
+    vm.item.attributes=[];
+    vm.removeAttribute = removeAttribute;
+    vm.addNewAttribute = addNewAttribute;
     var video;
     var itemId = $rootScope.itemId
     $scope.modal = $uibModalInstance;
@@ -19,10 +23,9 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
 
     function save() {
         vm.item.ownerId = $rootScope.globals.currentUser.id;
-        vm.item.attributes = [];
 
         $http.put('/api/users/' + vm.item.ownerId + "/collection/items/" + vm.item.id, vm.item).then(function(res) {
-            toastr.success('Item successfully added');
+            toastr.success('Item successfully edited');
 
             var itemId = res.data.id;
 
@@ -51,9 +54,20 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
             $location.path("/collections")
         }, function(res) {
             console.log(res);
-            toastr.error('Unable to add new item');
+            toastr.error('Unable to edit item');
         })
 
+    }
+
+    function addNewAttribute() {
+        var newItemNo = vm.item.attributes.length+1;
+        vm.item.attributes.push({'id':'attribute'+newItemNo});
+    }
+
+    function removeAttribute(attribute) {
+        var index = vm.item.attributes.indexOf(attribute);
+        if (index > -1)
+            vm.item.attributes.splice(index, 1);
     }
 
     $scope.turnOnCamera = function() {

@@ -1,4 +1,4 @@
-export default function EventsController($rootScope, $scope, $http, $location, $uibModal, moment) {
+export default function EventsController($rootScope, $sessionStorage,$scope, $http, $location, $uibModal, moment) {
     $scope.pagination = {
         currentPage: 1,
         itemsPerPage: 10,
@@ -77,12 +77,17 @@ export default function EventsController($rootScope, $scope, $http, $location, $
                     if (res.data.avatarFileId) {
                         event.image = '/api/users/' + event.id + '/avatar';
                     } else {
-                        event.image = DEFAULT;
+                        if($sessionStorage.getObject('user').fbId){
+                            $scope.image = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';
+                        }else {
+                            event.image = DEFAULT;
+                        }
                     }
                 },
                 function () {
                     event.image = DEFAULT;
                 })
+
         }
     }
 

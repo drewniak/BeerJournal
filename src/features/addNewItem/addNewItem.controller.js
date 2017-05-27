@@ -2,9 +2,15 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
     let vm = this;
     vm.operationType = "CREATE";
     vm.save = save;
+    vm.item = {};
+    vm.item.attributes=[];
+    vm.removeAttribute = removeAttribute;
+    vm.addNewAttribute = addNewAttribute;
     vm.countries = [];
+
     var video;
     $scope.modal = $uibModalInstance;
+    vm.types = ['bottle','can','cap','label'];
 
     countriesProvider.getCountries().then(function(countries) {
         vm.countries = countries;
@@ -12,7 +18,6 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
 
     function save() {
         vm.item.ownerId = $rootScope.globals.currentUser.id;
-        vm.item.attributes = [];
 
         $http.post('/api/users/' + vm.item.ownerId + "/collection/items", vm.item).then(function(res) {
             toastr.success('Item successfully added');
@@ -45,10 +50,18 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
         }, function(res) {
                 console.log(res);
                 toastr.error('Unable to add new item');
-            })
+            });
+    }
 
-  $scope.$dismiss('cancel');
-    $scope.$apply();
+    function addNewAttribute() {
+        var newItemNo = vm.item.attributes.length+1;
+        vm.item.attributes.push({'id':'attribute'+newItemNo});
+    }
+
+    function removeAttribute(attribute) {
+        var index = vm.item.attributes.indexOf(attribute);
+        if (index > -1)
+            vm.item.attributes.splice(index, 1);
     }
 
     $scope.turnOnCamera = function() {
@@ -170,11 +183,7 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
     }
 
     $scope.typeAutocomplete = function(searchText) {
-        return $http
-            .get('/api/categories/type/')
-            .then(function(res) {
-                return filterAutocompleteResults(searchText, res.data.values);
-            });
+        return filterAutocompleteResults(searchText,$scope.types);
     }
 
     $scope.styleAutocomplete = function(searchText) {

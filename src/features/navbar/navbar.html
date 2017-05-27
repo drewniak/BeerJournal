@@ -69,15 +69,14 @@
                  ng-show="vm.isLoggedIn()">
 
             <md-button class="md-icon my-icon-button" aria-label="Account" ng-click="$mdMenu.open()">
-                <img src="{{avatar}}" alt="Account" width="50" height="50">
+                <img id="avatarImage" src="{{avatar}}" alt="Account" width="50" height="50">
             </md-button>
 
             <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
-                <md-button class="md-primary" ui-sref="home">View profile</md-button>
+                <md-button class="md-primary" ui-sref="collections">View profile</md-button>
                 <md-button class="md-primary" ui-sref="accountSettings">Account settings</md-button>
                 <md-button class="md-primary" ng-click="vm.logout()">Log out</md-button>
             </md-menu-content>
         </md-menu>
-
     </div>
 </md-toolbar>
