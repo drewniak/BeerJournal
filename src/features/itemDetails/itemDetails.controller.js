@@ -5,7 +5,6 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
     $scope.item = {};
     $scope.rate = 0;
     $scope.readOnly = true;
-    $scope.avgRate = 3;
     $scope.isMyItem = false;
 
     $http.get('/api/items/' + itemID).then(function(res) {
@@ -46,7 +45,20 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
 
     $scope.onRating = function(rate) {
         if (rate == 0) {
-            //TODO delete user rating
+            //TODO change it
+            $http.get('/api/ratings?itemId=' + itemID).then(function(res) {
+                res.data.forEach(function(rating) {
+                   if (rating.raterId == user.id) {
+                       $http.delete('/api/ratings?ratingId=' + rating.id).then(function(){
+                               updateItemRate(itemID);
+                           },
+                        function(res) {
+                           toastr.error("Unable to remove Your rate", "Error");
+                           console.log(res);
+                        })
+                   }
+                });
+            })
         } else {
             var body = {
                 itemId: itemID,
@@ -56,7 +68,7 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
 
             $http.post("/api/ratings", body).then(function() {
                 toastr.success("Item's rate was successfully updated", "");
-                updateItemRate(itemId);
+                updateItemRate(itemID);
             }, function(res) {
                 toastr.success("Something goes wrong :(", "Error");
                 console.log(res);
@@ -65,7 +77,9 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
     }
 
     function updateItemRate(itemId) {
-        //TODO
+        $http.get('/api/items/' + itemId).then(function(res) {
+            $scope.item.averageRating = res.data.averageRating;
+        });
     }
 
     function getItemImages(imageIds) {

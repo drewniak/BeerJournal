@@ -1,6 +1,6 @@
 <div class="container">
     <div ng-controller="itemDetailsController" style="margin-top: 1%; margin-bottom: 1%">
-        <h1>{{item.name}}</h1><jk-rating-stars rating="avgRate" read-only="readOnly" ></jk-rating-stars>
+        <h1>{{item.name}}</h1><jk-rating-stars rating="item.averageRating" read-only="readOnly" ></jk-rating-stars>
 
         <div ng-show="item.owner">
             <md-button class="md-primary" ng-click="showUserCollection(item.owner)">Owner: <b>{{item.owner.firstName + ' ' + item.owner.lastName}}</b></md-button>
