@@ -53,23 +53,23 @@
                     <div ng-show="!imageFileAdded" class="form-group">
                         <form name="imageSource">
                             <label>
-                                <input type="radio" ng-model="imageSource" value="disc">
+                                <input type="radio" ng-model="vm.imageSource" value="disc">
                                 Upload file
                             </label><br/>
                             <label>
-                                <input type="radio" ng-model="imageSource" value="snapshot">
+                                <input type="radio" ng-model="vm.imageSource" value="snapshot">
                                 Take a photo
                             </label>
                         </form>
 
-                        <div ng-show="imageSource=='disc'" class="fileinput fileinput-new" data-provides="fileinput">
+                        <div ng-show="vm.imageSource=='disc'" class="fileinput fileinput-new" data-provides="fileinput">
                             <input type="file" id="fname" name='file' onclick="this.value=null"
                                    onchange="angular.element(this).scope().previewFile()"
                                    accept="image/x-png,image/gif,image/jpeg" style="display: none;">
                             <label for="fname" class="md-button md-raised md-primary">Choose Files</label>
                         </div>
 
-                        <div ng-show="imageSource=='snapshot'">
+                        <div ng-show="vm.imageSource=='snapshot'">
                             <div>
                                 <md-button ng-show="!cameraTurnedOn" class="md-primary md-raised" ng-click="turnOnCamera()">
                                     Turn on camera
@@ -96,9 +96,9 @@
                                 <md-icon><i class="material-icons">videocam_off</i></md-icon>
                             </md-button>
                         </div>
-                        <img ng-show="imageSource=='backend'" ng-src="{{vm.imageSrc}}" height="200">
-                        <img ng-show="imageSource=='disc'" ng-src="{{vm.imageSrc}}" height="200">
-                        <canvas ng-show="imageSource=='snapshot'" id="canvas" width="640" height="480"></canvas>
+                        <img ng-show="vm.imageSource=='backend'" ng-src="{{vm.imageSrc}}" height="200">
+                        <img ng-show="vm.imageSource=='disc'" ng-src="{{vm.imageSrc}}" height="200">
+                        <canvas ng-show="vm.imageSource=='snapshot'" id="canvas" width="640" height="480"></canvas>
                         <md-button class="md-warn md-raised" ng-click="removeImage()">Delete</md-button>
                     </div>
                     <md-button type="submit" class="md-primary md-raised" wz-next>Next...</md-button>

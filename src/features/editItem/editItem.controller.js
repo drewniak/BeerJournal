@@ -21,8 +21,8 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
         vm.item = res.data;
 
         if(vm.item.imageIds.length > 0) {
-            $scope.imageSource = 'backend';
             $scope.imageFileAdded = true;
+            vm.imageSource = 'backend';
             vm.imageSrc = "/api/files/" + vm.item.imageIds[0];
         }
     })
