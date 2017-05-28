@@ -21,6 +21,18 @@
                ng-change="filter.changed()"/>
     </div>
 </div>
+
+<div>
+    <label for="sortBy">Sort by</label>
+    <select id="sortBy" ng-model="sortBy" ng-change="getUserItems(sortBy, sortType)">
+        <option ng-repeat="sortOption in sortOptions" value="{{sortOption.val}}">{{sortOption.label}}</option>
+    </select>
+    <select id="sortType" ng-model="sortType" ng-change="getUserItems(sortBy, sortType)">
+        <option value="desc">Descending</option>
+        <option value="asc">Ascending</option>
+    </select>
+</div>
+
 <button class="btn btn-primary" ng-show="isUserCollection" ng-click="addItem()">Add new item</button>
 
 <md-card-content ng-repeat="item in userItems">
