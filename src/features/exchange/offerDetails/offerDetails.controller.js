@@ -12,13 +12,12 @@ export default function OfferDetailsController ($rootScope, $scope, $window, $ht
     vm.exchangeRejected = exchangeRejected;
 
     vm.offerId = $location.search().offerId;
-    vm.ownerId = $location.search().ownerId;
 
     $scope.back = function() {
         $window.history.back();
     }
 
-    getExchangeOfferObject(vm.offerId, vm.ownerId).then(function(offer) {
+    getExchangeOfferObject(vm.offerId).then(function(offer) {
         getItemDetails(offer.desiredItem.itemId).then(function(desiredItem) {
             vm.desiredItem = desiredItem;
             setItemImage(vm.desiredItem);
@@ -56,17 +55,9 @@ export default function OfferDetailsController ($rootScope, $scope, $window, $ht
         $location.path('/allUsers').search('id', userId);
     }
 
-    function getExchangeOfferObject(offerId, ownerId) {
-        return $http.get('/api/exchanges?ownerId=' + ownerId).then(function(res) {
-            var result = {}
-
-            res.data.forEach(function(offer) {
-                if (offer.id == offerId) {
-                    result = offer;
-                }
-            });
-
-            return result;
+    function getExchangeOfferObject(offerId) {
+        return $http.get('/api/exchanges/' + offerId).then(function(res) {
+            return res.data;
         })
     }
 
