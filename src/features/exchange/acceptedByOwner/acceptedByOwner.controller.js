@@ -11,7 +11,7 @@ export default function AcceptedByOwnerController($rootScope, $scope, $http, $lo
 
 
     function getOffers () {
-        $http.get('/api/exchanges?offerorId=' + user.id)
+        $http.get('/api/exchanges?ownerId=' + user.id)
             .then(function (response) {
                 $scope.offers = response.data;
 
