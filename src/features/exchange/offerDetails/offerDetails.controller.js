@@ -1,28 +1,31 @@
 export default function OfferDetailsController ($rootScope, $scope, $window, $http, $location, $uibModal, toastr) {
     let vm = this;
     vm.currentUser = $rootScope.globals.currentUser;
+    vm.offer = {};
     vm.offeror = "";
     vm.owner = ""
     vm.desiredItem = {};
     vm.offeredItems = [];
     vm.showUserCollection = showUserCollection;
     vm.showItemDetails = showItemDetails;
-    vm.exchangeCompleted = exchangeCompleted;
+    vm.acceptOffer = acceptOffer;
     vm.exchangeCancled = exchangeCancled;
     vm.exchangeRejected = exchangeRejected;
     vm.negotiate = negotiate;
     vm.resendOffer = resendOffer;
+    vm.completeExchange = completeExchange;
 
     vm.offerId = $location.search().offerId;
-    vm.ownerId = $location.search().ownerId;
-    vm.state = "inProgress";
 
     $scope.back = function() {
         $window.history.back();
     }
 
-    getExchangeOfferObject(vm.offerId, vm.ownerId).then(function(offer) {
-        getItemDetails(offer.desiredItem.itemId).then(function(desiredItem) {
+    getExchangeOfferObject(vm.offerId).then(function(offer) {
+        vm.offer = offer;
+        vm.state = offer.state;
+
+        getItemDetails(offer.desiredItems[0].itemId).then(function(desiredItem) {
             vm.desiredItem = desiredItem;
             setItemImage(vm.desiredItem);
         });
@@ -59,17 +62,9 @@ export default function OfferDetailsController ($rootScope, $scope, $window, $ht
         $location.path('/allUsers').search('id', userId);
     }
 
-    function getExchangeOfferObject(offerId, ownerId) {
-        return $http.get('/api/exchanges?ownerId=' + ownerId).then(function(res) {
-            var result = {}
-
-            res.data.forEach(function(offer) {
-                if (offer.id == offerId) {
-                    result = offer;
-                }
-            });
-
-            return result;
+    function getExchangeOfferObject(offerId) {
+        return $http.get('/api/exchanges/' + offerId).then(function(res) {
+            return res.data;
         })
     }
 
@@ -93,16 +88,31 @@ export default function OfferDetailsController ($rootScope, $scope, $window, $ht
         })
     }
 
-    function exchangeCompleted(offerId) {
-        var body = {}
-        body.performed = true;
-        console.log(offerId);
-        $http.put('/api/exchanges/' + offerId + '/status', body).then(function () {
+    function completeExchange(offerId) {
+        $http.put('/api/exchanges/' + offerId + '/state', {state: "COMPLETED"}).then(function () {
             toastr.success("Exchange processed successfully", "");
             $location.path('/collections');
         }, function (res) {
             console.log(res);
             toastr.error("Unable to complete exchange...", "");
+        })
+    }
+
+    function acceptOffer(offerId) {
+        var state = undefined;
+
+        if (vm.offeror.id == vm.currentUser.id) {
+            state = "ACCEPTED_BY_OFFEROR";
+        } else {
+            state = "ACCEPTED_BY_OWNER";
+        }
+
+        $http.put('/api/exchanges/' + offerId + '/state', {state: state}).then(function () {
+            toastr.success("Exchange processed successfully", "");
+            $location.path('/collections');
+        }, function (res) {
+            console.log(res);
+            toastr.error("Unable to accept exchange...", "");
         })
     }
 
@@ -127,15 +137,51 @@ export default function OfferDetailsController ($rootScope, $scope, $window, $ht
     }
 
     function resendOffer() {
-        toastr.info("TODO", "");
-        location.reload();
+        var body = {
+            desiredItemIds:[vm.desiredItem.id],
+            offeredItemIds:[]
+        };
+
+        $scope.userItems.forEach(function(item) {
+            if (item.selected) {
+                body.offeredItemIds.push(item.id);
+            }
+        });
+
+        var state = undefined;
+        if (vm.offeror.id == vm.currentUser.id) {
+            state = "WAITING_FOR_OWNER";
+        } else {
+            state = "WAITING_FOR_OFFEROR";
+        }
+
+        $http.put('/api/exchanges/{id}?exchangeId=' + vm.offerId, body).then(function() {
+            $http.put('/api/exchanges/'+vm.offerId+'/state', {state: state}).then(function() {
+                toastr.success("Offer send to offeror", "")
+                location.reload();
+            }, function(res) {
+                toastr.error("Ops, sth went wrong :(", "Error");
+            })
+        }, function(res) {
+            toastr.error("Ops, sth went wrong :(", "Error");
+        })
     }
 
     function exchangeCancled(offerId) {
-        toastr.info("In progress...", "");
+        $http.put('/api/exchanges/'+vm.offerId+'/state', {state: "CANCELED"}).then(function() {
+            toastr.success("Offer canceled", "")
+            location.reload();
+        }, function(res) {
+            toastr.error("Ops, sth went wrong :(", "Error");
+        })
     }
 
     function exchangeRejected(offerId) {
-        toastr.info("In progress...", "");
+        $http.put('/api/exchanges/'+vm.offerId+'/state', {state: "REJECTED"}).then(function() {
+            toastr.success("Offer rejected", "")
+            location.reload();
+        }, function(res) {
+            toastr.error("Ops, sth went wrong :(", "Error");
+        })
     }
 }

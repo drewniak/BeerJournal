@@ -71,7 +71,7 @@ export default function ItemsSelectionController($rootScope, $scope, $http, $loc
     $scope.submit = function() {
         var body = {};
 
-        body.desiredItemId = $location.search().id;
+        body.desiredItemIds = [$location.search().id];
         body.offeredItemIds = [];
         $scope.userItems.forEach(function(item) {
             if (item.selected) {

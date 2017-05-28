@@ -3,8 +3,20 @@
         <h2>Offer to <b>{{vm.owner.firstName}} {{vm.owner.lastName}}</b>
             <img src="images/user.png" height="40" ng-click="vm.showUserCollection(vm.owner.id)"/>
         </h2>
-        <div ng-show="vm.state=='inProgress'">
+        <div ng-show="vm.state=='WAITING_FOR_OWNER'">
             <button class="btn btn-warning" ng-click="vm.exchangeCancled(vm.offerId)">Cancel offer <img src="images/cancel.png" height="20"/></button>
+        </div>
+        <div ng-show="vm.state=='WAITING_FOR_OFFEROR'">
+            <button class="btn btn-success" ng-click="vm.acceptOffer(vm.offerId)">Accept exchange <img src="images/accept.png" height="20"/></button>
+            <button class="btn btn-info" ng-click="vm.negotiate(vm.offerId)">Negotiate <img src="images/negotiate.png" height="20"/></button>
+            <button class="btn btn-danger" ng-click="vm.exchangeRejected(vm.offerId)">Reject <img src="images/reject.png" height="20"/></button>
+        </div>
+        <div ng-show="vm.state=='ACCEPTED_BY_OWNER'">
+            <button class="btn btn-success" ng-click="vm.completeExchange(vm.offerId)">Complete exchange <img src="images/accept.png" height="20"/></button>
+            <button class="btn btn-danger" ng-click="vm.exchangeRejected(vm.offerId)">Reject <img src="images/reject.png" height="20"/></button>
+        </div>
+        <div ng-show="vm.state=='ACCEPTED_BY_OFFEROR'">
+            <button class="btn btn-danger" ng-click="vm.exchangeRejected(vm.offerId)">Reject <img src="images/reject.png" height="20"/></button>
         </div>
     </div>
 
@@ -12,11 +24,30 @@
         <h2>Offer from user <b>{{vm.offeror.firstName}} {{vm.offeror.lastName}}</b>
             <img src="images/user.png" height="40" ng-click="vm.showUserCollection(vm.offeror.id)"/>
         </h2>
-        <div ng-show="vm.state=='inProgress'">
-            <button class="btn btn-success" ng-click="vm.exchangeCompleted(vm.offerId)">Exchange completed <img src="images/accept.png" height="20"/></button>
+        <div ng-show="vm.state=='WAITING_FOR_OWNER'">
+            <button class="btn btn-success" ng-click="vm.acceptOffer(vm.offerId)">Accept exchange <img src="images/accept.png" height="20"/></button>
             <button class="btn btn-info" ng-click="vm.negotiate(vm.offerId)">Negotiate <img src="images/negotiate.png" height="20"/></button>
             <button class="btn btn-danger" ng-click="vm.exchangeRejected(vm.offerId)">Reject <img src="images/reject.png" height="20"/></button>
         </div>
+        <div ng-show="vm.state=='ACCEPTED_BY_OWNER'">
+            <button class="btn btn-danger" ng-click="vm.exchangeRejected(vm.offerId)">Reject <img src="images/reject.png" height="20"/></button>
+        </div>
+        <div ng-show="vm.state=='ACCEPTED_BY_OFFEROR'">
+            <button class="btn btn-success" ng-click="vm.completeExchange(vm.offerId)">Complete exchange <img src="images/accept.png" height="20"/></button>
+            <button class="btn btn-danger" ng-click="vm.exchangeRejected(vm.offerId)">Reject <img src="images/reject.png" height="20"/></button>
+        </div>
+    </div>
+
+    <div ng-show="vm.state=='CANCELED'">
+        <h3><b><font color="red">This offer was canceled</font></b></h3>
+    </div>
+
+    <div ng-show="vm.state=='REJECTED'">
+        <h3><b><font color="red">This offer was rejected</font></b></h3>
+    </div>
+
+    <div>
+        <p>{{vm.state}}</p>
     </div>
 </md-content>
 <br>
@@ -48,13 +79,25 @@
 <br>
 
 
-<md-content class="md-padding" ng-show="vm.state=='inProgress'">
+<md-content class="md-padding" ng-show="vm.state=='WAITING_FOR_OWNER'||vm.state=='WAITING_FOR_OFFEROR'
+                                                    ||vm.state=='CANCELED'||vm.state=='REJECTED'
+                                                    ||vm.state=='ACCEPTED_BY_OWNER'||vm.state=='ACCEPTED_BY_OFFEROR'">
     <div ng-show="vm.offeror.id == vm.currentUser.id">
-        <h3>...and You offer:</h3>
+        <div ng-show="vm.state=='WAITING_FOR_OWNER'||vm.state=='CANCELED'||vm.state=='REJECTED'||vm.state=='ACCEPTED_BY_OWNER'">
+            <h3>...and You offer:</h3>
+        </div>
+        <div ng-show="vm.state=='WAITING_FOR_OFFEROR'">
+            <h3>...but he/she wants:</h3>
+        </div>
     </div>
 
     <div ng-show="vm.owner.id == vm.currentUser.id">
-        <h3>...and offers You:</h3>
+        <div ng-show="vm.state=='WAITING_FOR_OWNER'||vm.state=='CANCELED'||vm.state=='REJECTED'||vm.state=='ACCEPTED_BY_OFFEROR'">
+            <h3>...and offers You:</h3>
+        </div>
+        <div ng-show="vm.state=='WAITING_FOR_OFFEROR'">
+            <h3 >...but You want:</h3>
+        </div>
     </div>
 
     <div ng-if="vm.offeredItems.length == 0">
@@ -76,10 +119,16 @@
             </md-card-content>
         </md-card>
     </md-card-content>
+    <br>
 </md-content>
 
 <md-content class="md-padding" ng-show="vm.state=='negotiate'">
-    <h3>...but I want:</h3>
+    <div ng-show="vm.offeror.id == vm.currentUser.id">
+        <h3>...but I may offer:</h3>
+    </div>
+    <div ng-show="vm.owner.id == vm.currentUser.id">
+        <h3>...but I want:</h3>
+    </div>
 
     <div class="search-bar" layout="row" layout-align="end center" flex>
         <label>Search: <input ng-model="textFilter"></label>

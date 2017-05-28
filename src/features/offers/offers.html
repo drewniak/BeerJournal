@@ -1,14 +1,14 @@
 <md-content class="md-padding">
     <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-        <md-nav-item md-nav-href="/offers" name="users">
+        <md-nav-item md-nav-href="/offers" name="offers">
             Offers from others          
         </md-nav-item>
-         <md-nav-item md-nav-href="/exchange" name="collections">
+         <md-nav-item md-nav-href="/exchange" name="exchange">
            My exchange proposals
         </md-nav-item> 
      </md-nav-bar>
 
-<md-card-content ng-repeat="offer in offers | filter: {performed : 'false'}">
+<md-card-content ng-repeat="offer in offers">
 
     <md-card md-theme="default" md-theme-watch>
         <md-card-title>
