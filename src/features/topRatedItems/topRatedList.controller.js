@@ -19,7 +19,7 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
     ];
 
     vm.getItems = function() {
-        $http.get('/api/users/' + $rootScope.globals.currentUser.id + "/collection/items", {
+        $http.get('/api/users/' + $rootScope.globals.currentUser.id + "/collection/items?sortBy=averagerating&sortType=decs", {
             params: {
                 name: $scope.filter.query,
                 category: $scope.filter.type,
