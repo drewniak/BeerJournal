@@ -41,12 +41,11 @@
                 </wz-step>
 
                 <wz-step wz-title="Select beer style">
-                    <h3>Beer style</h3>
+                    <h3>Select beer style</h3>
                     <beer-map model="vm.item.style"></beer-map>
-                    {{vm.item.style}}
                     <form name="form2" role="form">
                         <div class="form-group"
-                             ng-class="{ 'has-error': form.style.$dirty && form.style.$error.required }">
+                             ng-class="{ 'has-error': form2.style.$dirty && form2.style.$error.required }">
                             <label for="style">Style</label>
                             <md-autocomplete name="style" id="style" md-selected-item="style"
                                              md-search-text="vm.item.style"
