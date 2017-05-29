@@ -1,6 +1,6 @@
 <div class="container">
     <div ng-controller="itemDetailsController" style="margin-top: 1%; margin-bottom: 1%">
-        <h1>{{item.name}}</h1><jk-rating-stars rating="avgRate" read-only="readOnly" ></jk-rating-stars>
+        <h1>{{item.name}}</h1><jk-rating-stars rating="item.averageRating" read-only="readOnly" ></jk-rating-stars>
 
         <div ng-show="item.owner">
             <md-button class="md-primary" ng-click="showUserCollection(item.owner)">Owner: <b>{{item.owner.firstName + ' ' + item.owner.lastName}}</b></md-button>
@@ -31,7 +31,7 @@
 
         <div>
             <label ng-if="!isMyItem">Rate it</label>
-            <jk-rating-stars  rating="rate" ng-if="!isMyItem"></jk-rating-stars>
+            <jk-rating-stars rating="rate" ng-if="!isMyItem" on-rating="onRating(rate)"></jk-rating-stars>
             <button ng-show="item.owner" class="btn btn-success" ng-click="makeAnOffer(item.id)"><b>I WANT IT!!!</b></button>
             <button class="btn btn-primary" ng-click="close()">Close</button>
         </div>
