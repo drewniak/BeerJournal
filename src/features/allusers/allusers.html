@@ -29,6 +29,17 @@
         </div>
     </div>
 
+    <div>
+        <label for="sortBy">Sort by</label>
+        <select id="sortBy" ng-model="sortBy" ng-change="getUsersFromServer(sortBy, sortType)">
+            <option ng-repeat="sortOption in sortOptions" value="{{sortOption.val}}">{{sortOption.label}}</option>
+        </select>
+        <select id="sortType" ng-model="sortType" ng-change="getUsersFromServer(sortBy, sortType)">
+            <option value="desc">Descending</option>
+            <option value="asc">Ascending</option>
+        </select>
+    </div>
+
 
     <br/>
     <div ng-if="!showItems" ng-repeat="user in users">
@@ -43,7 +54,7 @@
                         <ul class="gallery gallery1">
                             <li ng-repeat="image in user.images">
                                 <a ng-click="openLightboxModal($index,user.images)">
-                                    <img ng-src="{{image}}" height="50" width="50">
+                                    <img ng-src="{{image}}" err-src="images/fallbackIcons/item.svg" height="50" width="50">
                                 </a>
                             </li>
                         </ul>

@@ -1,0 +1,60 @@
+<md-content class="md-padding">
+    <h1><b>Top rated items</b></h1>
+    <md-nav-bar md-selected-nav-item="vm.period" nav-bar-aria-label="navigation links">
+        <md-nav-item md-nav-click="vm.getItems(); goto('past24h')" name="past24h">
+            Past 24h
+        </md-nav-item>
+        <md-nav-item md-nav-click="vm.getItems(); goto('pastWeek')" name="pastWeek">
+            Past week
+        </md-nav-item>
+        <md-nav-item md-nav-click="vm.getItems(); goto('pastMonth')" name="pastMonth">
+            Past month
+        </md-nav-item>
+        <md-nav-item md-nav-click="vm.getItems(); goto('pastYear')" name="pastYear">
+            Past year
+        </md-nav-item>
+        <md-nav-item md-nav-click="vm.getItems(); goto('allTime')" name="allTime">
+            All time
+        </md-nav-item>
+    </md-nav-bar>
+
+    <div>
+        <nit-advanced-searchbox
+                ng-model="searchParams"
+                parameters="availableSearchParams"
+                placeholder="Search...">
+        </nit-advanced-searchbox>
+    </div>
+    <br>
+    <div>
+        <md-card md-theme="default" md-theme-watch ng-repeat="item in vm.items">
+            <md-card-title>
+                <md-card-title-text>
+                    <div>
+                        <h5>AVG: {{item.averageRating}}</h5>
+                        <jk-rating-stars rating="item.averageRating" read-only=true ></jk-rating-stars>
+                    </div>
+                    <span class="md-headline">{{item.name}}</span>
+                    <span class="md-subhead">{{item.category}}</span>
+                </md-card-title-text>
+                <md-card-title-media>
+                    <img ng-show="item.image" src="{{item.image}}" height="75">
+                </md-card-title-media>
+            </md-card-title>
+            <md-card-content>
+                <button class="btn btn-primary" ng-click="vm.showDetails(item.itemId)">Details</button>
+            </md-card-content>
+        </md-card>
+
+        <ul uib-pagination
+            total-items="pagination.totalItems"
+            num-pages="pagination.numPages"
+            ng-model="pagination.currentPage"
+            max-size="3"
+            force-ellipses="true"
+            ng-change="pagination.pageChanged()"
+            class="pagination-sm bj-pagination"></ul>
+    </div>
+
+</md-content>
+

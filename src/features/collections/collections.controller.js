@@ -21,10 +21,13 @@ export default function CollectionsController($rootScope, $sessionStorage, $scop
     let user = undefined;
     $scope.isUserCollection = false;
 
-    var selectedUserId = $location.search().id;
+    var selectedUserId = undefined;
+    if ($scope.selectedUser) {
+        selectedUserId = $scope.selectedUser.id
+    }
     if (!selectedUserId) {
-        if ($scope.selectedUser) {
-            selectedUserId = $scope.selectedUser.id;
+        if ($location.search().id) {
+            selectedUserId = $location.search().id;
         } else {
             selectedUserId = $rootScope.globals.currentUser.id;
         }
@@ -32,6 +35,20 @@ export default function CollectionsController($rootScope, $sessionStorage, $scop
     }
     $scope.isUserCollection = selectedUserId === $rootScope.globals.currentUser.id;
     $scope.userItems = [];
+    $scope.getUserItems = userItems;
+    $scope.sortBy = "averagerating";
+    $scope.sortType = "desc";
+
+
+    $scope.sortOptions = [
+        {val:"name", label:"Name"},
+        {val:"type", label:"Type"},
+        {val:"country", label:"Country"},
+        {val:"brewery", label:"Brewery"},
+        {val:"style", label:"Style"},
+        {val:"averagerating", label:"Avg rating"},
+        {val:"createtime", label:"Create time"}
+    ];
 
     $http.get('/api/users/' + selectedUserId).then(function(res) {
         user = res.data;
@@ -42,14 +59,16 @@ export default function CollectionsController($rootScope, $sessionStorage, $scop
         getUserAvatar();
     })
 
-    function userItems () {
+    function userItems (sortBy="averagerating", sortType="desc") {
         $http.get('/api/users/' + user.id + "/collection/items", {
             params: {
                 name: $scope.filter.name,
                 category: $scope.filter.category,
                 lacking: false,
                 count: $scope.pagination.itemsPerPage,
-                page: $scope.pagination.currentPage-1
+                page: $scope.pagination.currentPage-1,
+                sortBy: sortBy,
+                sortType: sortType
             }})
             .then(function (response) {
                 $scope.userItems = response.data.content;

@@ -23,16 +23,27 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
     $scope.username = user.username;
     $scope.currentNavItem = "users";
     $scope.users = [];
+    $scope.sortBy = "jointime";
+    $scope.sortType = "desc";
+    $scope.getUsersFromServer = getUsersFromServer;
 
     $scope.showItems = false;
 
-    function getUsersFromServer () {
+    $scope.sortOptions=[
+        {val:"jointime", label:"Join time"},
+        {val:"firstname", label:"First name"},
+        {val:"lastname", label:"Last name"}
+    ]
+
+    function getUsersFromServer (sortBy="jointime", sortType="desc") {
         $http.get('/api/users/', {
             params: {
                 firstname: $scope.filter.firstname,
                 lastname: $scope.filter.lastname,
                 count: $scope.pagination.itemsPerPage,
-                page: $scope.pagination.currentPage-1
+                page: $scope.pagination.currentPage-1,
+                sortBy: sortBy,
+                sortType: sortType
             }})
             .then(function (response) {
                 $scope.users = response.data.content;

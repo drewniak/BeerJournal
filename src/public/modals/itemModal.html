@@ -2,47 +2,48 @@
     <div class="jumbotron">
         <h2 ng-if="vm.operationType=='CREATE'">Add new item</h2>
         <h2 ng-if="vm.operationType=='UPDATE'">Edit Item</h2>
-        <form name="form" ng-submit="vm.save()" role="form">
             <wizard id='wizard' on-finish="finishedWizard()" indicators-position="top">
                 <wz-step wz-title="Basic informations">
                     <h3>Basic info</h3>
-                    <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" class="form-control" ng-model="vm.item.name" required/>
-                        <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Name is required</span>
-                    </div>
+                    <form name="form" role="form">
+                        <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" ng-model="vm.item.name" required/>
+                            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Name is required</span>
+                        </div>
 
-                    <div class="form-group" ng-class="{ 'has-error': form.brewery.$dirty && form.brewery.$error.required }">
-                        <label for="brewery">Brewery</label>
-                        <md-autocomplete name="brewery" id="brewery" md-selected-item="brewery" md-search-text="vm.item.brewery" md-items="item in breweryAutocomplete(vm.item.brewery)" md-dropdown-position="bottom" required>
-                            <span md-highlight-text="vm.item.brewery">{{item}}</span>
-                        </md-autocomplete>
-                        <span ng-show="form.brewery.$dirty && form.brewery.$error.required" class="help-block">Brewery is required</span>
-                    </div>
+                        <div class="form-group" ng-class="{ 'has-error': form.brewery.$dirty && form.brewery.$error.required }">
+                            <label for="brewery">Brewery</label>
+                            <md-autocomplete name="brewery" id="brewery" md-selected-item="brewery" md-search-text="vm.item.brewery" md-items="item in breweryAutocomplete(vm.item.brewery)" md-dropdown-position="bottom" required>
+                                <span md-highlight-text="vm.item.brewery">{{item}}</span>
+                            </md-autocomplete>
+                            <span ng-show="form.brewery.$dirty && form.brewery.$error.required" class="help-block">Brewery is required</span>
+                        </div>
+                      
+                        <div class="form-group" ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required }">
+                            <label for="type">Type</label>
+                            <md-select placeholder="Type" name="type" id="type" ng-model="vm.item.type" required>
+                                <md-option ng-value="t" ng-repeat="t in vm.types">{{t}}</md-option>
+                            </md-select>
+                            <span ng-show="form.type.$dirty && form.type.$error.required" class="help-block">Type is required</span>
+                        </div>
 
-                    <div class="form-group" ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required }">
-                        <label for="type">Type</label>
-                        <md-select placeholder="Type" name="type" id="type" ng-model="vm.item.type" required>
-                            <md-option ng-value="t" ng-repeat="t in vm.types">{{t}}</md-option>
-                        </md-select>
-                        <span ng-show="form.type.$dirty && form.type.$error.required" class="help-block">Type is required</span>
-                    </div>
+                        <div class="form-group" ng-class="{ 'has-error': form.style.$dirty && form.style.$error.required }">
+                            <label for="style">Style</label>
+                            <md-autocomplete name="style" id="style" md-selected-item="style" md-search-text="vm.item.style" md-items="item in styleAutocomplete(vm.item.style)" md-dropdown-position="bottom" required>
+                                <span md-highlight-text="vm.item.style">{{item}}</span>
+                            </md-autocomplete>
+                            <span ng-show="form.style.$dirty && form.style.$error.required" class="help-block">Style is required</span>
+                        </div>
 
-                    <div class="form-group" ng-class="{ 'has-error': form.style.$dirty && form.style.$error.required }">
-                        <label for="style">Style</label>
-                        <md-autocomplete name="style" id="style" md-selected-item="style" md-search-text="vm.item.style" md-items="item in styleAutocomplete(vm.item.style)" md-dropdown-position="bottom" required>
-                            <span md-highlight-text="vm.item.style">{{item}}</span>
-                        </md-autocomplete>
-                        <span ng-show="form.style.$dirty && form.style.$error.required" class="help-block">Style is required</span>
-                    </div>
-
-                    <div class="form-group" ng-class="{ 'has-error': form.country.$dirty && form.country.$error.required }">
-                        <label>Country</label>
-                        <md-select placeholder="Country" name="country" id="country" ng-model="vm.item.country" required>
-                            <md-option ng-value="c" ng-repeat="c in vm.countries">{{c}}</md-option>
-                        </md-select>
-                    </div>
-                    <md-button type="submit" class="md-primary md-raised" ng-disabled="form.$invalid" wz-next>Next...</md-button>
+                        <div class="form-group" ng-class="{ 'has-error': form.country.$dirty && form.country.$error.required }">
+                            <label>Country</label>
+                            <md-select placeholder="Country" name="country" id="country" ng-model="vm.item.country" required>
+                                <md-option ng-value="c" ng-repeat="c in vm.countries">{{c}}</md-option>
+                            </md-select>
+                        </div>
+                        <md-button type="submit" class="md-primary md-raised" ng-disabled="form.$invalid" wz-next>Next...</md-button>
+                    </form>
                 </wz-step>
 
 
@@ -52,23 +53,23 @@
                     <div ng-show="!imageFileAdded" class="form-group">
                         <form name="imageSource">
                             <label>
-                                <input type="radio" ng-model="imageSource" value="disc">
+                                <input type="radio" ng-model="vm.imageSource" value="disc">
                                 Upload file
                             </label><br/>
                             <label>
-                                <input type="radio" ng-model="imageSource" value="snapshot">
+                                <input type="radio" ng-model="vm.imageSource" value="snapshot">
                                 Take a photo
                             </label>
                         </form>
 
-                        <div ng-show="imageSource=='disc'" class="fileinput fileinput-new" data-provides="fileinput">
+                        <div ng-show="vm.imageSource=='disc'" class="fileinput fileinput-new" data-provides="fileinput">
                             <input type="file" id="fname" name='file' onclick="this.value=null"
                                    onchange="angular.element(this).scope().previewFile()"
                                    accept="image/x-png,image/gif,image/jpeg" style="display: none;">
                             <label for="fname" class="md-button md-raised md-primary">Choose Files</label>
                         </div>
 
-                        <div ng-show="imageSource=='snapshot'">
+                        <div ng-show="vm.imageSource=='snapshot'">
                             <div>
                                 <md-button ng-show="!cameraTurnedOn" class="md-primary md-raised" ng-click="turnOnCamera()">
                                     Turn on camera
@@ -95,11 +96,30 @@
                                 <md-icon><i class="material-icons">videocam_off</i></md-icon>
                             </md-button>
                         </div>
-                        <img ng-show="imageSource=='disc'" ng-src="{{vm.imageSrc}}" height="200">
-                        <canvas ng-show="imageSource=='snapshot'" id="canvas" width="640" height="480"></canvas>
+                        <img ng-show="vm.imageSource=='backend'" ng-src="{{vm.imageSrc}}" height="200">
+                        <img ng-show="vm.imageSource=='disc'" ng-src="{{vm.imageSrc}}" height="200">
+                        <canvas ng-show="vm.imageSource=='snapshot'" id="canvas" width="640" height="480"></canvas>
                         <md-button class="md-warn md-raised" ng-click="removeImage()">Delete</md-button>
                     </div>
-                    <md-button type="submit" class="md-primary md-raised" wz-next>Finish</md-button>
+                    <md-button type="submit" class="md-primary md-raised" wz-next>Next...</md-button>
+                </wz-step>
+
+
+                <wz-step wz-title="Additional informations">
+                    <h3>Add any additional information You want</h3>
+                    <form name="form" role="form">
+                        <div>
+                            <md-button ng-show="vm.item.attributes.length==0" type="button" class="md-accent md-raised" ng-click="vm.addNewAttribute()">Add</md-button>
+
+                            <fieldset data-ng-repeat="attribute in vm.item.attributes">
+                                <input type="text" class="fieldset" ng-model="attribute.name" name="" placeholder="Property name (e.g. Year)" required>
+                                <input type="text" class="fieldset" ng-model="attribute.value" name="" placeholder="value(e.g. 2013)" required>
+                                <button type="button" class="remove" ng-click="vm.removeAttribute(attribute)">-</button>
+                                <button type="button" class="addAttribute" ng-show="$last" ng-click="vm.addNewAttribute()">+</button>
+                            </fieldset>
+                        </div>
+                    </form>
+                    <md-button type="button" class="md-primary md-raised" ng-disabled="form.$invalid" wz-next>Finish</md-button>
                 </wz-step>
 
 
@@ -127,6 +147,10 @@
                                 <td>Style</td>
                                 <td>{{vm.item.style}}</td>
                             </tr>
+                            <tr ng-repeat="attribute in vm.item.attributes">
+                                <td>{{ attribute.name }}</td>
+                                <td>{{ attribute.value }}</td>
+                            </tr>
                         </table>
                     </div>
 
@@ -134,13 +158,15 @@
                         <img ng-show="vm.imageSrc" ng-src="{{vm.imageSrc}}" height="200">
                     </div>
 
-                    <div class="form-group" style="margin-top: 5%">
-                        <input ng-if="vm.operationType=='CREATE'" class="btn btn-success" ng-disabled="form.$invalid" type="submit"
-                               value="Add item to my collection" ng-click="modal.dismiss()">
-                        <input ng-if="vm.operationType=='UPDATE'" class="btn btn-success" ng-disabled="form.$invalid" type="submit"
-                               value="Apply changes" ng-click="modal.dismiss()">
-                        <a class="btn btn-info" ng-click="modal.close()">Cancel</a>
-                    </div>
+                    <form name="form" ng-submit="vm.save()">
+                        <div class="form-group" style="margin-top: 5%">
+                            <input ng-if="vm.operationType=='CREATE'" class="btn btn-success" ng-disabled="form.$invalid" type="submit"
+                                   value="Add item to my collection" ng-click="modal.dismiss()">
+                            <input ng-if="vm.operationType=='UPDATE'" class="btn btn-success" ng-disabled="form.$invalid" type="submit"
+                                   value="Apply changes" ng-click="modal.dismiss()">
+                            <a class="btn btn-info" ng-click="modal.close()">Cancel</a>
+                        </div>
+                    </form>
                 </wz-step>
             </wizard>
         </form>

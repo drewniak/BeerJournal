@@ -30,6 +30,13 @@
             Exchanges
         </md-button>
 
+        <md-button aria-label="HallOfFame"
+                   ui-sref="topRatedList"
+                   class="md-raised md-small md-accent"
+                   ng-show="vm.isLoggedIn()">
+            Hall of fame
+        </md-button>
+
         <md-button ng-show="localstream" ng-click="turnOffCamera()">
             <md-icon><i class="material-icons">videocam_off</i></md-icon>
         </md-button>
