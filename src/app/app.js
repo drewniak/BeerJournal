@@ -18,6 +18,7 @@ import "../style/navbar.css";
 import "../style/events.css"
 import "../style/default.theme.css";
 import "angular-bootstrap-colorpicker/css/colorpicker.css"
+import "../style/beerMap.css"
 
 import "../style/advancedSearch.css"
 import "../style/rate.css"
@@ -44,10 +45,11 @@ import StartController from "../features/startPage";
 import ItemsSelectionController from "../features/exchange/selectItems"
 import OfferDetailsController from "../features/exchange/offerDetails"
 import topRatedListController from "../features/topRatedItems"
+import beerMap from "../features/beerMap"
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, theme, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', "colorpicker.module", 'angular-advanced-searchbox'])
+angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, theme, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', "colorpicker.module", 'angular-advanced-searchbox', beerMap])
     .config(routing)
     .config(themeConfig)
     .run(run);

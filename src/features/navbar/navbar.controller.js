@@ -39,18 +39,19 @@ export default function NavbarController($scope, $rootScope, $http, authService,
 
     function initThemeCustomize() {
         let color = $cookieStore.get("themeColor");
+        console.log(color);
         if (!color) {
             color = "#febf01";
         }
+
+        $cookieStore.put("themeColor", $scope.themeColor)
+
         $scope.themeColor = color;
         $rootScope.themeColor = $scope.themeColor;
 
-        let timeoutPromise;
         $scope.$watch("themeColor", (themeColor) => {
-            $timeout.cancel(timeoutPromise);
-            timeoutPromise = $timeout(() => {
-                $cookieStore.put("themeColor", $scope.themeColor)
-            }, 250);
+            $cookieStore.put("themeColor", $scope.themeColor)
+            console.log($cookieStore.get("themeColor"))
         });
     }
 
