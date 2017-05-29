@@ -1,5 +1,7 @@
  <div>
     <div class="jumbotron">
+
+
         <h2 ng-if="vm.operationType=='CREATE'">Add new item</h2>
         <h2 ng-if="vm.operationType=='UPDATE'">Edit Item</h2>
             <wizard id='wizard' on-finish="finishedWizard()" indicators-position="top">
@@ -28,14 +30,6 @@
                             <span ng-show="form.type.$dirty && form.type.$error.required" class="help-block">Type is required</span>
                         </div>
 
-                        <div class="form-group" ng-class="{ 'has-error': form.style.$dirty && form.style.$error.required }">
-                            <label for="style">Style</label>
-                            <md-autocomplete name="style" id="style" md-selected-item="style" md-search-text="vm.item.style" md-items="item in styleAutocomplete(vm.item.style)" md-dropdown-position="bottom" required>
-                                <span md-highlight-text="vm.item.style">{{item}}</span>
-                            </md-autocomplete>
-                            <span ng-show="form.style.$dirty && form.style.$error.required" class="help-block">Style is required</span>
-                        </div>
-
                         <div class="form-group" ng-class="{ 'has-error': form.country.$dirty && form.country.$error.required }">
                             <label>Country</label>
                             <md-select placeholder="Country" name="country" id="country" ng-model="vm.item.country" required>
@@ -43,6 +37,26 @@
                             </md-select>
                         </div>
                         <md-button type="submit" class="md-primary md-raised" ng-disabled="form.$invalid" wz-next>Next...</md-button>
+                    </form>
+                </wz-step>
+
+                <wz-step wz-title="Select beer style">
+                    <h3>Select beer style</h3>
+                    <beer-map model="vm.item.style"></beer-map>
+                    <form name="form2" role="form">
+                        <div class="form-group"
+                             ng-class="{ 'has-error': form2.style.$dirty && form2.style.$error.required }">
+                            <label for="style">Style</label>
+                            <md-autocomplete name="style" id="style" md-selected-item="style"
+                                             md-search-text="vm.item.style"
+                                             md-items="item in styleAutocomplete(vm.item.style)"
+                                             md-dropdown-position="bottom" required>
+                                <span md-highlight-text="vm.item.style">{{item}}</span>
+                            </md-autocomplete>
+                            <span ng-show="form2.style.$dirty && form2.style.$error.required" class="help-block">Style is required</span>
+                        </div>
+
+                        <md-button type="submit" class="md-primary md-raised" wz-next>Next...</md-button>
                     </form>
                 </wz-step>
 

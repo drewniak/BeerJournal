@@ -43,6 +43,8 @@
 
         <span flex></span>
 
+        <div style="width:25px; height:25px; border:1px solid #333;" ng-style="{'background-color': themeColor}" colorpicker ng-model="themeColor"></div>
+
         <md-button md-no-ink
                    class="md-small"
                    aria-label="Register"
@@ -79,8 +81,8 @@
                 <img id="avatarImage" src="{{avatar}}" alt="Account" width="50" height="50">
             </md-button>
 
+
             <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
-                <md-button class="md-primary" ui-sref="collections">View profile</md-button>
                 <md-button class="md-primary" ui-sref="accountSettings">Account settings</md-button>
                 <md-button class="md-primary" ng-click="vm.logout()">Log out</md-button>
             </md-menu-content>
