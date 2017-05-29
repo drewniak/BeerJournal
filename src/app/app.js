@@ -7,6 +7,7 @@ import "angular-ui-bootstrap"
 import "angular-sessionstorage"
 import "angular-route"
 import "angular-wizard"
+import "angular-bootstrap-colorpicker"
 import "angular-advanced-searchbox"
 
 import "../style/app.css";
@@ -14,19 +15,23 @@ import "../style/galeryListStyle.css";
 import "../style/itemDetails.css"
 import "../style/common.css";
 import "../style/navbar.css";
-import "../style/beer.theme.css";
 import "../style/events.css"
+import "../style/default.theme.css";
+import "angular-bootstrap-colorpicker/css/colorpicker.css"
+import "../style/beerMap.css"
+
 import "../style/advancedSearch.css"
 import "../style/rate.css"
 
 import routing from "./app.config.js";
-import themeConfig from "./beer.theme"
+import themeConfig from "./default.theme"
 import collections from "../features/collections";
 import login from "../features/login";
 import registration from "../features/registration"
 import home from "../features/home";
 import allusers from "../features/allusers"
 import navbar from "../features/navbar"
+import theme from "../features/theme"
 import authService from "../features/authService"
 import AddNewItemController from "../features/addNewItem"
 import itemDetailsController from "../features/itemDetails"
@@ -40,10 +45,11 @@ import StartController from "../features/startPage";
 import ItemsSelectionController from "../features/exchange/selectItems"
 import OfferDetailsController from "../features/exchange/offerDetails"
 import topRatedListController from "../features/topRatedItems"
+import beerMap from "../features/beerMap"
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, topRatedListController, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', 'angular-advanced-searchbox'])
+angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, theme, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', "colorpicker.module", 'angular-advanced-searchbox', beerMap])
     .config(routing)
     .config(themeConfig)
     .run(run);
