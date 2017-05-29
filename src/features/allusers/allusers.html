@@ -29,6 +29,17 @@
         </div>
     </div>
 
+    <div>
+        <label for="sortBy">Sort by</label>
+        <select id="sortBy" ng-model="sortBy" ng-change="getUsersFromServer(sortBy, sortType)">
+            <option ng-repeat="sortOption in sortOptions" value="{{sortOption.val}}">{{sortOption.label}}</option>
+        </select>
+        <select id="sortType" ng-model="sortType" ng-change="getUsersFromServer(sortBy, sortType)">
+            <option value="desc">Descending</option>
+            <option value="asc">Ascending</option>
+        </select>
+    </div>
+
 
     <br/>
     <div ng-if="!showItems" ng-repeat="user in users">
