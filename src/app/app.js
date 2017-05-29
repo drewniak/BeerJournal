@@ -8,6 +8,7 @@ import "angular-sessionstorage"
 import "angular-route"
 import "angular-wizard"
 import "angular-bootstrap-colorpicker"
+import "angular-advanced-searchbox"
 
 import "../style/app.css";
 import "../style/galeryListStyle.css";
@@ -18,6 +19,8 @@ import "../style/events.css"
 import "../style/default.theme.css";
 import "angular-bootstrap-colorpicker/css/colorpicker.css"
 
+import "../style/advancedSearch.css"
+import "../style/rate.css"
 
 import routing from "./app.config.js";
 import themeConfig from "./default.theme"
@@ -40,10 +43,11 @@ import exchange from  "../features/exchange"
 import StartController from "../features/startPage";
 import ItemsSelectionController from "../features/exchange/selectItems"
 import OfferDetailsController from "../features/exchange/offerDetails"
+import topRatedListController from "../features/topRatedItems"
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, theme, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', "colorpicker.module"])
+angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, theme, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', "colorpicker.module", 'angular-advanced-searchbox'])
     .config(routing)
     .config(themeConfig)
     .run(run);

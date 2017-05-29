@@ -22,11 +22,11 @@ export default function ExchangeController($rootScope, $scope, $http, $location,
     }
 
 
-$scope.showDetails = function(ownerId, offerId){  
-    $location.path('/offerDetails').search('ownerId', ownerId).search('offerId', offerId);
-}
+    $scope.showDetails = function(ownerId, offerId){
+        $location.path('/offerDetails').search('offerId', offerId);
+    }
 
 
-getOffers();
+    getOffers();
 }
 

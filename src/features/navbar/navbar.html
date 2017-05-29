@@ -30,6 +30,13 @@
             Exchanges
         </md-button>
 
+        <md-button aria-label="HallOfFame"
+                   ui-sref="topRatedList"
+                   class="md-raised md-small md-accent"
+                   ng-show="vm.isLoggedIn()">
+            Hall of fame
+        </md-button>
+
         <md-button ng-show="localstream" ng-click="turnOffCamera()">
             <md-icon><i class="material-icons">videocam_off</i></md-icon>
         </md-button>
@@ -71,7 +78,7 @@
                  ng-show="vm.isLoggedIn()">
 
             <md-button class="md-icon my-icon-button" aria-label="Account" ng-click="$mdMenu.open()">
-                <img src="{{avatar}}" alt="Account" width="50" height="50">
+                <img id="avatarImage" src="{{avatar}}" alt="Account" width="50" height="50">
             </md-button>
 
 
@@ -80,6 +87,5 @@
                 <md-button class="md-primary" ng-click="vm.logout()">Log out</md-button>
             </md-menu-content>
         </md-menu>
-
     </div>
 </md-toolbar>

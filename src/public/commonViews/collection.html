@@ -35,14 +35,14 @@
                       md-highlight-flags="gi">{{item.category}}</span>
             </md-card-title-text>
             <md-card-title-media>
-                <img ng-show="item.image" src="{{item.image}}" height="75">
+                <img ng-show="item.image" ng-src="{{item.image}}" err-src="images/fallbackIcons/item.svg" height="75">
             </md-card-title-media>
         </md-card-title>
         <md-card-content>
             <button class="btn btn-primary" ng-click="showDetails(item.itemId)">Details</button>
             <button class="btn btn-warning" ng-show="isUserCollection" ng-click="deleteItem(item.itemId)">Delete item
             </button>
-            <button class="btn btn-primary" ng-click="editItem(item.itemId)">Edit</button>
+            <button class="btn btn-primary" ng-show="isUserCollection" ng-click="editItem(item.itemId)">Edit</button>
         </md-card-content>
     </md-card>
 </md-card-content>

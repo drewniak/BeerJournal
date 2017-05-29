@@ -1,4 +1,4 @@
-export default function CollectionsController($rootScope, $scope, $http, $location, $uibModal) {
+export default function CollectionsController($rootScope, $sessionStorage, $scope, $http, $location, $uibModal) {
     
     $scope.pagination = {
         currentPage: 1,
@@ -21,10 +21,13 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
     let user = undefined;
     $scope.isUserCollection = false;
 
-    var selectedUserId = $location.search().id;
+    var selectedUserId = undefined;
+    if ($scope.selectedUser) {
+        selectedUserId = $scope.selectedUser.id
+    }
     if (!selectedUserId) {
-        if ($scope.selectedUser) {
-            selectedUserId = $scope.selectedUser.id;
+        if ($location.search().id) {
+            selectedUserId = $location.search().id;
         } else {
             selectedUserId = $rootScope.globals.currentUser.id;
         }
@@ -65,12 +68,16 @@ export default function CollectionsController($rootScope, $scope, $http, $locati
     }
 
     function getUserAvatar() {
-        $http.get('api/users/'+user.id+'/avatar')
-            .then(function (response) {
-                $scope.selectedUserAvatar = 'api/users/'+user.id+'/avatar';
-            }, function (error) {
-                $scope.selectedUserAvatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxeed1zuKopBf5p58ffZNLCz2DMwbmA_xj9fD2W-EzZ4xcsVN6oFhAAw';
-            });
+        $scope.selectedUserAvatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxeed1zuKopBf5p58ffZNLCz2DMwbmA_xj9fD2W-EzZ4xcsVN6oFhAAw';
+        $http.get('api/users/' + user.id + '/avatar')
+                .then(function (response) {
+                    $scope.selectedUserAvatar = 'api/users/' + user.id + '/avatar';
+                }, function (error) {
+                    if($sessionStorage.getObject('user').fbId){
+                        $scope.selectedUserAvatar = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';
+                    }
+                });
+
     }
 
     $scope.showDetails = function (itemId) {

@@ -7,7 +7,7 @@
             <md-card-content>
                 <div class="row">
                     <div class="col-md-1" align="left">
-                        <img src="{{event.image}}" height="50" width="50"/>
+                        <img ng-src="{{event.image}}" err-src="images/fallbackIcons/item.png" height="50" width="50"/>
                     </div>
                     <div class="col-md-9" align="left">
                         <div ng-if="event.action=='CREATE'">
@@ -38,7 +38,7 @@
                 <md-card-content>
                     <div class="row">
                         <div class="col-md-1" align="left">
-                            <img src="{{event.image}}" height="50" width="50"/>
+                            <img ng-src="{{event.image}}" err-src="images/fallbackIcons/user.png" height="50" width="50"/>
                         </div>
                         <div class="col-md-9" align="left">
                             <p class="md-subhead">User <b>{{event.data.firstName}} {{event.data.lastName}}</b> just

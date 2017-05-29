@@ -1,6 +1,6 @@
 <div class="container">
     <div ng-controller="itemDetailsController" style="margin-top: 1%; margin-bottom: 1%">
-        <h1>{{item.name}}</h1>
+        <h1>{{item.name}}</h1><jk-rating-stars rating="avgRate" read-only="readOnly" ></jk-rating-stars>
 
         <div ng-show="item.owner">
             <md-button class="md-primary" ng-click="showUserCollection(item.owner)">Owner: <b>{{item.owner.firstName + ' ' + item.owner.lastName}}</b></md-button>
@@ -15,17 +15,23 @@
         <h3>Type: {{item.type}}</h3>
         <h3>Style: {{item.style}}</h3>
 
+        <div ng-repeat="attribute in item.attributes">
+            <h4>{{attribute.name}}: {{attribute.value}}</h4>
+        </div>
+
         <div class="images">
             <ul class="gallery gallery1">
                 <li ng-repeat="image in item.images">
                     <a ng-click="openLightboxModal($index,item.images)">
-                        <img ng-src="{{image}}" height="100" width="100">
+                        <img ng-src="{{image}}" err-src="images/fallbackIcons/item.svg" height="100" width="100">
                     </a>
                 </li>
             </ul>
         </div>
 
         <div>
+            <label ng-if="!isMyItem">Rate it</label>
+            <jk-rating-stars  rating="rate" ng-if="!isMyItem"></jk-rating-stars>
             <button ng-show="item.owner" class="btn btn-success" ng-click="makeAnOffer(item.id)"><b>I WANT IT!!!</b></button>
             <button class="btn btn-primary" ng-click="close()">Close</button>
         </div>

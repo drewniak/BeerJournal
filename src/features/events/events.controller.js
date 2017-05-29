@@ -1,4 +1,4 @@
-export default function EventsController($rootScope, $scope, $http, $location, $uibModal, moment) {
+export default function EventsController($rootScope, $sessionStorage,$scope, $http, $location, $uibModal, moment) {
     $scope.pagination = {
         currentPage: 1,
         itemsPerPage: 10,
@@ -56,7 +56,7 @@ export default function EventsController($rootScope, $scope, $http, $location, $
 
     function loadEventImage(event) {
         if (event.dataType == 'ITEM') {
-            var DEFAULT = 'https://image.flaticon.com/icons/svg/410/410321.svg';
+            var DEFAULT = 'images/fallbackIcons/item.svg';
 
             $http.get('/api/items/' + event.data.id).then(
                 function (res) {
@@ -70,19 +70,24 @@ export default function EventsController($rootScope, $scope, $http, $location, $
                     event.image = DEFAULT;
                 });
         } else if (event.dataType == 'USER') {
-            var DEFAULT = 'https://maxcdn.icons8.com/Color/PNG/48/Users/checked_user_male-48.png';
+            var DEFAULT = 'images/fallbackIcons/user.png';
 
             $http.get('/api/users/' + event.data.id).then(
                 function (res) {
                     if (res.data.avatarFileId) {
                         event.image = '/api/users/' + event.id + '/avatar';
                     } else {
-                        event.image = DEFAULT;
+                        if($sessionStorage.getObject('user').fbId){
+                            $scope.image = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';
+                        }else {
+                            event.image = DEFAULT;
+                        }
                     }
                 },
                 function () {
                     event.image = DEFAULT;
                 })
+
         }
     }
 

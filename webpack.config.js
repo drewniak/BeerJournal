@@ -90,11 +90,11 @@ module.exports = function makeWebpackConfig() {
         proxy: {
             '/api/login': {
                 'pathRewrite': {'^/api': ''},
-                'target': 'http://vps394659.ovh.net:8080/',
+                'target': 'http://vps394659.ovh.net:8081/',
                 changeOrigin: true
             },
             '/api': {
-                'target': 'http://vps394659.ovh.net:8080/',
+                'target': 'http://vps394659.ovh.net:8081/',
                 changeOrigin: true
             }
         }
