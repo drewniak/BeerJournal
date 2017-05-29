@@ -1,28 +1,33 @@
 <md-content class="md-padding">
     <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-        <md-nav-item md-nav-href="/offers" name="users">
-            Offers from others          
-        </md-nav-item>
-         <md-nav-item md-nav-href="/exchange" name="collections">
-           My exchange proposals
+        <md-nav-item md-nav-href="/offers" name="offers">
+           Offers
+        </md-nav-item> 
+        <md-nav-item md-nav-href="/acceptedByOfferor" name="acceptedByOfferor">
+           Accepted by offeror
+        </md-nav-item> 
+        <md-nav-item md-nav-href="/acceptedByOwner" name="acceptedByOwner">
+           Accepted by owner
+        </md-nav-item> 
+        <md-nav-item md-nav-href="/waitingForOwner" name="waitingForOwner">
+           Waiting for owner
+        </md-nav-item> 
+        <md-nav-item md-nav-href="/waitingForOfferor" name="waitingForOfferor">
+           Waiting for offeror
+        </md-nav-item> 
+        <md-nav-item md-nav-href="/canceled" name="canceled">
+           Canceled
+        </md-nav-item> 
+        <md-nav-item md-nav-href="/rejected" name="rejected">
+           Rejected
         </md-nav-item> 
      </md-nav-bar>
-
-<md-card-content ng-repeat="offer in offers | filter: {performed : 'false'}">
+<md-card-content ng-repeat="offer in offers | filter: {state : 'WAITING_FOR_OWNER'}">
 
     <md-card md-theme="default" md-theme-watch>
         <md-card-title>
             <md-card-title-text>
-               <div ng-repeat = "offeror in offerors">
-                <div ng-if= " offeror.id == offer.offerorId">
-                <span class="md-headline"
-                      md-highlight-text="textFilter"   
-                            
-                      md-highlight-flags="gi">{{offeror.firstName}} {{offeror.lastName}}</span>
-                      wants to exchange 
-            </div>
-            </div>
-                        <ul>
+                 <ul>
                         <li ng-repeat=" offeredItem in offer.offeredItems"  >
                             {{ offeredItem.name }}  
                         </br>

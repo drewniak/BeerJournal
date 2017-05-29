@@ -1,9 +1,9 @@
-export default function ExchangeController($rootScope, $scope, $http, $location, $uibModal, moment) {
+export default function WaitingForOwnerController($rootScope, $scope, $http, $location, $uibModal, moment) {
 
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "exchange";
+    $scope.currentNavItem = "waitingForOwner";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};

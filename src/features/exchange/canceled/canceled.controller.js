@@ -1,9 +1,9 @@
-export default function ExchangeController($rootScope, $scope, $http, $location, $uibModal, moment) {
+export default function CanceledController($rootScope, $scope, $http, $location, $uibModal, moment) {
 
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "exchange";
+    $scope.currentNavItem = "canceled";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};
@@ -11,7 +11,7 @@ export default function ExchangeController($rootScope, $scope, $http, $location,
 
 
     function getOffers () {
-        $http.get('/api/exchanges?offerorId=' + user.id)
+        $http.get('/api/exchanges?ownerId=' + user.id)
             .then(function (response) {
                 $scope.offers = response.data;
 

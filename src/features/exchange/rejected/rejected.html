@@ -3,7 +3,7 @@
         <md-nav-item md-nav-href="/offers" name="offers">
            Offers
         </md-nav-item> 
-        <md-nav-item md-nav-href="/acceptedByOfferor" name="acceptedByOfferor">
+       <md-nav-item md-nav-href="/acceptedByOfferor" name="acceptedByOfferor">
            Accepted by offeror
         </md-nav-item> 
         <md-nav-item md-nav-href="/acceptedByOwner" name="acceptedByOwner">
@@ -23,7 +23,7 @@
         </md-nav-item> 
      </md-nav-bar>
 
-<md-card-content ng-repeat="offer in offers">
+<md-card-content ng-repeat="offer in offers | filter: {state : 'REJECTED'}">
     <md-card md-theme="default" md-theme-watch>
         <md-card-title>
             <md-card-title-text>
@@ -37,10 +37,7 @@
           </md-card-title>
  <md-card-content>
             <button class="btn btn-primary" ng-click="showDetails(offer.ownerId, offer.id)">Details</button>
-            <button class="btn btn-warning" ng-click="cancel(offer.offerId)">Cancel offer</button>
-
-         
-        </md-card-content>
+                  </md-card-content>
      
     </md-card>
 </md-card-content>
