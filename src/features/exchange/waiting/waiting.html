@@ -1,6 +1,6 @@
 <md-content class="md-padding">
     <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-         <md-nav-item md-nav-href="/accepted" name="accepted">
+        <md-nav-item md-nav-href="/accepted" name="accepted">
            Accepted
         </md-nav-item> 
         <md-nav-item md-nav-href="/waiting" name="waiting">
@@ -10,19 +10,18 @@
            Closed
         </md-nav-item> 
       </md-nav-bar>
+
+
+
  <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-        <md-nav-item md-nav-href="/completed" name="completed">
-           Completed
+        <md-nav-item md-nav-href="/waitingForMe" name="waitingForMe">
+           Waiting for me
         </md-nav-item> 
-        <md-nav-item md-nav-href="/canceled" name="canceled">
-           Canceled
-        </md-nav-item> 
-        <md-nav-item md-nav-href="/rejected" name="rejected">
-           Rejected
+        <md-nav-item md-nav-href="/waitingForContractor" name="waitingForContractor">
+           Waiting for contractor
         </md-nav-item> 
       </md-nav-bar>
-
-<md-card-content ng-repeat="offer in offers | filter: {state : 'REJECTED'}">
+<md-card-content ng-repeat="offer in offers | filter: {state : 'ACCEPTED_BY_OFFEROR'}">
     <md-card md-theme="default" md-theme-watch>
         <md-card-title>
             <md-card-title-text>

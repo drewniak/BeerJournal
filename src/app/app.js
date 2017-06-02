@@ -45,17 +45,21 @@ import StartController from "../features/startPage";
 import ItemsSelectionController from "../features/exchange/selectItems"
 import OfferDetailsController from "../features/exchange/offerDetails"
 import topRatedListController from "../features/topRatedItems"
-import acceptedByOfferor from "../features/exchange/acceptedByOfferor"
-import acceptedByOwner from "../features/exchange/acceptedByOwner"
-import waitingForOwner from "../features/exchange/waitingForOwner"
-import waitingForOfferor from "../features/exchange/waitingForOfferor"
+import acceptedByMe from "../features/exchange/acceptedByMe"
+import acceptedByContractor from "../features/exchange/acceptedByContractor"
+import waitingForMe from "../features/exchange/waitingForMe"
+import waitingForContractor from "../features/exchange/waitingForContractor"
 import canceled from "../features/exchange/canceled"
 import rejected from "../features/exchange/rejected"
 import beerMap from "../features/beerMap"
+import accepted from "../features/exchange/accepted"
+import waiting from "../features/exchange/waiting"
+import closed from "../features/exchange/closed"
+import completed from "../features/exchange/completed"
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, theme, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, acceptedByOfferor, acceptedByOwner, waitingForOwner, waitingForOfferor, canceled, rejected, topRatedListController, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', 'angular-advanced-searchbox', "colorpicker.module", beerMap])
+angular.module(MODULE_NAME, [uirouter, EditItemController, collections, login, registration, home, allusers, navbar, theme, authService, itemDetailsController, AddNewItemController, EventsController, accountSettings, countriesProvider, StartController, ItemsSelectionController, OfferDetailsController, exchange, offers, acceptedByMe, acceptedByContractor, waitingForMe, waitingForContractor, canceled, rejected, topRatedListController, accepted, waiting, closed, completed, 'ngSessionStorage', 'ngMaterial','base64', 'ngRoute','ui.bootstrap','bootstrapLightbox', 'mgo-angular-wizard', 'angular-advanced-searchbox', "colorpicker.module", beerMap])
     .config(routing)
     .config(themeConfig)
     .run(run);

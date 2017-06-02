@@ -1,4 +1,4 @@
-export default function ExchangeController($rootScope, $scope, $http, $location, $uibModal, moment) {
+export default function AcceptedController($rootScope, $scope, $http, $location, $uibModal, moment) {
 
     let user = $rootScope.globals.currentUser;
 
@@ -11,7 +11,7 @@ export default function ExchangeController($rootScope, $scope, $http, $location,
 
 
     function getOffers () {
-        $http.get('/api/exchanges?offerorId=' + user.id)
+        $http.get('/api/exchanges?ownerId=' + user.id )
             .then(function (response) {
                 $scope.offers = response.data;
 

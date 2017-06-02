@@ -1,29 +1,25 @@
 <md-content class="md-padding">
     <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-        <md-nav-item md-nav-href="/offers" name="offers">
-           Offers
+         <md-nav-item md-nav-href="/accepted" name="accepted">
+           Accepted
         </md-nav-item> 
-        <md-nav-item md-nav-href="/acceptedByOfferor" name="acceptedByOfferor">
-           Accepted by offeror
+        <md-nav-item md-nav-href="/waiting" name="waiting">
+           Waiting
         </md-nav-item> 
-        <md-nav-item md-nav-href="/acceptedByOwner" name="acceptedByOwner">
-           Accepted by owner
+        <md-nav-item md-nav-href="/closed" name="closed">
+           Closed
         </md-nav-item> 
-        <md-nav-item md-nav-href="/waitingForOwner" name="waitingForOwner">
-           Waiting for owner
+      </md-nav-bar>
+ <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+        <md-nav-item md-nav-href="/acceptedByMe" name="acceptedByMe">
+           Accepted by me
         </md-nav-item> 
-        <md-nav-item md-nav-href="/waitingForOfferor" name="waitingForOfferor">
-           Waiting for offeror
+        <md-nav-item md-nav-href="/acceptedByContractor" name="acceptedByContractor">
+           Accepted by contractor
         </md-nav-item> 
-        <md-nav-item md-nav-href="/canceled" name="canceled">
-           Canceled
-        </md-nav-item> 
-        <md-nav-item md-nav-href="/rejected" name="rejected">
-           Rejected
-        </md-nav-item> 
-     </md-nav-bar>
+      </md-nav-bar>
 
-<md-card-content ng-repeat="offer in offers | filter: {state : 'WAITING_FOR_OFFEROR'}">
+<md-card-content ng-repeat="offer in offers | filter: {state : 'ACCEPTED_BY_OFFEROR'}">
     <md-card md-theme="default" md-theme-watch>
         <md-card-title>
             <md-card-title-text>
