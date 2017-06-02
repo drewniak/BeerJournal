@@ -10,9 +10,6 @@
            Closed
         </md-nav-item> 
       </md-nav-bar>
-
-
-
  <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
         <md-nav-item md-nav-href="/waitingForMe" name="waitingForMe">
            Waiting for me
@@ -21,22 +18,4 @@
            Waiting for contractor
         </md-nav-item> 
       </md-nav-bar>
-<md-card-content ng-repeat="offer in offers | filter: {state : 'ACCEPTED_BY_OFFEROR'}">
-    <md-card md-theme="default" md-theme-watch>
-        <md-card-title>
-            <md-card-title-text>
-            
-                <span class="md-headline"
-
-                      md-highlight-text="textFilter"
-                                            
-                      md-highlight-flags="gi">   {{offer.desiredItems[0].name}}</span>
-            </md-card-title-text>
-          </md-card-title>
- <md-card-content>
-            <button class="btn btn-primary" ng-click="showDetails(offer.ownerId, offer.id)">Details</button>
-                  </md-card-content>
-     
-    </md-card>
-</md-card-content>
    </md-content>
