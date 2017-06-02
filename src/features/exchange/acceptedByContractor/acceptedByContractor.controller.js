@@ -11,7 +11,7 @@ export default function AcceptedByContractorController($rootScope, $scope, $http
 
 
     function getOffers () {
-        $http.get('/api/exchanges?ownerId=' + user.id)
+        $http.get('/api/exchanges?offerorId=' + user.id)
             .then(function (response) {
                 $scope.offers = response.data;
 
