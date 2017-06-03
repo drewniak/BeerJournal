@@ -60,9 +60,9 @@ export default function EventsController($rootScope, $sessionStorage,$scope, $ht
 
             $http.get('/api/items/' + event.data.id).then(
                 function (res) {
-                    var imageIds = res.data.imageIds;
-                    if (imageIds.length > 0) {
-                        event.image = '/api/files/' + imageIds[0];
+                    var imageId = res.data.mainImageId;
+                    if (imageId) {
+                        event.image = '/api/files/' + imageId;
                     } else {
                         event.image = DEFAULT;
                     }

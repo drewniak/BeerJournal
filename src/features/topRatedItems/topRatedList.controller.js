@@ -56,14 +56,11 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
     }
 
     function setItemImage(item) {
-        $http.get('/api/items/' + item.itemId).then(function(res) {
-            var ids = res.data.imageIds;
-            if (ids.length > 0) {
-                item.image = '/api/files/' + ids[0];
-            } else {
-                item.image = undefined;
-            }
-        })
+        if (item.imageId) {
+            item.image = '/api/files/' + item.imageId;
+        } else {
+            item.image = undefined;
+        }
     }
 
     $scope.$on('advanced-searchbox:modelUpdated', function (event, model) {
