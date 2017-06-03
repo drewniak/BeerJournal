@@ -3,7 +3,8 @@ export default function WaitingForMeController($rootScope, $scope, $http, $locat
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "waitingForMe";
+  //  $scope.currentNavItem = "waitingForMe";
+    $scope.currentTab = "waitingForMe";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};

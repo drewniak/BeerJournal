@@ -3,7 +3,8 @@ export default function ExchangeController($rootScope, $scope, $http, $location,
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "accepted";
+    $scope.currentNavItem = "waiting";
+    $scope.currentTab = "waitingForMe";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};
