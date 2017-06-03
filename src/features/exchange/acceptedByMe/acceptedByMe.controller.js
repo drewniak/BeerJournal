@@ -1,9 +1,10 @@
-export default function AcceptedByOwnerController($rootScope, $scope, $http, $location, $uibModal, moment) {
+export default function AcceptedByMeController($rootScope, $scope, $http, $location, $uibModal, moment) {
 
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "acceptedByOwner";
+    $scope.currentTab = "acceptedByMe";
+    $scope.currentNavItem = "accepted";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};
@@ -11,7 +12,7 @@ export default function AcceptedByOwnerController($rootScope, $scope, $http, $lo
 
 
     function getOffers () {
-        $http.get('/api/exchanges?ownerId=' + user.id)
+        $http.get('/api/exchanges?ownerId=' + user.id )
             .then(function (response) {
                 $scope.offers = response.data;
 

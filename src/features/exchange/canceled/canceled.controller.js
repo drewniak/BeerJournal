@@ -3,7 +3,8 @@ export default function CanceledController($rootScope, $scope, $http, $location,
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "canceled";
+    $scope.currentNavItem = "closed";
+    $scope.currentTab = "canceled";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};
@@ -11,7 +12,7 @@ export default function CanceledController($rootScope, $scope, $http, $location,
 
 
     function getOffers () {
-        $http.get('/api/exchanges?ownerId=' + user.id)
+        $http.get('/api/exchanges?offerorId=' + user.id)
             .then(function (response) {
                 $scope.offers = response.data;
 

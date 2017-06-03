@@ -1,9 +1,10 @@
-export default function WaitingForOfferorController($rootScope, $scope, $http, $location, $uibModal, moment) {
+export default function WaitingForMeController($rootScope, $scope, $http, $location, $uibModal, moment) {
 
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "waitingForOfferor";
+    $scope.currentNavItem = "waiting";
+    $scope.currentTab = "waitingForMe";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};
@@ -11,6 +12,7 @@ export default function WaitingForOfferorController($rootScope, $scope, $http, $
 
 
     function getOffers () {
+        console.log("hello");
         $http.get('/api/exchanges?ownerId=' + user.id)
             .then(function (response) {
                 $scope.offers = response.data;

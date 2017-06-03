@@ -1,9 +1,10 @@
-export default function WaitingForOwnerController($rootScope, $scope, $http, $location, $uibModal, moment) {
+export default function WaitingForContractorController($rootScope, $scope, $http, $location, $uibModal, moment) {
 
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "waitingForOwner";
+    $scope.currentNavItem = "waiting";
+    $scope.currentTab = "waitingForContractor";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};
