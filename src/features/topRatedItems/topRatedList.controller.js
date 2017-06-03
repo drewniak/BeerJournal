@@ -18,6 +18,13 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
         { key: "type", name: "Type", placeholder: "Type...", restrictToSuggestedValues: true, suggestedValues: ['Bottle', 'Can', 'Cap', 'Label'] }
     ];
 
+    var periods = {
+        past24h: "now-1d",
+        pastWeek: "now-1w",
+        pastMonth: "now-1M",
+        pastYear: "now-1y"
+    };
+
     vm.getItems = function() {
         var sort = {
             averageRating : {
@@ -53,6 +60,14 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
                 _all: $scope.filter.query
             }
             query.bool.must.push({match: match});
+        }
+        if (vm.period != "allTime") {
+            var range = {
+                created: {
+                    gte: periods[vm.period]
+                }
+            }
+            query.bool.must.push({range: range});
         }
 
         $http.post('/search', {query: query, sort: sort}, {
