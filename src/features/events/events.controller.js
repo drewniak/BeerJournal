@@ -75,7 +75,7 @@ export default function EventsController($rootScope, $sessionStorage,$scope, $ht
             $http.get('/api/users/' + event.data.id).then(
                 function (res) {
                     if (res.data.avatarFileId) {
-                        event.image = '/api/users/' + event.id + '/avatar';
+                        event.image = '/api/files/' + res.data.avatarFileId;
                     } else {
                         if($sessionStorage.getObject('user').fbId){
                             $scope.image = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';

@@ -1,5 +1,6 @@
 export default function NavbarController($scope, $rootScope, $http, authService, $cookieStore, $timeout, $sessionStorage) {
     let vm = this;
+    vm.defaultAvatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxeed1zuKopBf5p58ffZNLCz2DMwbmA_xj9fD2W-EzZ4xcsVN6oFhAAw';
     vm.logout = function () {
         authService.logout();
     };
@@ -23,17 +24,25 @@ export default function NavbarController($scope, $rootScope, $http, authService,
     }
 
     var getUserAvatar = function () {
-        $scope.avatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxeed1zuKopBf5p58ffZNLCz2DMwbmA_xj9fD2W-EzZ4xcsVN6oFhAAw';
+        $scope.avatar = undefined;
         if (vm.isLoggedIn()) {
-            $http.get('api/users/' + $rootScope.globals.currentUser.id + '/avatar')
-                .then(function (response) {
-                    $scope.avatar = 'api/users/' + $rootScope.globals.currentUser.id + '/avatar';
-                }, function (error) {
-                    if($sessionStorage.getObject('user').fbId){
-                        $scope.avatar = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';
+            $http.get('/api/users/' + $rootScope.globals.currentUser.id)
+                .then(function(res) {
+                    if(res.data.avatarFileId) {
+                        $scope.avatar = 'api/files/' + res.data.avatarFileId;
+                    } else {
+                        if($sessionStorage.getObject('user').fbId){
+                            $scope.avatar = 'http://graph.facebook.com/' + $sessionStorage.getObject('user').fbId + '/picture?type=normal';
+                        } else {
+                            $scope.avatar = vm.defaultAvatar;
+                        }
                     }
+                }, function(err) {
+                    console.log(err);
+                    $scope.avatar = vm.defaultAvatar;
                 });
-
+        } else {
+            $scope.avatar = vm.defaultAvatar;
         }
     }
 
