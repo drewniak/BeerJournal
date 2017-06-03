@@ -1,4 +1,4 @@
-export default function NavbarController($scope, $rootScope, $http, authService, $cookieStore, $timeout, $sessionStorage) {
+export default function NavbarController($scope, $rootScope, $http, authService, $timeout, $sessionStorage, localStorageService) {
     let vm = this;
     vm.logout = function () {
         authService.logout();
@@ -38,21 +38,28 @@ export default function NavbarController($scope, $rootScope, $http, authService,
     }
 
     function initThemeCustomize() {
-        let color = $cookieStore.get("themeColor");
+        let color = loadThemeColor();
         console.log(color);
         if (!color) {
             color = "#febf01";
         }
 
-        $cookieStore.put("themeColor", $scope.themeColor)
+        saveThemeColor();
 
         $scope.themeColor = color;
         $rootScope.themeColor = $scope.themeColor;
 
         $scope.$watch("themeColor", (themeColor) => {
-            $cookieStore.put("themeColor", $scope.themeColor)
-            console.log($cookieStore.get("themeColor"))
+            saveThemeColor();
         });
+    }
+
+	function loadThemeColor() {
+        return localStorageService.get("themeColor");
+	}
+	
+    function saveThemeColor() {
+        localStorageService.set("themeColor", $scope.themeColor);
     }
 
     getUserAvatar();

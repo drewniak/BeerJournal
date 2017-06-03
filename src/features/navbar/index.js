@@ -1,10 +1,10 @@
 import angular from 'angular';
 import 'angular-material';
-import "angular-cookies"
+import 'angular-local-storage';
 
 import NavbarController from './navbar.controller';
 
-export default angular.module('navbar', ['ngMaterial', 'ngCookies'])
+export default angular.module('navbar', ['ngMaterial', 'LocalStorageModule'])
     .directive('navbar', [function() {
         return {
             template: require('./navbar.html'),
