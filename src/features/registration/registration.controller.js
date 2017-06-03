@@ -12,6 +12,9 @@ export default function RegistrationController($rootScope, $scope, $http, $locat
                     $location.path('/login');
                 },
                 function(res) {
+                    if(res.status === 409){
+                         toastr.error('User with given email already exists ', 'Error');
+                      }
                     toastr.error('Unable to create new user ', 'Error');
                     console.log(res);
                 });
