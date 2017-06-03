@@ -3,7 +3,8 @@ export default function RejectedController($rootScope, $scope, $http, $location,
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "rejected";
+    $scope.currentNavItem = "closed";
+    $scope.currentTab = "rejected";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};

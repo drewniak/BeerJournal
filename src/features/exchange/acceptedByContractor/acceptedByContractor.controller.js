@@ -3,7 +3,8 @@ export default function AcceptedByContractorController($rootScope, $scope, $http
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "acceptedByContractor";
+    $scope.currentTab = "acceptedByContractor";
+    $scope.currentNavItem = "accepted";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};

@@ -3,7 +3,8 @@ export default function AcceptedByMeController($rootScope, $scope, $http, $locat
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "acceptedByMe";
+    $scope.currentTab = "acceptedByMe";
+    $scope.currentNavItem = "accepted";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};

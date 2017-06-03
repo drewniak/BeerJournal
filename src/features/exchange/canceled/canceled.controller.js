@@ -3,7 +3,8 @@ export default function CanceledController($rootScope, $scope, $http, $location,
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "canceled";
+    $scope.currentNavItem = "closed";
+    $scope.currentTab = "canceled";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};

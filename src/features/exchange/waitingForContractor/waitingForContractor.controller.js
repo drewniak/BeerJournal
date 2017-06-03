@@ -3,7 +3,8 @@ export default function WaitingForContractorController($rootScope, $scope, $http
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-    $scope.currentNavItem = "waitingForContractor";
+    $scope.currentNavItem = "waiting";
+    $scope.currentTab = "waitingForContractor";
     $scope.offers = [];
     $scope.offerors = [];
     $scope.offeror = {};
