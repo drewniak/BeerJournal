@@ -1,6 +1,6 @@
 <img ng-if="selectedUserAvatar" ng-src="{{selectedUserAvatar}}" height="100" width="100">
 <br>
-<label>{{user_firstName}} {{user_lastName}}</label>
+<label ng-show="isUserCollection">{{firstName}} {{lastName}}</label>
 <br>
 <br>
 
