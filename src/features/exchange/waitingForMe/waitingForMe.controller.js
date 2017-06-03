@@ -3,7 +3,7 @@ export default function WaitingForMeController($rootScope, $scope, $http, $locat
     let user = $rootScope.globals.currentUser;
 
     $scope.username = user.username;
-  //  $scope.currentNavItem = "waitingForMe";
+    $scope.currentNavItem = "waiting";
     $scope.currentTab = "waitingForMe";
     $scope.offers = [];
     $scope.offerors = [];
@@ -12,6 +12,7 @@ export default function WaitingForMeController($rootScope, $scope, $http, $locat
 
 
     function getOffers () {
+        console.log("hello");
         $http.get('/api/exchanges?ownerId=' + user.id)
             .then(function (response) {
                 $scope.offers = response.data;
