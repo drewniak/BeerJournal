@@ -6,7 +6,7 @@
 
 .Treant > .node {
     color: #ffffff;
-    background-color: #f38022;
+    background-color: #f1a10f;
     border-radius: 50%;
     padding: 10px;
 }
@@ -25,9 +25,22 @@
 }
 
 .Treant .node.collapsed {
-    border: 2px solid #a61d00;
+    border: 2px solid #f18113;
 }
 
 .Treant .node.collapsed .collapse-switch {
     background: none;
+}
+
+.Treant .node {
+    cursor: pointer;
+}
+
+.Treant .node:hover {
+    background-color: rgba(241, 161, 15, 0.83);
+}
+
+.Treant .node.selected {
+    background-color: #f1c40f;
+
 }
