@@ -25,7 +25,7 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
         pastYear: "now-1y"
     };
 
-    vm.getItems = function() {
+    vm.getItems = function(period = 'past24h') {
         var sort = {
             averageRating : {
                 order : "desc"
@@ -61,10 +61,10 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
             }
             query.bool.must.push({match: match});
         }
-        if (vm.period != "allTime") {
+        if (period != "allTime") {
             var range = {
                 created: {
-                    gte: periods[vm.period]
+                    gte: periods[period]
                 }
             }
             query.bool.must.push({range: range});
