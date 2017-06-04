@@ -94,15 +94,10 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
                     userItem.id = id;
                     userItem.images = [];
                     response.data.content.forEach(function (item) {
-                      $http.get('/api/items/'+item.itemId)
-                            .then(function (res) {
-                                res.data.imageIds.forEach(function (imageId) {
-                                    userItem.images = ['/api/files/' + imageId];
-                                    createImagesCollection(userItem);
-                                })
-                            }, function (error) {
-                                console.log(error);
-                            });
+                                    if (item.imageId != null) {
+                                        userItem.images = ['/api/files/' + item.imageId];
+                                       createImagesCollection(userItem);
+                                }
                     })
                 }, function (error) {
                     console.log(error);
