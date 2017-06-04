@@ -18,30 +18,77 @@ export default function TopRatedListController($rootScope, $scope, $http, $locat
         { key: "type", name: "Type", placeholder: "Type...", restrictToSuggestedValues: true, suggestedValues: ['Bottle', 'Can', 'Cap', 'Label'] }
     ];
 
-    vm.getItems = function() {
-        $http.get('/api/users/' + $rootScope.globals.currentUser.id + "/collection/items?sortBy=averagerating&sortType=decs", {
-            params: {
-                name: $scope.filter.query,
-                category: $scope.filter.type,
-                brewery: $scope.filter.brewery,
-                country: $scope.filter.country,
-                lacking: false,
-                count: $scope.pagination.itemsPerPage,
-                page: $scope.pagination.currentPage-1
-            }
-        })
-            .then(function (response) {
-                vm.items = response.data.content;
+    var periods = {
+        past24h: "now-1d",
+        pastWeek: "now-1w",
+        pastMonth: "now-1M",
+        pastYear: "now-1y"
+    };
 
-                vm.items.forEach(function(item) {
-                    $http.get('/api/items/' + item.itemId).then(function(res) {
-                        item.averageRating = res.data.averageRating;
-                    })
-                    setItemImage(item);
-                });
-            }, function (error) {
-                console.log(error);
-            });
+    vm.getItems = function() {
+        var sort = {
+            averageRating : {
+                order : "desc"
+            }
+        };
+        var query = {
+            bool: {
+                must: []
+            }
+        };
+
+        if ($scope.filter.type) {
+            var match = {
+                type: $scope.filter.type
+            }
+            query.bool.must.push({match: match});
+        }
+        if ($scope.filter.brewery) {
+            var match = {
+                brewery: $scope.filter.brewery
+            }
+            query.bool.must.push({match: match});
+        }
+        if ($scope.filter.country) {
+            var match = {
+                country: $scope.filter.country
+            }
+            query.bool.must.push({match: match});
+        }
+        if ($scope.filter.query) {
+            var match = {
+                _all: $scope.filter.query
+            }
+            query.bool.must.push({match: match});
+        }
+        if (vm.period != "allTime") {
+            var range = {
+                created: {
+                    gte: periods[vm.period]
+                }
+            }
+            query.bool.must.push({range: range});
+        }
+
+        $http.post('/search', {query: query, sort: sort}, {
+            params: {
+                size: $scope.pagination.itemsPerPage,
+                from: ($scope.pagination.currentPage-1) * $scope.pagination.itemsPerPage,
+                pretty: true
+            }
+        }).then(function(res){
+            $scope.pagination.totalItems = res.data.hits.total;
+
+            vm.items = [];
+            res.data.hits.hits.forEach(function (hit) {
+                var item = hit._source;
+                item.itemId = hit._id;
+                setItemImage(item);
+                vm.items.push(item);
+            })
+        }, function(res){
+            console.log(res);
+        })
     }
 
     vm.showDetails = function (itemId) {
