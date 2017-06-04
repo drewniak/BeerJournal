@@ -53,9 +53,9 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
                 var usersId = [];
                 $scope.users.forEach(function (user) {
                     user.images = [];
+                    getUserCollection(user);
                     usersId.push(user.id);
                 })
-                getUserCollections(usersId);
             }, function (error) {
                 console.log(error);
             });
@@ -86,62 +86,26 @@ export default function AllUsersController($rootScope, $scope, $location, $http,
         $scope.showItems = true;
     }
 
-    function getUserCollections(usersId) {
-        usersId.forEach(function (id) {
-            $http.get('api/users/'+id+'/collection/items')
-                .then(function (response) {
-                    var userItem = {};
-                    userItem.id = id;
-                    userItem.images = [];
-                    response.data.content.forEach(function (item) {
-                      $http.get('/api/items/'+item.itemId)
-                            .then(function (res) {
-                                res.data.imageIds.forEach(function (imageId) {
-                                    userItem.images = ['/api/files/' + imageId];
-                                    createImagesCollection(userItem);
-                                })
-                            }, function (error) {
-                                console.log(error);
-                            });
-                    })
-                }, function (error) {
-                    console.log(error);
-                });
-
-        })
-    }
-
-    var createImagesCollection = function (userItem) {
-        var imageTabObj = $scope.users.filter(function(v) {
-            return v.id === userItem.id;
-        })[0];
-        if(imageTabObj.images!=null) {
-            imageTabObj.images = imageTabObj.images.concat(userItem.images)
-            removeByAttr($scope.users, 'id', imageTabObj.id);
-            $scope.users.push(imageTabObj);
-        }else{
-            imageTabObj.images = userItem.images;
-            removeByAttr($scope.users,'id',imageTabObj.id);
-            $scope.users.push(imageTabObj);
-        }
-    }
-
-
-
-    var removeByAttr = function(arr, attr, value){
-        var i = arr.length;
-        while(i--){
-            if( arr[i]
-                && arr[i].hasOwnProperty(attr)
-                && (arguments.length > 2 && arr[i][attr] === value ) ){
-                arr.splice(i,1);
+    function getUserCollection(user) {
+        $http.get('api/users/'+user.id+'/collection/items', {
+            params:{
+                count: 3,
+                sortBy: "averagerating",
+                sortType: "desc"
             }
-        }
-        return arr;
+        }).then(function (response) {
+            response.data.content.forEach(function (item) {
+                $http.get('/api/items/'+item.itemId)
+                    .then(function (res) {
+                        if (res.data.mainImageId) {
+                            user.images.push('/api/files/' + res.data.mainImageId);
+                        }
+                    }, function (error) {
+                        console.log(error);
+                    });
+            })
+        }, function (error) {
+            console.log(error);
+        });
     }
 }
-
-
-
-
-
