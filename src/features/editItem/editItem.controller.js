@@ -6,6 +6,7 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
     vm.types = ['bottle','can','cap','label'];
     vm.item = {};
     vm.item.attributes=[];
+    vm.imagesToRemove = [];
     vm.removeAttribute = removeAttribute;
     vm.addNewAttribute = addNewAttribute;
 
@@ -32,6 +33,14 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
 
         $http.put('/api/users/' + vm.item.ownerId + "/collection/items/" + vm.item.id, vm.item).then(function(res) {
             toastr.success('Item successfully edited');
+
+            vm.imagesToRemove.forEach(function(image) {
+                $http.delete('/api/users/' + vm.item.ownerId + '/collection/items/' + vm.item.id + '/images/' + image)
+                    .then(function(){},
+                    function(err) {
+                        console.log(err);
+                    })
+            })
 
             var itemId = res.data.id;
 
@@ -134,6 +143,8 @@ export default function EditItemController($scope,$rootScope, $http, $timeout, $
         $scope.errFiles = undefined;
         $scope.imageFileAdded = false;
         vm.imageSrc = '';
+        vm.imagesToRemove = vm.item.imageIds;
+        vm.item.imageIds = [];
     }
 
     var modalInstance;
