@@ -6,6 +6,7 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
     $scope.rate = 0;
     $scope.readOnly = true;
     $scope.isMyItem = false;
+    $scope.offerId = undefined;
 
     $http.get('/api/items/' + itemID).then(function(res) {
         $scope.item = res.data;
@@ -25,6 +26,26 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
         }
 
     });
+
+    //check if offer already exists
+    $http.get('/api/exchanges', {
+        params: {
+            offerorId: user.id,
+            desiredItemId: itemID
+        }
+    }).then(function(res) {
+        res.data.forEach(function (offer) {
+            $http.get('/api/exchanges/' + offer.id).then(function (offerDetails) {
+                //TODO #132 list should be already filtered
+                if (offerDetails.data.state != "CANCELED" &&
+                    offerDetails.data.state != "REJECTED" &&
+                    offerDetails.data.state != "COMPLETED" &&
+                    offerDetails.data.desiredItems[0].itemId == itemID) {
+                    $scope.offerId = offerDetails.data.id;
+                }
+            })
+        })
+    })
     
     $scope.close = function () {
         $scope.$dismiss('cancel');
@@ -70,6 +91,10 @@ export default function itemDetailsController($rootScope, $scope, $http, $locati
                 console.log(res);
             })
         }
+    }
+
+    $scope.showOffer = function() {
+        $location.path('/offerDetails').search('offerId', $scope.offerId);
     }
 
     function getRating(itemId, userId) {
