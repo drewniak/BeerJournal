@@ -13,6 +13,6 @@
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
         </div>
         <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Sign in</button>
-        <a href="/home" class="btn btn-link">Cancel</a>
+        <a class="btn btn-link" ng-click="vm.changePassword()">Forget password?</a>
     </form>
 </div>
