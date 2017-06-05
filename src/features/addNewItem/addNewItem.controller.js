@@ -174,11 +174,23 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
         }
     }
 
+    $scope.beerAutocomplete = function(searchText) {
+        return $http
+            .get('/external/v2/search?q=' + searchText + '&type=beer&&key=c5d6fc620b8d7754a407eda3ec1642ab&format=json')
+            .then(function(res) {
+                if (res.data.data){
+                    return res.data.data.map(getName);
+                }
+            });
+    }
+
     $scope.breweryAutocomplete = function(searchText) {
         return $http
-            .get('/api/categories/brewery/')
+            .get('/external/v2/search?q=' + searchText + '&type=brewery&key=c5d6fc620b8d7754a407eda3ec1642ab&format=json')
             .then(function(res) {
-                return filterAutocompleteResults(searchText, res.data.values);
+                if (res.data.data){
+                    return res.data.data.map(getName);
+                }
             });
     }
 
@@ -198,6 +210,10 @@ export default function AddNewItemController($scope,$rootScope, $http, $location
         return results.filter(function(result) {
             return angular.lowercase(result).includes(angular.lowercase(searchText));
         });
+    }
+
+    function getName(object) {
+        return object.name
     }
 
 }

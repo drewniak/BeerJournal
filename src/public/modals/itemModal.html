@@ -10,7 +10,9 @@
                     <form name="form" role="form">
                         <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
                             <label for="name">Name</label>
-                            <input type="text" name="name" id="name" class="form-control" ng-model="vm.item.name" required/>
+                            <md-autocomplete name="name" id="name" md-selected-item="name" md-search-text="vm.item.name" md-items="item in beerAutocomplete(vm.item.name)" md-dropdown-position="bottom" required>
+                                <span md-highlight-text="vm.item.name">{{item}}</span>
+                            </md-autocomplete>
                             <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Name is required</span>
                         </div>
 
