@@ -1,26 +1,27 @@
 <md-toolbar class="md-primary" style="margin-bottom:30px">
     <div class="md-toolbar-tools">
 
-        <img class="beer-journal-icon"
-             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAiCAYAAABIiGl0AAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4QULBx0eDgEtDAAAApRJREFUWMPll7+LFVcUxz/fO/PePn/wzMafgUgaSwsLRRKQlIpdsBAULLSwSCWmMj/sLBP/AbExlQgWKSyCRQhJ4Q+wD4KKuFr4lnV33+ybmfu1yF3yeNldfdk3IvHAcObeMzOfc8+cc+4MvI9ie6ftPbbbtj+3/avtnu17tr+zHSYNPG77dqwHMVZ91+VCUZdzsR70qqp4/rLsP411tWjbN23vs90Zl6EVoCccy5+rpRm7XtJaN4esQ9behrLOPPANcA3oS4pjgW2fjNXC1ap41hrP/eCsNa2Qd1HISuAKcEFSb02w7Z3A9VjNH6qKmXW9ppBvWspaW6eUtW8BRyV5xeuSPuMY1w0FiNXCVNl/jGN5BPhiVQeTPuW4MDvRBI19gP1vAtt1sWWipaEWwMPVzHnSN0Lr429RmLPp2hFc47iUHiJEDkTsCNTL7o4mGSHvliHbEEK24QXw25uSKwd+sePhcvHJLK5y8MZkF7BMMFANOTwsNRDyzicmdLIQsgOS7q0ZakkV8KcUwOVH4M3JpiEHlebaSY8eLSDDgzyETGtBGfFc/yRGAbEAZbjugysIHQhT4NQbPPj7XAGF4ca19a1S4F8hKx7sX19OffY97U/Pjw+eYL+/AmwC5oD7wE1JM42DgdMj40u2z0q6PlzHTUgBPAf6aTwNXLO9t2lwV9IuYAdwLs21gYuNgiWVSc9LugzcSaaDTa94VP5Ieve7Bq+4SfyvwV8m/ajpBtKVNGd7O/A1sG/4XTfZQGZtD9LmsRzZReCHpkMtYGqI8Qw4Jumvplf840ivviVptvFeLen8B19Oq4J7k8zot/6Fsb0DeAK8Au4OfeCNI9NpE7gs6dw4Rf+V7d/936Vn+6e0iPdTXgN/oF737sjOnwAAAABJRU5ErkJggg==">
+        <a ui-sref="start">
+            <img class="beer-journal-icon"
+                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAiCAYAAABIiGl0AAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4QULBx0eDgEtDAAAApRJREFUWMPll7+LFVcUxz/fO/PePn/wzMafgUgaSwsLRRKQlIpdsBAULLSwSCWmMj/sLBP/AbExlQgWKSyCRQhJ4Q+wD4KKuFr4lnV33+ybmfu1yF3yeNldfdk3IvHAcObeMzOfc8+cc+4MvI9ie6ftPbbbtj+3/avtnu17tr+zHSYNPG77dqwHMVZ91+VCUZdzsR70qqp4/rLsP411tWjbN23vs90Zl6EVoCccy5+rpRm7XtJaN4esQ9behrLOPPANcA3oS4pjgW2fjNXC1ap41hrP/eCsNa2Qd1HISuAKcEFSb02w7Z3A9VjNH6qKmXW9ppBvWspaW6eUtW8BRyV5xeuSPuMY1w0FiNXCVNl/jGN5BPhiVQeTPuW4MDvRBI19gP1vAtt1sWWipaEWwMPVzHnSN0Lr429RmLPp2hFc47iUHiJEDkTsCNTL7o4mGSHvliHbEEK24QXw25uSKwd+sePhcvHJLK5y8MZkF7BMMFANOTwsNRDyzicmdLIQsgOS7q0ZakkV8KcUwOVH4M3JpiEHlebaSY8eLSDDgzyETGtBGfFc/yRGAbEAZbjugysIHQhT4NQbPPj7XAGF4ca19a1S4F8hKx7sX19OffY97U/Pjw+eYL+/AmwC5oD7wE1JM42DgdMj40u2z0q6PlzHTUgBPAf6aTwNXLO9t2lwV9IuYAdwLs21gYuNgiWVSc9LugzcSaaDTa94VP5Ieve7Bq+4SfyvwV8m/ajpBtKVNGd7O/A1sG/4XTfZQGZtD9LmsRzZReCHpkMtYGqI8Qw4Jumvplf840ivviVptvFeLen8B19Oq4J7k8zot/6Fsb0DeAK8Au4OfeCNI9NpE7gs6dw4Rf+V7d/936Vn+6e0iPdTXgN/oF737sjOnwAAAABJRU5ErkJggg==">
+        </a>
 
         <span class="spacer-15"></span>
-        <a ui-sref="start"><h2 md-truncate>BeerJournal</h2></a>
+        <a ui-sref="start" ng-show="!vm.isMobileBrowser"><h2 md-truncate>BeerJournal</h2></a>
 
         <span class="vertical-line"></span>
 
-        <md-button aria-label="Collections"
-                   ui-sref="collections"
-                   class="md-raised md-small md-accent"
-                   ng-show="vm.isLoggedIn()">
-            Collections
-        </md-button>
-        <md-button aria-label="Events"
-                   ui-sref="events"
-                   class="md-raised md-small md-accent"
-                   ng-show="vm.isLoggedIn()">
-            Events
-        </md-button>
+        <div ng-show="vm.isLoggedIn() && !vm.isMobileBrowser">
+            <md-button aria-label="Collections"
+                       ui-sref="collections"
+                       class="md-raised md-small md-accent">
+                Collections
+            </md-button>
+            <md-button aria-label="Events"
+                       ui-sref="events"
+                       class="md-raised md-small md-accent">
+                Events
+            </md-button>
 
 
         <md-button aria-label="Exchanges"
@@ -30,12 +31,44 @@
             Exchanges
         </md-button>
 
-        <md-button aria-label="HallOfFame"
-                   ui-sref="topRatedList"
-                   class="md-raised md-small md-accent"
-                   ng-show="vm.isLoggedIn()">
-            Hall of fame
-        </md-button>
+            <md-button aria-label="HallOfFame"
+                       ui-sref="topRatedList"
+                       class="md-raised md-small md-accent">
+                Hall of fame
+            </md-button>
+        </div>
+        <div ng-show="vm.isLoggedIn() && vm.isMobileBrowser">
+            <md-menu md-position-mode="target-right target">
+
+                <md-button class="md-accent md-raised" aria-label="viewsImage" ng-click="$mdMenu.open()">show me...</md-button>
+
+                <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
+                    <md-button aria-label="Collections"
+                               ui-sref="collections"
+                               class="md-primary">
+                        Collections
+                    </md-button>
+                    <md-button aria-label="Events"
+                               ui-sref="events"
+                               class="md-primary">
+                        Events
+                    </md-button>
+
+
+                    <md-button aria-label="Exchanges"
+                               ui-sref="offers"
+                               class="md-primary">
+                        Exchanges
+                    </md-button>
+
+                    <md-button aria-label="HallOfFame"
+                               ui-sref="topRatedList"
+                               class="md-primary">
+                        Hall of fame
+                    </md-button>
+                </md-menu-content>
+            </md-menu>
+        </div>
 
         <md-button ng-show="localstream" ng-click="turnOffCamera()">
             <md-icon><i class="material-icons">videocam_off</i></md-icon>
@@ -45,34 +78,33 @@
 
         <div style="width:25px; height:25px; border:1px solid #333;" ng-style="{'background-color': themeColor}" colorpicker ng-model="themeColor"></div>
 
-        <md-button md-no-ink
-                   class="md-small"
-                   aria-label="Register"
-                   ui-sref="registration"
-                   ng-show="!vm.isLoggedIn()">
-            Register
-        </md-button>
-        <md-button class="md-raised md-small"
-                   aria-label="Log in"
-                   ui-sref="login"
-                   ng-show="!vm.isLoggedIn()">
-            Log in
-        </md-button>
+        <div ng-show="!vm.isMobileBrowser && !vm.isLoggedIn()">
+            <md-button md-no-ink
+                       class="md-small"
+                       aria-label="Register"
+                       ui-sref="registration">
+                Register
+            </md-button>
+            <md-button class="md-raised md-small"
+                       aria-label="Log in"
+                       ui-sref="login">
+                Log in
+            </md-button>
 
-        <md-button class="md-raised md-small"
-                   aria-label="Log in"
-                   ng-click="loginFb()"
-                   ng-show="!vm.isLoggedIn()">
-            FB Login
-            <i class="fa fa-facebook-official fa-2x" aria-hidden="true"></i>
-        </md-button>
+            <md-button class="md-raised md-small"
+                       aria-label="Log in"
+                       ng-click="loginFb()">
+                FB Login
+                <i class="fa fa-facebook-official fa-2x" aria-hidden="true"></i>
+            </md-button>
+        </div>
 
         <span class="vertical-line"
               ng-show="vm.isLoggedIn()"></span>
 
         <span class="md-body-2 spacer-5"
               ng-bind="vm.getCurrentUsername()"
-              ng-show="vm.isLoggedIn()"></span>
+              ng-show="!vm.isMobileBrowser && vm.isLoggedIn()"></span>
 
         <md-menu md-position-mode="target-right target"
                  ng-show="vm.isLoggedIn()">
