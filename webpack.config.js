@@ -97,6 +97,11 @@ module.exports = function makeWebpackConfig() {
                 'target': 'http://vps394659.ovh.net:8081/',
                 changeOrigin: true
             },
+            '/external': {
+                'pathRewrite': {'^/external': ''},
+                'target': 'https://api.brewerydb.com/',
+                changeOrigin: true
+            },
             '/search': {
                 'pathRewrite': {'^/search': ''},
                 'target': 'http://vps394659.ovh.net:9200/beerjournal/item/_search',
